@@ -3,7 +3,7 @@ layout: post
 title: "存储系统-I/O"
 date: 2014-03-16 15:40:50 +0800
 comments: true
-categories: 
+categories: IO
 ---
 
 存储系统瓶颈往往在于I/O，因此需要对I/O有一个整体而清晰的认识，也算是一次总结。I/O涉及的范围比较广，包括硬件架构和网络结构等方面，本篇文章试图从应用层面来分析：

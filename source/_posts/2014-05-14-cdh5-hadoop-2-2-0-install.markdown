@@ -3,7 +3,7 @@ layout: post
 title: "Hadoop 2.2.0-cdh5.0.0-beta-2安装说明"
 date: 2014-05-14 23:08:37 +0800
 comments: true
-categories: 
+categories: Hadoop
 ---
 环境说明  
     master 10.0.1.252  

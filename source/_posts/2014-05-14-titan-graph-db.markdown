@@ -3,7 +3,7 @@ layout: post
 title: "Titan图数据库介绍"
 date: 2014-05-14 22:35:18 +0800
 comments: true
-categories: 
+categories: Hadoop
 ---
 Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：
 

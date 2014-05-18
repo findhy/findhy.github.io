@@ -3,7 +3,7 @@ layout: post
 title: "How To Become A Hacker"
 date: 2014-02-24 20:08:45 +0800
 comments: true
-categories: 
+categories: Others
 ---
 From：http://www.catb.org/esr/faqs/hacker-howto.html
 

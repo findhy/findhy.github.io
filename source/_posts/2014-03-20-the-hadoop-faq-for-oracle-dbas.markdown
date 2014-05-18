@@ -3,7 +3,7 @@ layout: post
 title: "Oracle DBA如何转型到Hadoop平台"
 date: 2014-03-20 15:02:44 +0800
 comments: true
-categories: 
+categories: Hadoop
 ---
 Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在[这里](http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/)。对于国内的一些DBA想转型Hadoop的可以参考一下。
 

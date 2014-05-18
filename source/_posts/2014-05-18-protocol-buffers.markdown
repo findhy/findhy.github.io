@@ -48,7 +48,7 @@ categories: RPC
 - 支持更多语言，包括：C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, 
 Cocoa, JavaScript, Node.js, Smalltalk, OCaml and Delphi等
 - IDL描述语言要比PB更简洁
-- 提供一个PRC调用栈
+- 提供一个RPC调用栈
 - http://thrift.apache.org/
 
 ### 6.Apache Avro ###
@@ -62,8 +62,8 @@ Cocoa, JavaScript, Node.js, Smalltalk, OCaml and Delphi等
 ### 7.传输数据大小比较 ###
 {% img /images/rpc_2.png %} 
 
-TBinaryProtocol - 没有经过压缩的二进制协议，比文本协议要快，但是很难调试  
-TCompactProtocol - 经过压缩处理的，更加高效
+Thrift-TBinaryProtocol - 没有经过压缩的二进制协议，比文本协议要快，但是很难调试  
+Thrift-TCompactProtocol - 经过压缩处理的，更加高效
 
 ### 8.哪些项目在使用Thrift？ ###
 - Facebook 
@@ -87,18 +87,18 @@ TCompactProtocol - 经过压缩处理的，更加高效
 https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2
 
 ### 11.总结 ###
-- 其实大部分场景下，基于HTTP的Hessian或者阿里巴巴的Dubbo已经可以满足需求了
+- 其实大部分场景下，基于HTTP的Hessian或者阿里巴巴的Dubbo完全可以满足需求
 - 如果追求更高的性能，像高并发的游戏服务器端，可以选择Protocol Buffers、Avro或Thrift
 - Protocol Buffers和Thrift的稳定性要更好，大量运用于Google和Facebook的生产环境中
 - Thrift相比Protocol Buffers支持更多的语言，框架逻辑更加清晰，易于定制扩展，性能与Protocol Buffers不相上下，目前来说应该是最佳的选择
 - Avro的优势在于Schema动态加载功能，而且Avro更适合于数据交换及存储的通用工具和平台
-- Avro的性能不输Protocol Buffers和Thrift，但是发展时间较短，没有经过太多项目的验证
+- Avro的性能不输Protocol Buffers和Thrift，但缺点是发展时间较短，没有经过太多项目的验证
 
 
 ### 12.参考 ###
 http://www.slideshare.net/ChicagoHUG/avro-chug-20120416 
 http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro 
 http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  
-https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de  
+https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de    
 http://www.alidata.org/archives/1307  
 

@@ -3,7 +3,7 @@ layout: post
 title: "A hackable text editor for the 21st Century"
 date: 2014-02-27 09:57:57 +0800
 comments: true
-categories: 
+categories: Others
 ---
 See more : http://atom.io/
 
