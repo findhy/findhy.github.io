@@ -1,0 +1,1263 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Findhy</title>
+  <meta name="author" content="Findhy">
+
+  
+  <meta name="description" content="test_blog_move
+">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://findhy.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Findhy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Findhy</a></h1>
+  
+    <h2>Art is long, Life is short.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:findhy.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/03/test-blog-move/">Test_blog_move</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-03T21:17:39+08:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>test_blog_move</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-18T15:53:37+08:00" pubdate data-updated="true">May 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
+
+<h3>1.RPC模型</h3>
+
+<p>一个简单的RPC调用模型如下图所示：<br/>
+<img src="/images/rpc_1.png"></p>
+
+<p>当我们在选型RPC框架的时候需要关注的几个核心问题是：</p>
+
+<ul>
+<li>传输的协议和数据（JSON、XML等）是什么？</li>
+<li>如何高效的数据存储和传输？</li>
+<li>服务器端处理请求的方式？</li>
+</ul>
+
+
+<h3>2.不建议的方案</h3>
+
+<ul>
+<li>SOAP：基于XML，传输的数据太多</li>
+<li>CORBA：多度设计而且重量级，<a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a></li>
+<li>DCOM, COM+ :主要用于windows客户端程序</li>
+<li>HTTP/JSON/XML/Plain Text：基于HTTP协议的，这种在简单的场景下是可以用的，像hessian，但缺点是缺乏更复杂的协议描述，只能传输简单的对象，而且JSON/XML都太重了</li>
+</ul>
+
+
+<h3>3.建议方案</h3>
+
+<ul>
+<li>Protocol Buffers</li>
+<li>Apache Thrift</li>
+<li>Apache Avro</li>
+<li>Message Pack</li>
+<li>kryo</li>
+<li>BSON</li>
+</ul>
+
+
+<p>上面这些序列化框架共同的特点的是：有接口描述（IDL）、性能较高、版本控制和基于二进制的数据传输。下面重点介绍前三个。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/18/protocol-buffers/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/18/kafka/">Kafka介绍</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-18T10:25:44+08:00" pubdate data-updated="true">May 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
+Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
+
+<ul>
+<li>高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。</li>
+<li>可扩展：集群设计可以保证弹性扩展而不停机</li>
+<li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
+<li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
+</ul>
+
+
+<h4>Kafka的部署结构图</h4>
+
+<p><img src="/images/kafka.png"></p>
+
+<h4>为什么要用Kafka</h4>
+
+<ul>
+<li>统一消息入口<br/>
+Storm流数据平台需要处理的数据多种多样，如果直接用Storm来接入，会需要写很多的接口，这样必然不是最佳的解决方案，加了一层Kafka之后，Storm只需要处理来自Kafka的数据，由Kafka对接数据源。</li>
+<li>消息持久化<br/>
+直接用Storm或者其它MQ会发生数据丢失的可能，而Kafka是把数据持久化到磁盘上面而且会有复制备份，所以不会发生数据丢失。</li>
+<li>支持分布式<br/>
+支持分布式保证了架构的健壮性、弹性扩展和容错。</li>
+</ul>
+
+
+<p>Kafka在数据平台中的位置如图：<br/>
+<img src="/images/kafka_hadoop.png"></p>
+
+<p>Kafka作为消息中间件，为Storm提供数据来源。<br/>
+Zookeeper为Kafka、Storm、HBase提供分布式协调服务，所以单独部署，不用HBase自带的Zookeeper。<br/>
+HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/17/nginx-on-linux/">Nginx在Linux上的安装和配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-17T07:12:34+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
+
+<h3>1.配置nginx的yum源</h3>
+
+<pre><code>sudo vi /etc/yum.repos.d/nginx.repo
+</code></pre>
+
+<p>添加下面的内容：</p>
+
+<pre><code>[nginx]
+name=nginx repo 
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ 
+gpgcheck=0 
+enabled=1
+</code></pre>
+
+<p>保存退出</p>
+
+<h3>2.安装</h3>
+
+<pre><code>sudo yum install nginx
+</code></pre>
+
+<h3>3.启动Nginx</h3>
+
+<pre><code>sudo /etc/init.d/nginx start
+</code></pre>
+
+<p>访问：<a href="http://localhost">http://localhost</a></p>
+
+<h3>4.其它命令</h3>
+
+<pre><code>停止nginx服务：# /etc/init.d/nginx stop 
+启动nginx服务：# /etc/init.d/nginx start 
+编辑nginx配置文件：# vi /etc/nginx/nginx.conf
+</code></pre>
+
+<h3>5.反向代理配置</h3>
+
+<pre><code>sudo vi /etc/nginx/nginx.conf
+</code></pre>
+
+<p>配置：</p>
+
+<pre><code>upstream rexster {
+    server 127.0.0.1:8182 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+upstream yarn {
+    server 127.0.0.1:8089 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+upstream storm {
+    server 127.0.0.1:7070 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+server {
+    listen 80;
+    server_name yarn.xxx.com;
+    location / {
+        proxy_pass http://yarn;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    # redirect server error pages to the static page /50x.html
+}
+server {
+    listen 80;
+    server_name storm.xxx.com;
+    location / {
+        proxy_pass http://storm;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    # redirect server error pages to the static page /50x.html
+}
+</code></pre>
+
+<p>输入域名测试，跳转成功</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN安装说明</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-17T06:37:52+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
+
+<p>环境说明</p>
+
+<pre><code>master 10.0.1.252  
+slave1 10.0.1.252  
+slave2 10.0.1.252  
+</code></pre>
+
+<p>软件版本</p>
+
+<pre><code>https://github.com/anfeng/storm-yarn/archive/master.zip  
+Storm-0.9.0-win21  
+zookeeper-3.4.5-cdh5.0.0-beta-2  
+apache-maven-3.1.0  
+</code></pre>
+
+<h2>Zookeeper集群搭建</h2>
+
+<hr />
+
+<p>Storm需要使用zookeeper来协调整个集群，但是storm并不用zookeeper来传递消息，所以zookeeper的负载很低，大多数情况下，单个节点的zookeeper就够了，所以我们这里就只部署一台机子的zookeeper，后面再扩展到集群。</p>
+
+<h3>1.安装JDK</h3>
+
+<p>前面Hadoop集群已经安装了，只要保证JDK版本在1.6以上就可以了。</p>
+
+<h3>2.下载和解压zookeeper安装包</h3>
+
+<p>因为我们用的是CDH的Hadoop发行版，所以这里zookeeper也用CDH的，到这里下载：</p>
+
+<pre><code>wget http://archive-primary.cloudera.com/cdh5/cdh/5/zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<p>解压</p>
+
+<pre><code>tar –zxvf zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<h3>3.修改zoo.cfg配置文件</h3>
+
+<p>进入zookeeper安装目录/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2/conf，将zoo_sample.cfg重命名为zoo.cfg</p>
+
+<pre><code>mv zoo_sample.cfg zoo.cfg
+</code></pre>
+
+<p>修改zoo.cfg文件，增加：</p>
+
+<pre><code>tickTime=2000
+dataDir=/home/hadoop/zookeeper-data
+clientPort=2181
+initLimit=5
+syncLimit=2
+server.1=master:2888:3888
+</code></pre>
+
+<p>创建这个目录：/home/hadoop/zookeeper-data</p>
+
+<h3>4.修改myid</h3>
+
+<p>在/home/hadoop/zookeeper-data目录下创建文件myid，里面内容为server的ID，这里写：1</p>
+
+<h3>5.配置zookeeper的环境变量</h3>
+
+<p>vi /etc/profile，增加：</p>
+
+<pre><code>export ZOOKEEPER_HOME=/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2
+export PATH=$PATH:$ZOOKEEPER_HOME/bin
+
+source /etc/profile
+</code></pre>
+
+<h3>6.启动zookeeper</h3>
+
+<pre><code>./bin/zkServer.sh start
+</code></pre>
+
+<h3>7.测试Zookeeper</h3>
+
+<p>测试Zookeeper客户端是否可用</p>
+
+<pre><code>./bin/zkCli.sh -server 127.0.0.1:2181
+</code></pre>
+
+<p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
+
+<h2>Storm-on-YARN搭建</h2>
+
+<hr />
+
+<h3>1.安装maven</h3>
+
+<p>下载maven安装包</p>
+
+<pre><code>wget http://archive.apache.org/dist/maven/maven-3/3.1.0/binaries/apache-maven-3.1.0-bin.tar.gz
+</code></pre>
+
+<p>解压</p>
+
+<pre><code>tar –zxvf apache-maven-3.1.0-bin.tar.gz
+</code></pre>
+
+<h3>2.配置环境变量</h3>
+
+<pre><code>vi /etc/profile
+</code></pre>
+
+<p>添加：</p>
+
+<pre><code>export MAVEN_HOME=/home/hadoop/apache-maven-3.1.0
+export PATH=$PATH:$MAVEN_HOME/bin
+</code></pre>
+
+<p>使环境变量生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre>
+
+<p>测试</p>
+
+<pre><code>mvn –version
+</code></pre>
+
+<h3>3.下载storm on yarn</h3>
+
+<p>这里下载@anfeng的分支版本（针对Hadoop2.2.0的），而不是官方版本。</p>
+
+<pre><code>wget https://github.com/anfeng/storm-yarn/archive/master.zip
+</code></pre>
+
+<p>解压：</p>
+
+<pre><code>unzip master
+</code></pre>
+
+<p>解压完了会生成一个storm-yarn-master目录</p>
+
+<h3>4.编译storm on yarn</h3>
+
+<p>进入storm-yarn-master目录：</p>
+
+<pre><code>cd storm-yarn-master
+</code></pre>
+
+<p>编译（跳过测试）：</p>
+
+<pre><code>mvn package –DskipTests
+</code></pre>
+
+<h3>5.在HDFS中创建对应Storm目录</h3>
+
+<p>在HDFS中创建目录：</p>
+
+<pre><code>/lib/storm/0.9.0-wip21
+</code></pre>
+
+<h3>6.将storm.zip放进去（注意和你自己的目录对应）</h3>
+
+<pre><code>./bin/hadoop fs -put /home/hadoop/storm-yarn-master/lib/storm.zip /lib/storm/0.9.0-wip21/
+</code></pre>
+
+<h3>7.解压Storm</h3>
+
+<p>将/home/hadoop/storm-yarn-master/lib /storm-0.9.0-wip21.zip
+解压到/home/hadoop/storm-yarn-master这个目录下</p>
+
+<h3>8.修改环境变量</h3>
+
+<pre><code>export STORM_HOME=/home/hadoop/storm-yarn-master
+export PATH=$PATH:$STORM_HOME/storm-0.9.0-wip21/bin
+export PATH=$PATH:$STORM_HOME/bin
+</code></pre>
+
+<p>环境变量生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre>
+
+<h3>9.修改storm.yaml</h3>
+
+<p>修改/home/hadoop/storm-yarn-master/storm-0.9.0-wip21/conf/storm.yaml配置文件，增加zookeeper的配置：</p>
+
+<pre><code>storm.zookeeper.servers:
+  - "master"
+</code></pre>
+
+<h3>10.启动storm on yarn环境</h3>
+
+<p>执行下面命令启动：</p>
+
+<pre><code>storm-yarn launch storm.yaml
+</code></pre>
+
+<p>如果报错：yarn is not installed
+设置Hadoop和YARN的环境变量（如果已经设置过了请跳过这一步）</p>
+
+<pre><code>export HADOOP_DEV_HOME=/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+export PATH=$PATH:$HADOOP_DEV_HOME/bin
+export PATH=$PATH:$HADOOP_DEV_HOME/sbin
+export HADOOP_MAPARED_HOME=${HADOOP_DEV_HOME}
+export HADOOP_COMMON_HOME=${HADOOP_DEV_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_DEV_HOME}
+export YARN_HOME=${HADOOP_DEV_HOME}
+export HADOOP_CONF_DIR=${HADOOP_DEV_HOME}/etc/hadoop
+export HDFS_CONF_DIR=${HADOOP_DEV_HOME}/etc/hadoop
+export YARN_CONF_DIR=${HADOOP_DEV_HOME}/etc/Hadoop
+
+source /etc/profile
+</code></pre>
+
+<p>再试一下</p>
+
+<pre><code>storm-yarn launch storm.yaml
+</code></pre>
+
+<p>因为storm是作为一个yarn程序运行在集群上的，所以在YARN的集群管理页面中会有一个AppId</p>
+
+<h3>11.复制storm.yaml</h3>
+
+<p>创建这个目录：~/.storm
+执行（appid换成上面YARN管理界面中看到的appid）：</p>
+
+<pre><code>storm-yarn getStormConfig -appId application_1399464020057_0006  -output ~/.storm/storm.yaml
+</code></pre>
+
+<h3>12.查看nimbus</h3>
+
+<p>执行下面命令确定nimbus.host</p>
+
+<pre><code>cat ~/.storm/storm.yaml | grep nimbus.host  
+</code></pre>
+
+<h3>13.提交Topology</h3>
+
+<p>注意nimbus.host就是上面查询的nimbus服务器</p>
+
+<pre><code>storm jar ./lib/storm-starter-0.0.1-SNAPSHOT.jar storm.starter.WordCountTopology WordCountTopology -c nimbus.host=10.0.1.253
+</code></pre>
+
+<h3>14.Storm监控</h3>
+
+<p>看一下storm的UI监控界面（nimbus.host:7070），可以看见刚刚提交的wordcountTopology</p>
+
+<pre><code>http://nimbus.host:7070/
+</code></pre>
+
+<h3>15.YARN-Storm Client</h3>
+
+<p>现在Storm作为一个应用部署在YARN上，后面所有Storm集群的控制都可以通过YARN客户端命令来完成，下面简单介绍一下。构建一个Storm的集群命令</p>
+
+<pre><code>storm-yarn launch &lt;storm-yarn-config&gt;  
+</code></pre>
+
+<p>其中，&lt;storm-yarn-config>是Storm的配置信息，包括启动Supervisor个数，Storm ApplicationMaster占用的内存等。</p>
+
+<p>启动Storm后，可以通过下面的命令来控制Storm：</p>
+
+<pre><code>storm-yarn [command] –appId [appId] –output [file] [–supervisors [n]]
+</code></pre>
+
+<p>其中，command为具体命令，具体参见下面两张表，参数 –appId 为启动的Storm在YARN中的应用程序ID，通过YANR的集群管理界面可以看见，-Supervisors为需要增加的Supervisor服务个数，该参数只对命令addSupervisors有效。
+例如我们现在增加2个Supervisors，命令如下：</p>
+
+<pre><code>storm-yarn addSupervisors -appId application_1399464020057_0006 -supervisors 2
+</code></pre>
+
+<p>输入storm-yarn查看所有命令</p>
+
+<h3>16.关闭Storm on yarn集群</h3>
+
+<pre><code>storm-yarn shutdown –appId [applicationId]
+</code></pre>
+
+<h2>参考</h2>
+
+<p><a href="http://dongxicheng.org/mapreduce-nextgen/storm-on-yarn/">http://dongxicheng.org/mapreduce-nextgen/storm-on-yarn/</a></p>
+
+<p><a href="http://www.geedoo.info/storm-on-yarn-platform-to-build.html">http://www.geedoo.info/storm-on-yarn-platform-to-build.html</a></p>
+
+<p><a href="http://blog.csdn.net/weijonathan/article/details/17762477">http://blog.csdn.net/weijonathan/article/details/17762477</a></p>
+
+<p><a href="https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/">https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/</a></p>
+
+<p><a href="http://yzprofile.me/2013/04/25/storm-tutorial.html">http://yzprofile.me/2013/04/25/storm-tutorial.html</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2安装说明</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-14T23:08:37+08:00" pubdate data-updated="true">May 14<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>环境说明</p>
+
+<pre><code>master 10.0.1.252  
+slave1 10.0.1.252  
+slave2 10.0.1.252  
+</code></pre>
+
+<p>软件版本</p>
+
+<pre><code>Hadoop 2.2.0-cdh5.0.0-beta-2  
+JDK 1.7.0_45
+</code></pre>
+
+<h2>开始安装</h2>
+
+<hr />
+
+<h3>1.创建用户</h3>
+
+<pre><code>useradd hadoop
+</code></pre>
+
+<h3>2.修改密码</h3>
+
+<pre><code>passwd hadoop
+</code></pre>
+
+<h3>3.修改HOSTS文件</h3>
+
+<pre><code>10.0.1.252 master  
+10.0.1.253 slave1  
+10.0.1.254 slave2  
+</code></pre>
+
+<h3>4.节点互信配置</h3>
+
+<p>在每个节点执行</p>
+
+<pre><code>ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub &gt;~/.ssh/authorized_keys
+</code></pre>
+
+<p>更改权限</p>
+
+<pre><code>[hadoop@master .ssh]$ chmod 600 authorized_keys
+[hadoop@master ~]$ chmod 700 .ssh/
+</code></pre>
+
+<p>在master节点操作<br/>
+拷贝其它节点的公钥到authorized_keys文件中</p>
+
+<pre><code>[hadoop@master .ssh]$ ssh hadoop@slave1 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
+[hadoop@master .ssh]$ ssh hadoop@slave2 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
+</code></pre>
+
+<p>然后将公钥拷贝到其它节点</p>
+
+<pre><code>[hadoop@master .ssh]$ scp authorized_keys hadoop@slave1:~/.ssh/
+[hadoop@master .ssh]$ scp authorized_keys hadoop@slave2:~/.ssh/
+</code></pre>
+
+<p>测试一下，不需要密码就可以访问</p>
+
+<pre><code>ssh master  
+Ssh slave1  
+Ssh slave2  
+</code></pre>
+
+<p>首次会让输入yes，后面就可以直接登录了</p>
+
+<h3>5.JDK安装</h3>
+
+<p>用java –version检查是否安装了JDK，如果没有安装，则参照下面的连接安装：
+<a href="https://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_oracle_jdk_installation.html#topic_29_1">https://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_oracle_jdk_installation.html#topic_29_1</a></p>
+
+<h3>6.载CDH安装包</h3>
+
+<p>下载解压：<a href="http://archive-primary.cloudera.com/cdh5/cdh/5/hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz">http://archive-primary.cloudera.com/cdh5/cdh/5/hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz</a></p>
+
+<pre><code>tar –zxvf hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<h3>7.修改hadoop-env.sh</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/hadoop-env.sh</p>
+
+<pre><code>export JAVA_HOME=/usr/java/jdk1.7.0_45
+</code></pre>
+
+<h3>8.修改mapred-site.xml</h3>
+
+<p>在${HADOOP_HOME}/etc/hadoop/目录中，将mapred-site.xml.templat重命名成mapred-site.xml：</p>
+
+<pre><code>mv mapred-site.xml.template mapred-site.xml
+</code></pre>
+
+<p>并添加以下内容：</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+&lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt; 
+</code></pre>
+
+<h3>9.修改core-site.xml</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/core-site.xml</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;fs.default.name&lt;/name&gt;
+&lt;value&gt;hdfs://master:8020&lt;/value&gt;
+&lt;final&gt;true&lt;/final&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h3>10.修改yarn-site.xml</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/yarn-site.xml：</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
+&lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h3>11.修改hdfs-site.xml</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/hdfs-site.xml</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+&lt;value&gt;/home/hadoop/dfs/yarn/name&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+&lt;value&gt;/home/hadoop/dfs/yarn/data&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;dfs.replication&lt;/name&gt;
+&lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;dfs.permissions&lt;/name&gt;
+&lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h3>12.修改slaves文件</h3>
+
+<p>在slaves文件中添加你的slave节点：</p>
+
+<pre><code>slave1
+slave2
+</code></pre>
+
+<h3>13.修改masters文件</h3>
+
+<p>在masters文件中添加你的master节点：</p>
+
+<pre><code>master
+</code></pre>
+
+<h3>14.将安装包复制到其它节点</h3>
+
+<pre><code>scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave1:/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+</code></pre>
+
+<p><em>上面配置文件对应的目录在每个节点都需要提前创建好</em></p>
+
+<h3>15.初始化HDFS</h3>
+
+<pre><code>./bin/hadoop namenode –format
+</code></pre>
+
+<h3>16.启动HDFS</h3>
+
+<pre><code>./sbin/start-dfs.sh
+</code></pre>
+
+<h3>17.启动YARN</h3>
+
+<pre><code>./sbin/start-yarn.sh
+</code></pre>
+
+<h3>18.测试集群</h3>
+
+<p>自己创建一个文件put到HDFS的/test/in目录下面
+执行：</p>
+
+<pre><code>./bin/hadoop jar share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.2.0-cdh5.0.0-beta-2.jar wordcount /test/in/ /test/out/wordcountr
+</code></pre>
+
+<h3>19.YARN管理地址</h3>
+
+<p><a href="http://master:8089/cluster/cluster">http://master:8089/cluster/cluster</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/14/titan-graph-db/">Titan图数据库介绍</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-14T22:35:18+08:00" pubdate data-updated="true">May 14<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：</p>
+
+<ul>
+<li>弹性和性能的线性扩展</li>
+<li>容错性</li>
+<li>多数据中心的高可用性和热备份</li>
+<li>支持事务的ACID和最终一致性</li>
+<li>支持多种不同的后端存储<br/>
+<em>Apache Cassandra（分布式）<br/>
+Apache HBase（分布式）<br/>
+Oracle BerkeleyDB（本地的）<br/>
+Persistit（本地）</em></li>
+<li>支持多种后端索引  <br/>
+<em>ElasticSearch<br/>
+Apache Lucene</em></li>
+<li>与图形处理栈TinkerPop原生集成   <br/>
+  <em>图查询语言Gremlin<br/>
+  对象到图的映射器Frames<br/>
+  图服务器Rexster<br/>
+  标准图API：Blueprints</em></li>
+<li>Apache2 license 开源协议</li>
+</ul>
+
+
+<p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
+
+<p>更多关于Titan的文档可以看<a href="https://github.com/thinkaurelius/titan/wiki">这里</a></p>
+
+<p>可以从<a href="https://github.com/thinkaurelius/titan/wiki/Getting-Started">这里</a>开始</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/21/big-data-business/">大数据时代下的商机</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-21T22:57:30+08:00" pubdate data-updated="true">Apr 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？</p>
+
+<blockquote><p>Q：<strong>大数据时代有哪些商业模式？</strong></p></blockquote>
+
+<h3>数据租售</h3>
+
+<p>直接卖数据API，代表公司有twitter。</p>
+
+<h3>数据服务</h3>
+
+<p>卖数据产品、数据分析结果，代表公司有BAT。这个是目前最流行也是最容易变现的模式，而且同样的数据可以打包成不同服务和产品出售，转化率很高，下面有例子，但是前提是你要有数据。</p>
+
+<h3>数据技术</h3>
+
+<p>提供大数据技术支持，代表公司有cloudera。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/21/big-data-business/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/17/storm/">Storm</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-17T22:54:04+08:00" pubdate data-updated="true">Apr 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>使用场景</h1>
+
+<p>Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。</p>
+
+<p>下面五个特性保证了Storm实时处理的能力：</p>
+
+<ul>
+<li><strong>Fast</strong> &ndash; 快，每个节点每秒可以处理百万个100字节的消息</li>
+<li><strong>Scalable</strong> &ndash; 可扩展，这没得说</li>
+<li><strong>Fault-tolerant</strong> &ndash; 容错，如果workers进程死掉，Storm会自动重启。如果一个节点死掉，会在其它节点上重启workers进程</li>
+<li><strong>Reliable</strong> &ndash; 可靠性，Storm确保每个单元数据（tuple）会被处理最少一次，仅仅当消息处理失败才会发生通知</li>
+<li><strong>Easy to operate</strong> &ndash; 标准的配置适应于生产环境，一旦部署，Storm很容易操作。</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/17/storm/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/23/how-do-design/">「写给大家的设计书」</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-23T21:13:47+08:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。</p>
+
+<blockquote><p>Q：<strong>我为什么要学设计，有啥用？</strong></p></blockquote>
+
+<p>很多行业都有专业的设计学科，如建筑设计、美术设计等。那非设计专业的人为什么要学点设计呢？首先是对设计的理解，我觉得设计就是：<strong>建立与外界连接的桥梁</strong>。连接第一个层次就是沟通顺畅或者别人可以理解你，第二个层次是让人爽心悦目和产生共鸣。</p>
+
+<p><strong>如果这样来理解设计，那我们无时无刻不在设计或者参与设计，如何设计公司网站的首页、如何设计博客、如何设计简历、如何设计你的名片，如何写邮件、写文章等等，这些都需要设计，因为我们需要通过它们来与外界沟通</strong>。</p>
+
+<p>网页设计中，怎么样做到让访问者既能够很直观的了解网站的主题和用途，并且愿意停留呢？Google的首页是一个很好的例子，整个网页通过对比突出一个搜索框，你完全不需要思考就知道该怎么用了，不让用户思考是它设计的成功之处。苹果的产品不管在易用性和美观上都是好的设计，还有写邮件或者文章，怎么样让读者很快明白你所表达的意思也是需要设计的。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/03/23/how-do-design/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/03/test-blog-move/">Test_blog_move</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/18/kafka/">Kafka介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/17/nginx-on-linux/">Nginx在Linux上的安装和配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN安装说明</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2安装说明</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/14/titan-graph-db/">Titan图数据库介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/21/big-data-business/">大数据时代下的商机</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/17/storm/">Storm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/23/how-do-design/">「写给大家的设计书」</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/">Oracle DBA如何转型到Hadoop平台</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/20/yarn/">YARN，Hadoop平台的操作系统</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/16/io/">存储系统-I/O</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/">A Hackable Text Editor for the 21st Century</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/24/how-to-become-a-hacker/">How to Become a Hacker</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Findhy -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'findhy';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

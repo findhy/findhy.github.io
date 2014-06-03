@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Storm-on-YARN安装说明 - Findhy</title>
+  <meta name="author" content="Findhy">
+
+  
+  <meta name="description" content="Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。 当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。 环境说明 master 10.0.1.252 slave1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://findhy.com/blog/2014/05/17/storm-on-yarn">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Findhy" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Findhy</a></h1>
+  
+    <h2>Art is long, Life is short.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:findhy.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Storm-on-YARN安装说明</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-17T06:37:52+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
+
+<p>环境说明</p>
+
+<pre><code>master 10.0.1.252  
+slave1 10.0.1.252  
+slave2 10.0.1.252  
+</code></pre>
+
+<p>软件版本</p>
+
+<pre><code>https://github.com/anfeng/storm-yarn/archive/master.zip  
+Storm-0.9.0-win21  
+zookeeper-3.4.5-cdh5.0.0-beta-2  
+apache-maven-3.1.0  
+</code></pre>
+
+<h2>Zookeeper集群搭建</h2>
+
+<hr />
+
+<p>Storm需要使用zookeeper来协调整个集群，但是storm并不用zookeeper来传递消息，所以zookeeper的负载很低，大多数情况下，单个节点的zookeeper就够了，所以我们这里就只部署一台机子的zookeeper，后面再扩展到集群。</p>
+
+<h3>1.安装JDK</h3>
+
+<p>前面Hadoop集群已经安装了，只要保证JDK版本在1.6以上就可以了。</p>
+
+<h3>2.下载和解压zookeeper安装包</h3>
+
+<p>因为我们用的是CDH的Hadoop发行版，所以这里zookeeper也用CDH的，到这里下载：</p>
+
+<pre><code>wget http://archive-primary.cloudera.com/cdh5/cdh/5/zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<p>解压</p>
+
+<pre><code>tar –zxvf zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<h3>3.修改zoo.cfg配置文件</h3>
+
+<p>进入zookeeper安装目录/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2/conf，将zoo_sample.cfg重命名为zoo.cfg</p>
+
+<pre><code>mv zoo_sample.cfg zoo.cfg
+</code></pre>
+
+<p>修改zoo.cfg文件，增加：</p>
+
+<pre><code>tickTime=2000
+dataDir=/home/hadoop/zookeeper-data
+clientPort=2181
+initLimit=5
+syncLimit=2
+server.1=master:2888:3888
+</code></pre>
+
+<p>创建这个目录：/home/hadoop/zookeeper-data</p>
+
+<h3>4.修改myid</h3>
+
+<p>在/home/hadoop/zookeeper-data目录下创建文件myid，里面内容为server的ID，这里写：1</p>
+
+<h3>5.配置zookeeper的环境变量</h3>
+
+<p>vi /etc/profile，增加：</p>
+
+<pre><code>export ZOOKEEPER_HOME=/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2
+export PATH=$PATH:$ZOOKEEPER_HOME/bin
+
+source /etc/profile
+</code></pre>
+
+<h3>6.启动zookeeper</h3>
+
+<pre><code>./bin/zkServer.sh start
+</code></pre>
+
+<h3>7.测试Zookeeper</h3>
+
+<p>测试Zookeeper客户端是否可用</p>
+
+<pre><code>./bin/zkCli.sh -server 127.0.0.1:2181
+</code></pre>
+
+<p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
+
+<h2>Storm-on-YARN搭建</h2>
+
+<hr />
+
+<h3>1.安装maven</h3>
+
+<p>下载maven安装包</p>
+
+<pre><code>wget http://archive.apache.org/dist/maven/maven-3/3.1.0/binaries/apache-maven-3.1.0-bin.tar.gz
+</code></pre>
+
+<p>解压</p>
+
+<pre><code>tar –zxvf apache-maven-3.1.0-bin.tar.gz
+</code></pre>
+
+<h3>2.配置环境变量</h3>
+
+<pre><code>vi /etc/profile
+</code></pre>
+
+<p>添加：</p>
+
+<pre><code>export MAVEN_HOME=/home/hadoop/apache-maven-3.1.0
+export PATH=$PATH:$MAVEN_HOME/bin
+</code></pre>
+
+<p>使环境变量生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre>
+
+<p>测试</p>
+
+<pre><code>mvn –version
+</code></pre>
+
+<h3>3.下载storm on yarn</h3>
+
+<p>这里下载@anfeng的分支版本（针对Hadoop2.2.0的），而不是官方版本。</p>
+
+<pre><code>wget https://github.com/anfeng/storm-yarn/archive/master.zip
+</code></pre>
+
+<p>解压：</p>
+
+<pre><code>unzip master
+</code></pre>
+
+<p>解压完了会生成一个storm-yarn-master目录</p>
+
+<h3>4.编译storm on yarn</h3>
+
+<p>进入storm-yarn-master目录：</p>
+
+<pre><code>cd storm-yarn-master
+</code></pre>
+
+<p>编译（跳过测试）：</p>
+
+<pre><code>mvn package –DskipTests
+</code></pre>
+
+<h3>5.在HDFS中创建对应Storm目录</h3>
+
+<p>在HDFS中创建目录：</p>
+
+<pre><code>/lib/storm/0.9.0-wip21
+</code></pre>
+
+<h3>6.将storm.zip放进去（注意和你自己的目录对应）</h3>
+
+<pre><code>./bin/hadoop fs -put /home/hadoop/storm-yarn-master/lib/storm.zip /lib/storm/0.9.0-wip21/
+</code></pre>
+
+<h3>7.解压Storm</h3>
+
+<p>将/home/hadoop/storm-yarn-master/lib /storm-0.9.0-wip21.zip
+解压到/home/hadoop/storm-yarn-master这个目录下</p>
+
+<h3>8.修改环境变量</h3>
+
+<pre><code>export STORM_HOME=/home/hadoop/storm-yarn-master
+export PATH=$PATH:$STORM_HOME/storm-0.9.0-wip21/bin
+export PATH=$PATH:$STORM_HOME/bin
+</code></pre>
+
+<p>环境变量生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre>
+
+<h3>9.修改storm.yaml</h3>
+
+<p>修改/home/hadoop/storm-yarn-master/storm-0.9.0-wip21/conf/storm.yaml配置文件，增加zookeeper的配置：</p>
+
+<pre><code>storm.zookeeper.servers:
+  - "master"
+</code></pre>
+
+<h3>10.启动storm on yarn环境</h3>
+
+<p>执行下面命令启动：</p>
+
+<pre><code>storm-yarn launch storm.yaml
+</code></pre>
+
+<p>如果报错：yarn is not installed
+设置Hadoop和YARN的环境变量（如果已经设置过了请跳过这一步）</p>
+
+<pre><code>export HADOOP_DEV_HOME=/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+export PATH=$PATH:$HADOOP_DEV_HOME/bin
+export PATH=$PATH:$HADOOP_DEV_HOME/sbin
+export HADOOP_MAPARED_HOME=${HADOOP_DEV_HOME}
+export HADOOP_COMMON_HOME=${HADOOP_DEV_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_DEV_HOME}
+export YARN_HOME=${HADOOP_DEV_HOME}
+export HADOOP_CONF_DIR=${HADOOP_DEV_HOME}/etc/hadoop
+export HDFS_CONF_DIR=${HADOOP_DEV_HOME}/etc/hadoop
+export YARN_CONF_DIR=${HADOOP_DEV_HOME}/etc/Hadoop
+
+source /etc/profile
+</code></pre>
+
+<p>再试一下</p>
+
+<pre><code>storm-yarn launch storm.yaml
+</code></pre>
+
+<p>因为storm是作为一个yarn程序运行在集群上的，所以在YARN的集群管理页面中会有一个AppId</p>
+
+<h3>11.复制storm.yaml</h3>
+
+<p>创建这个目录：~/.storm
+执行（appid换成上面YARN管理界面中看到的appid）：</p>
+
+<pre><code>storm-yarn getStormConfig -appId application_1399464020057_0006  -output ~/.storm/storm.yaml
+</code></pre>
+
+<h3>12.查看nimbus</h3>
+
+<p>执行下面命令确定nimbus.host</p>
+
+<pre><code>cat ~/.storm/storm.yaml | grep nimbus.host  
+</code></pre>
+
+<h3>13.提交Topology</h3>
+
+<p>注意nimbus.host就是上面查询的nimbus服务器</p>
+
+<pre><code>storm jar ./lib/storm-starter-0.0.1-SNAPSHOT.jar storm.starter.WordCountTopology WordCountTopology -c nimbus.host=10.0.1.253
+</code></pre>
+
+<h3>14.Storm监控</h3>
+
+<p>看一下storm的UI监控界面（nimbus.host:7070），可以看见刚刚提交的wordcountTopology</p>
+
+<pre><code>http://nimbus.host:7070/
+</code></pre>
+
+<h3>15.YARN-Storm Client</h3>
+
+<p>现在Storm作为一个应用部署在YARN上，后面所有Storm集群的控制都可以通过YARN客户端命令来完成，下面简单介绍一下。构建一个Storm的集群命令</p>
+
+<pre><code>storm-yarn launch &lt;storm-yarn-config&gt;  
+</code></pre>
+
+<p>其中，&lt;storm-yarn-config>是Storm的配置信息，包括启动Supervisor个数，Storm ApplicationMaster占用的内存等。</p>
+
+<p>启动Storm后，可以通过下面的命令来控制Storm：</p>
+
+<pre><code>storm-yarn [command] –appId [appId] –output [file] [–supervisors [n]]
+</code></pre>
+
+<p>其中，command为具体命令，具体参见下面两张表，参数 –appId 为启动的Storm在YARN中的应用程序ID，通过YANR的集群管理界面可以看见，-Supervisors为需要增加的Supervisor服务个数，该参数只对命令addSupervisors有效。
+例如我们现在增加2个Supervisors，命令如下：</p>
+
+<pre><code>storm-yarn addSupervisors -appId application_1399464020057_0006 -supervisors 2
+</code></pre>
+
+<p>输入storm-yarn查看所有命令</p>
+
+<h3>16.关闭Storm on yarn集群</h3>
+
+<pre><code>storm-yarn shutdown –appId [applicationId]
+</code></pre>
+
+<h2>参考</h2>
+
+<p><a href="http://dongxicheng.org/mapreduce-nextgen/storm-on-yarn/">http://dongxicheng.org/mapreduce-nextgen/storm-on-yarn/</a></p>
+
+<p><a href="http://www.geedoo.info/storm-on-yarn-platform-to-build.html">http://www.geedoo.info/storm-on-yarn-platform-to-build.html</a></p>
+
+<p><a href="http://blog.csdn.net/weijonathan/article/details/17762477">http://blog.csdn.net/weijonathan/article/details/17762477</a></p>
+
+<p><a href="https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/">https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/</a></p>
+
+<p><a href="http://yzprofile.me/2013/04/25/storm-tutorial.html">http://yzprofile.me/2013/04/25/storm-tutorial.html</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Findhy</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-17T06:37:52+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/hadoop/'>hadoop</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/" title="Previous Post: Hadoop 2.2.0-cdh5.0.0-beta-2安装说明">&laquo; Hadoop 2.2.0-cdh5.0.0-beta-2安装说明</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/17/nginx-on-linux/" title="Next Post: Nginx在Linux上的安装和配置">Nginx在Linux上的安装和配置 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/03/test-blog-move/">Test_blog_move</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/18/kafka/">Kafka介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/17/nginx-on-linux/">Nginx在Linux上的安装和配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN安装说明</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2安装说明</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/14/titan-graph-db/">Titan图数据库介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/21/big-data-business/">大数据时代下的商机</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/17/storm/">Storm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/23/how-do-design/">「写给大家的设计书」</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/">Oracle DBA如何转型到Hadoop平台</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/20/yarn/">YARN，Hadoop平台的操作系统</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/16/io/">存储系统-I/O</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/">A Hackable Text Editor for the 21st Century</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/24/how-to-become-a-hacker/">How to Become a Hacker</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Findhy -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'findhy';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://findhy.com/blog/2014/05/17/storm-on-yarn/';
+        var disqus_url = 'http://findhy.com/blog/2014/05/17/storm-on-yarn/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

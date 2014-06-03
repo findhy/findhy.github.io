@@ -1,0 +1,1461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Findhy]]></title>
+  <link href="http://findhy.com/atom.xml" rel="self"/>
+  <link href="http://findhy.com/"/>
+  <updated>2014-06-03T21:18:21+08:00</updated>
+  <id>http://findhy.com/</id>
+  <author>
+    <name><![CDATA[Findhy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Test_blog_move]]></title>
+    <link href="http://findhy.com/blog/2014/06/03/test-blog-move/"/>
+    <updated>2014-06-03T21:17:39+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/03/test-blog-move</id>
+    <content type="html"><![CDATA[<p>test_blog_move</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Protocol Buffers vs Avro vs Thrift]]></title>
+    <link href="http://findhy.com/blog/2014/05/18/protocol-buffers/"/>
+    <updated>2014-05-18T15:53:37+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/18/protocol-buffers</id>
+    <content type="html"><![CDATA[<p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
+
+<h3>1.RPC模型</h3>
+
+<p>一个简单的RPC调用模型如下图所示：<br/>
+<img src="http://findhy.com/images/rpc_1.png"></p>
+
+<p>当我们在选型RPC框架的时候需要关注的几个核心问题是：</p>
+
+<ul>
+<li>传输的协议和数据（JSON、XML等）是什么？</li>
+<li>如何高效的数据存储和传输？</li>
+<li>服务器端处理请求的方式？</li>
+</ul>
+
+
+<h3>2.不建议的方案</h3>
+
+<ul>
+<li>SOAP：基于XML，传输的数据太多</li>
+<li>CORBA：多度设计而且重量级，<a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a></li>
+<li>DCOM, COM+ :主要用于windows客户端程序</li>
+<li>HTTP/JSON/XML/Plain Text：基于HTTP协议的，这种在简单的场景下是可以用的，像hessian，但缺点是缺乏更复杂的协议描述，只能传输简单的对象，而且JSON/XML都太重了</li>
+</ul>
+
+
+<h3>3.建议方案</h3>
+
+<ul>
+<li>Protocol Buffers</li>
+<li>Apache Thrift</li>
+<li>Apache Avro</li>
+<li>Message Pack</li>
+<li>kryo</li>
+<li>BSON</li>
+</ul>
+
+
+<p>上面这些序列化框架共同的特点的是：有接口描述（IDL）、性能较高、版本控制和基于二进制的数据传输。下面重点介绍前三个。</p>
+
+<!--more-->
+
+
+<h3>4.Protocol Buffers</h3>
+
+<ul>
+<li>来源Google，于2001年开始设计，2008年开源</li>
+<li>非常稳定，大量运用在Google的生产环境中</li>
+<li>目前支持四种语言：C++, Java, Python, and JavaScript</li>
+<li><a href="https://code.google.com/p/protobuf/">https://code.google.com/p/protobuf/</a></li>
+</ul>
+
+
+<h3>5.Apache Thrift</h3>
+
+<ul>
+<li>由Google-X实验室的工程师于2007年设计，后来主要用于Facebook内部项目，现在为apache的开源项目</li>
+<li>旨在成为下一代的PB（更加全面的功能和支持更多的语言）</li>
+<li>支持更多语言，包括：C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#,
+Cocoa, JavaScript, Node.js, Smalltalk, OCaml and Delphi等</li>
+<li>IDL描述语言要比PB更简洁</li>
+<li>提供一个RPC调用栈</li>
+<li><a href="http://thrift.apache.org/">http://thrift.apache.org/</a></li>
+</ul>
+
+
+<h3>6.Apache Avro</h3>
+
+<ul>
+<li>Avro是Hadoop的作者Doug Cutting写的另外一个RPC框架</li>
+<li>支持序列化为JSON或者二进制</li>
+<li>支持从protobufs和thrift读写数据</li>
+<li>支持语言：Java, C, C++, C#, Python, Ruby</li>
+<li><a href="http://avro.apache.org/">http://avro.apache.org/</a></li>
+</ul>
+
+
+<h3>7.传输数据大小比较</h3>
+
+<p><img src="http://findhy.com/images/rpc_2.png"></p>
+
+<p>Thrift-TBinaryProtocol &ndash; 没有经过压缩的二进制协议，比文本协议要快，但是很难调试<br/>
+Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
+
+<h3>8.哪些项目在使用Thrift？</h3>
+
+<ul>
+<li>Facebook</li>
+<li>Cassandra project</li>
+<li>Hadoop supports access to its HDFS API through Thrift bindings</li>
+<li>HBase leverages Thrift for a cross-language API</li>
+<li>Hypertable leverages Thrift for a cross-language API since v0.9.1.0a</li>
+<li>LastFM</li>
+<li>DoAT</li>
+<li>ThriftDB</li>
+<li>Scribe</li>
+<li>Evernote uses Thrift for its public API.</li>
+<li>Junkdepot</li>
+</ul>
+
+
+<h3>9.哪些项目在使用Protocol Buffers？</h3>
+
+<ul>
+<li>Google</li>
+<li>ActiveMQ uses the protobuf for Message store</li>
+<li>Netty (protobuf-rpc)</li>
+</ul>
+
+
+<h3>10.不同框架测试结果比较</h3>
+
+<p><a href="https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2">https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2</a></p>
+
+<h3>11.总结</h3>
+
+<ul>
+<li>其实大部分场景下，基于HTTP的Hessian或者阿里巴巴的Dubbo完全可以满足需求</li>
+<li>如果追求更高的性能，像高并发的游戏服务器端，可以选择Protocol Buffers、Avro或Thrift</li>
+<li>Protocol Buffers和Thrift的稳定性要更好，大量运用于Google和Facebook的生产环境中</li>
+<li>Thrift相比Protocol Buffers支持更多的语言，框架逻辑更加清晰，易于定制扩展，性能与Protocol Buffers不相上下，目前来说应该是最佳的选择</li>
+<li>Avro的优势在于Schema动态加载功能，而且Avro更适合于数据交换及存储的通用工具和平台</li>
+<li>Avro的性能不输Protocol Buffers和Thrift，但缺点是发展时间较短，没有经过太多项目的验证</li>
+</ul>
+
+
+<h3>12.参考</h3>
+
+<p><a href="http://www.slideshare.net/ChicagoHUG/avro-chug-20120416">http://www.slideshare.net/ChicagoHUG/avro-chug-20120416</a>
+<a href="http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro">http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro</a>
+<a href="http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  ">http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  </a>
+<a href="https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de">https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de</a>  <br/>
+<a href="http://www.alidata.org/archives/1307">http://www.alidata.org/archives/1307</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kafka介绍]]></title>
+    <link href="http://findhy.com/blog/2014/05/18/kafka/"/>
+    <updated>2014-05-18T10:25:44+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/18/kafka</id>
+    <content type="html"><![CDATA[<p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
+Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
+
+<ul>
+<li>高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。</li>
+<li>可扩展：集群设计可以保证弹性扩展而不停机</li>
+<li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
+<li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
+</ul>
+
+
+<h4>Kafka的部署结构图</h4>
+
+<p><img src="http://findhy.com/images/kafka.png"></p>
+
+<h4>为什么要用Kafka</h4>
+
+<ul>
+<li>统一消息入口<br/>
+Storm流数据平台需要处理的数据多种多样，如果直接用Storm来接入，会需要写很多的接口，这样必然不是最佳的解决方案，加了一层Kafka之后，Storm只需要处理来自Kafka的数据，由Kafka对接数据源。</li>
+<li>消息持久化<br/>
+直接用Storm或者其它MQ会发生数据丢失的可能，而Kafka是把数据持久化到磁盘上面而且会有复制备份，所以不会发生数据丢失。</li>
+<li>支持分布式<br/>
+支持分布式保证了架构的健壮性、弹性扩展和容错。</li>
+</ul>
+
+
+<p>Kafka在数据平台中的位置如图：<br/>
+<img src="http://findhy.com/images/kafka_hadoop.png"></p>
+
+<p>Kafka作为消息中间件，为Storm提供数据来源。<br/>
+Zookeeper为Kafka、Storm、HBase提供分布式协调服务，所以单独部署，不用HBase自带的Zookeeper。<br/>
+HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Nginx在Linux上的安装和配置]]></title>
+    <link href="http://findhy.com/blog/2014/05/17/nginx-on-linux/"/>
+    <updated>2014-05-17T07:12:34+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/17/nginx-on-linux</id>
+    <content type="html"><![CDATA[<p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
+
+<h3>1.配置nginx的yum源</h3>
+
+<pre><code>sudo vi /etc/yum.repos.d/nginx.repo
+</code></pre>
+
+<p>添加下面的内容：</p>
+
+<pre><code>[nginx]
+name=nginx repo 
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ 
+gpgcheck=0 
+enabled=1
+</code></pre>
+
+<p>保存退出</p>
+
+<h3>2.安装</h3>
+
+<pre><code>sudo yum install nginx
+</code></pre>
+
+<h3>3.启动Nginx</h3>
+
+<pre><code>sudo /etc/init.d/nginx start
+</code></pre>
+
+<p>访问：<a href="http://localhost">http://localhost</a></p>
+
+<h3>4.其它命令</h3>
+
+<pre><code>停止nginx服务：# /etc/init.d/nginx stop 
+启动nginx服务：# /etc/init.d/nginx start 
+编辑nginx配置文件：# vi /etc/nginx/nginx.conf
+</code></pre>
+
+<h3>5.反向代理配置</h3>
+
+<pre><code>sudo vi /etc/nginx/nginx.conf
+</code></pre>
+
+<p>配置：</p>
+
+<pre><code>upstream rexster {
+    server 127.0.0.1:8182 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+upstream yarn {
+    server 127.0.0.1:8089 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+upstream storm {
+    server 127.0.0.1:7070 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+server {
+    listen 80;
+    server_name yarn.xxx.com;
+    location / {
+        proxy_pass http://yarn;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    # redirect server error pages to the static page /50x.html
+}
+server {
+    listen 80;
+    server_name storm.xxx.com;
+    location / {
+        proxy_pass http://storm;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    # redirect server error pages to the static page /50x.html
+}
+</code></pre>
+
+<p>输入域名测试，跳转成功</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Storm-on-YARN安装说明]]></title>
+    <link href="http://findhy.com/blog/2014/05/17/storm-on-yarn/"/>
+    <updated>2014-05-17T06:37:52+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/17/storm-on-yarn</id>
+    <content type="html"><![CDATA[<p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
+
+<p>环境说明</p>
+
+<pre><code>master 10.0.1.252  
+slave1 10.0.1.252  
+slave2 10.0.1.252  
+</code></pre>
+
+<p>软件版本</p>
+
+<pre><code>https://github.com/anfeng/storm-yarn/archive/master.zip  
+Storm-0.9.0-win21  
+zookeeper-3.4.5-cdh5.0.0-beta-2  
+apache-maven-3.1.0  
+</code></pre>
+
+<h2>Zookeeper集群搭建</h2>
+
+<hr />
+
+<p>Storm需要使用zookeeper来协调整个集群，但是storm并不用zookeeper来传递消息，所以zookeeper的负载很低，大多数情况下，单个节点的zookeeper就够了，所以我们这里就只部署一台机子的zookeeper，后面再扩展到集群。</p>
+
+<h3>1.安装JDK</h3>
+
+<p>前面Hadoop集群已经安装了，只要保证JDK版本在1.6以上就可以了。</p>
+
+<h3>2.下载和解压zookeeper安装包</h3>
+
+<p>因为我们用的是CDH的Hadoop发行版，所以这里zookeeper也用CDH的，到这里下载：</p>
+
+<pre><code>wget http://archive-primary.cloudera.com/cdh5/cdh/5/zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<p>解压</p>
+
+<pre><code>tar –zxvf zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<h3>3.修改zoo.cfg配置文件</h3>
+
+<p>进入zookeeper安装目录/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2/conf，将zoo_sample.cfg重命名为zoo.cfg</p>
+
+<pre><code>mv zoo_sample.cfg zoo.cfg
+</code></pre>
+
+<p>修改zoo.cfg文件，增加：</p>
+
+<pre><code>tickTime=2000
+dataDir=/home/hadoop/zookeeper-data
+clientPort=2181
+initLimit=5
+syncLimit=2
+server.1=master:2888:3888
+</code></pre>
+
+<p>创建这个目录：/home/hadoop/zookeeper-data</p>
+
+<h3>4.修改myid</h3>
+
+<p>在/home/hadoop/zookeeper-data目录下创建文件myid，里面内容为server的ID，这里写：1</p>
+
+<h3>5.配置zookeeper的环境变量</h3>
+
+<p>vi /etc/profile，增加：</p>
+
+<pre><code>export ZOOKEEPER_HOME=/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2
+export PATH=$PATH:$ZOOKEEPER_HOME/bin
+
+source /etc/profile
+</code></pre>
+
+<h3>6.启动zookeeper</h3>
+
+<pre><code>./bin/zkServer.sh start
+</code></pre>
+
+<h3>7.测试Zookeeper</h3>
+
+<p>测试Zookeeper客户端是否可用</p>
+
+<pre><code>./bin/zkCli.sh -server 127.0.0.1:2181
+</code></pre>
+
+<p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
+
+<h2>Storm-on-YARN搭建</h2>
+
+<hr />
+
+<h3>1.安装maven</h3>
+
+<p>下载maven安装包</p>
+
+<pre><code>wget http://archive.apache.org/dist/maven/maven-3/3.1.0/binaries/apache-maven-3.1.0-bin.tar.gz
+</code></pre>
+
+<p>解压</p>
+
+<pre><code>tar –zxvf apache-maven-3.1.0-bin.tar.gz
+</code></pre>
+
+<h3>2.配置环境变量</h3>
+
+<pre><code>vi /etc/profile
+</code></pre>
+
+<p>添加：</p>
+
+<pre><code>export MAVEN_HOME=/home/hadoop/apache-maven-3.1.0
+export PATH=$PATH:$MAVEN_HOME/bin
+</code></pre>
+
+<p>使环境变量生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre>
+
+<p>测试</p>
+
+<pre><code>mvn –version
+</code></pre>
+
+<h3>3.下载storm on yarn</h3>
+
+<p>这里下载@anfeng的分支版本（针对Hadoop2.2.0的），而不是官方版本。</p>
+
+<pre><code>wget https://github.com/anfeng/storm-yarn/archive/master.zip
+</code></pre>
+
+<p>解压：</p>
+
+<pre><code>unzip master
+</code></pre>
+
+<p>解压完了会生成一个storm-yarn-master目录</p>
+
+<h3>4.编译storm on yarn</h3>
+
+<p>进入storm-yarn-master目录：</p>
+
+<pre><code>cd storm-yarn-master
+</code></pre>
+
+<p>编译（跳过测试）：</p>
+
+<pre><code>mvn package –DskipTests
+</code></pre>
+
+<h3>5.在HDFS中创建对应Storm目录</h3>
+
+<p>在HDFS中创建目录：</p>
+
+<pre><code>/lib/storm/0.9.0-wip21
+</code></pre>
+
+<h3>6.将storm.zip放进去（注意和你自己的目录对应）</h3>
+
+<pre><code>./bin/hadoop fs -put /home/hadoop/storm-yarn-master/lib/storm.zip /lib/storm/0.9.0-wip21/
+</code></pre>
+
+<h3>7.解压Storm</h3>
+
+<p>将/home/hadoop/storm-yarn-master/lib /storm-0.9.0-wip21.zip
+解压到/home/hadoop/storm-yarn-master这个目录下</p>
+
+<h3>8.修改环境变量</h3>
+
+<pre><code>export STORM_HOME=/home/hadoop/storm-yarn-master
+export PATH=$PATH:$STORM_HOME/storm-0.9.0-wip21/bin
+export PATH=$PATH:$STORM_HOME/bin
+</code></pre>
+
+<p>环境变量生效：</p>
+
+<pre><code>source /etc/profile
+</code></pre>
+
+<h3>9.修改storm.yaml</h3>
+
+<p>修改/home/hadoop/storm-yarn-master/storm-0.9.0-wip21/conf/storm.yaml配置文件，增加zookeeper的配置：</p>
+
+<pre><code>storm.zookeeper.servers:
+  - "master"
+</code></pre>
+
+<h3>10.启动storm on yarn环境</h3>
+
+<p>执行下面命令启动：</p>
+
+<pre><code>storm-yarn launch storm.yaml
+</code></pre>
+
+<p>如果报错：yarn is not installed
+设置Hadoop和YARN的环境变量（如果已经设置过了请跳过这一步）</p>
+
+<pre><code>export HADOOP_DEV_HOME=/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+export PATH=$PATH:$HADOOP_DEV_HOME/bin
+export PATH=$PATH:$HADOOP_DEV_HOME/sbin
+export HADOOP_MAPARED_HOME=${HADOOP_DEV_HOME}
+export HADOOP_COMMON_HOME=${HADOOP_DEV_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_DEV_HOME}
+export YARN_HOME=${HADOOP_DEV_HOME}
+export HADOOP_CONF_DIR=${HADOOP_DEV_HOME}/etc/hadoop
+export HDFS_CONF_DIR=${HADOOP_DEV_HOME}/etc/hadoop
+export YARN_CONF_DIR=${HADOOP_DEV_HOME}/etc/Hadoop
+
+source /etc/profile
+</code></pre>
+
+<p>再试一下</p>
+
+<pre><code>storm-yarn launch storm.yaml
+</code></pre>
+
+<p>因为storm是作为一个yarn程序运行在集群上的，所以在YARN的集群管理页面中会有一个AppId</p>
+
+<h3>11.复制storm.yaml</h3>
+
+<p>创建这个目录：~/.storm
+执行（appid换成上面YARN管理界面中看到的appid）：</p>
+
+<pre><code>storm-yarn getStormConfig -appId application_1399464020057_0006  -output ~/.storm/storm.yaml
+</code></pre>
+
+<h3>12.查看nimbus</h3>
+
+<p>执行下面命令确定nimbus.host</p>
+
+<pre><code>cat ~/.storm/storm.yaml | grep nimbus.host  
+</code></pre>
+
+<h3>13.提交Topology</h3>
+
+<p>注意nimbus.host就是上面查询的nimbus服务器</p>
+
+<pre><code>storm jar ./lib/storm-starter-0.0.1-SNAPSHOT.jar storm.starter.WordCountTopology WordCountTopology -c nimbus.host=10.0.1.253
+</code></pre>
+
+<h3>14.Storm监控</h3>
+
+<p>看一下storm的UI监控界面（nimbus.host:7070），可以看见刚刚提交的wordcountTopology</p>
+
+<pre><code>http://nimbus.host:7070/
+</code></pre>
+
+<h3>15.YARN-Storm Client</h3>
+
+<p>现在Storm作为一个应用部署在YARN上，后面所有Storm集群的控制都可以通过YARN客户端命令来完成，下面简单介绍一下。构建一个Storm的集群命令</p>
+
+<pre><code>storm-yarn launch &lt;storm-yarn-config&gt;  
+</code></pre>
+
+<p>其中，&lt;storm-yarn-config>是Storm的配置信息，包括启动Supervisor个数，Storm ApplicationMaster占用的内存等。</p>
+
+<p>启动Storm后，可以通过下面的命令来控制Storm：</p>
+
+<pre><code>storm-yarn [command] –appId [appId] –output [file] [–supervisors [n]]
+</code></pre>
+
+<p>其中，command为具体命令，具体参见下面两张表，参数 –appId 为启动的Storm在YARN中的应用程序ID，通过YANR的集群管理界面可以看见，-Supervisors为需要增加的Supervisor服务个数，该参数只对命令addSupervisors有效。
+例如我们现在增加2个Supervisors，命令如下：</p>
+
+<pre><code>storm-yarn addSupervisors -appId application_1399464020057_0006 -supervisors 2
+</code></pre>
+
+<p>输入storm-yarn查看所有命令</p>
+
+<h3>16.关闭Storm on yarn集群</h3>
+
+<pre><code>storm-yarn shutdown –appId [applicationId]
+</code></pre>
+
+<h2>参考</h2>
+
+<p><a href="http://dongxicheng.org/mapreduce-nextgen/storm-on-yarn/">http://dongxicheng.org/mapreduce-nextgen/storm-on-yarn/</a></p>
+
+<p><a href="http://www.geedoo.info/storm-on-yarn-platform-to-build.html">http://www.geedoo.info/storm-on-yarn-platform-to-build.html</a></p>
+
+<p><a href="http://blog.csdn.net/weijonathan/article/details/17762477">http://blog.csdn.net/weijonathan/article/details/17762477</a></p>
+
+<p><a href="https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/">https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/</a></p>
+
+<p><a href="http://yzprofile.me/2013/04/25/storm-tutorial.html">http://yzprofile.me/2013/04/25/storm-tutorial.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2安装说明]]></title>
+    <link href="http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/"/>
+    <updated>2014-05-14T23:08:37+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install</id>
+    <content type="html"><![CDATA[<p>环境说明</p>
+
+<pre><code>master 10.0.1.252  
+slave1 10.0.1.252  
+slave2 10.0.1.252  
+</code></pre>
+
+<p>软件版本</p>
+
+<pre><code>Hadoop 2.2.0-cdh5.0.0-beta-2  
+JDK 1.7.0_45
+</code></pre>
+
+<h2>开始安装</h2>
+
+<hr />
+
+<h3>1.创建用户</h3>
+
+<pre><code>useradd hadoop
+</code></pre>
+
+<h3>2.修改密码</h3>
+
+<pre><code>passwd hadoop
+</code></pre>
+
+<h3>3.修改HOSTS文件</h3>
+
+<pre><code>10.0.1.252 master  
+10.0.1.253 slave1  
+10.0.1.254 slave2  
+</code></pre>
+
+<h3>4.节点互信配置</h3>
+
+<p>在每个节点执行</p>
+
+<pre><code>ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub &gt;~/.ssh/authorized_keys
+</code></pre>
+
+<p>更改权限</p>
+
+<pre><code>[hadoop@master .ssh]$ chmod 600 authorized_keys
+[hadoop@master ~]$ chmod 700 .ssh/
+</code></pre>
+
+<p>在master节点操作<br/>
+拷贝其它节点的公钥到authorized_keys文件中</p>
+
+<pre><code>[hadoop@master .ssh]$ ssh hadoop@slave1 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
+[hadoop@master .ssh]$ ssh hadoop@slave2 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
+</code></pre>
+
+<p>然后将公钥拷贝到其它节点</p>
+
+<pre><code>[hadoop@master .ssh]$ scp authorized_keys hadoop@slave1:~/.ssh/
+[hadoop@master .ssh]$ scp authorized_keys hadoop@slave2:~/.ssh/
+</code></pre>
+
+<p>测试一下，不需要密码就可以访问</p>
+
+<pre><code>ssh master  
+Ssh slave1  
+Ssh slave2  
+</code></pre>
+
+<p>首次会让输入yes，后面就可以直接登录了</p>
+
+<h3>5.JDK安装</h3>
+
+<p>用java –version检查是否安装了JDK，如果没有安装，则参照下面的连接安装：
+<a href="https://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_oracle_jdk_installation.html#topic_29_1">https://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_oracle_jdk_installation.html#topic_29_1</a></p>
+
+<h3>6.载CDH安装包</h3>
+
+<p>下载解压：<a href="http://archive-primary.cloudera.com/cdh5/cdh/5/hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz">http://archive-primary.cloudera.com/cdh5/cdh/5/hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz</a></p>
+
+<pre><code>tar –zxvf hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz
+</code></pre>
+
+<h3>7.修改hadoop-env.sh</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/hadoop-env.sh</p>
+
+<pre><code>export JAVA_HOME=/usr/java/jdk1.7.0_45
+</code></pre>
+
+<h3>8.修改mapred-site.xml</h3>
+
+<p>在${HADOOP_HOME}/etc/hadoop/目录中，将mapred-site.xml.templat重命名成mapred-site.xml：</p>
+
+<pre><code>mv mapred-site.xml.template mapred-site.xml
+</code></pre>
+
+<p>并添加以下内容：</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+&lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt; 
+</code></pre>
+
+<h3>9.修改core-site.xml</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/core-site.xml</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;fs.default.name&lt;/name&gt;
+&lt;value&gt;hdfs://master:8020&lt;/value&gt;
+&lt;final&gt;true&lt;/final&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h3>10.修改yarn-site.xml</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/yarn-site.xml：</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
+&lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h3>11.修改hdfs-site.xml</h3>
+
+<p>修改${HADOOP_HOME}/etc/hadoop/hdfs-site.xml</p>
+
+<pre><code>&lt;property&gt;
+&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+&lt;value&gt;/home/hadoop/dfs/yarn/name&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+&lt;value&gt;/home/hadoop/dfs/yarn/data&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;dfs.replication&lt;/name&gt;
+&lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;dfs.permissions&lt;/name&gt;
+&lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+</code></pre>
+
+<h3>12.修改slaves文件</h3>
+
+<p>在slaves文件中添加你的slave节点：</p>
+
+<pre><code>slave1
+slave2
+</code></pre>
+
+<h3>13.修改masters文件</h3>
+
+<p>在masters文件中添加你的master节点：</p>
+
+<pre><code>master
+</code></pre>
+
+<h3>14.将安装包复制到其它节点</h3>
+
+<pre><code>scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave1:/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
+</code></pre>
+
+<p><em>上面配置文件对应的目录在每个节点都需要提前创建好</em></p>
+
+<h3>15.初始化HDFS</h3>
+
+<pre><code>./bin/hadoop namenode –format
+</code></pre>
+
+<h3>16.启动HDFS</h3>
+
+<pre><code>./sbin/start-dfs.sh
+</code></pre>
+
+<h3>17.启动YARN</h3>
+
+<pre><code>./sbin/start-yarn.sh
+</code></pre>
+
+<h3>18.测试集群</h3>
+
+<p>自己创建一个文件put到HDFS的/test/in目录下面
+执行：</p>
+
+<pre><code>./bin/hadoop jar share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.2.0-cdh5.0.0-beta-2.jar wordcount /test/in/ /test/out/wordcountr
+</code></pre>
+
+<h3>19.YARN管理地址</h3>
+
+<p><a href="http://master:8089/cluster/cluster">http://master:8089/cluster/cluster</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Titan图数据库介绍]]></title>
+    <link href="http://findhy.com/blog/2014/05/14/titan-graph-db/"/>
+    <updated>2014-05-14T22:35:18+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/14/titan-graph-db</id>
+    <content type="html"><![CDATA[<p>Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：</p>
+
+<ul>
+<li>弹性和性能的线性扩展</li>
+<li>容错性</li>
+<li>多数据中心的高可用性和热备份</li>
+<li>支持事务的ACID和最终一致性</li>
+<li>支持多种不同的后端存储<br/>
+<em>Apache Cassandra（分布式）<br/>
+Apache HBase（分布式）<br/>
+Oracle BerkeleyDB（本地的）<br/>
+Persistit（本地）</em></li>
+<li>支持多种后端索引  <br/>
+<em>ElasticSearch<br/>
+Apache Lucene</em></li>
+<li>与图形处理栈TinkerPop原生集成   <br/>
+  <em>图查询语言Gremlin<br/>
+  对象到图的映射器Frames<br/>
+  图服务器Rexster<br/>
+  标准图API：Blueprints</em></li>
+<li>Apache2 license 开源协议</li>
+</ul>
+
+
+<p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
+
+<p>更多关于Titan的文档可以看<a href="https://github.com/thinkaurelius/titan/wiki">这里</a></p>
+
+<p>可以从<a href="https://github.com/thinkaurelius/titan/wiki/Getting-Started">这里</a>开始</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大数据时代下的商机]]></title>
+    <link href="http://findhy.com/blog/2014/04/21/big-data-business/"/>
+    <updated>2014-04-21T22:57:30+08:00</updated>
+    <id>http://findhy.com/blog/2014/04/21/big-data-business</id>
+    <content type="html"><![CDATA[<p>大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？</p>
+
+<blockquote><p>Q：<strong>大数据时代有哪些商业模式？</strong></p></blockquote>
+
+<h3>数据租售</h3>
+
+<p>直接卖数据API，代表公司有twitter。</p>
+
+<h3>数据服务</h3>
+
+<p>卖数据产品、数据分析结果，代表公司有BAT。这个是目前最流行也是最容易变现的模式，而且同样的数据可以打包成不同服务和产品出售，转化率很高，下面有例子，但是前提是你要有数据。</p>
+
+<h3>数据技术</h3>
+
+<p>提供大数据技术支持，代表公司有cloudera。</p>
+
+<!--more-->
+
+
+<p></p>
+
+<blockquote><p>Q：<strong>有哪些大数据产品？</strong></p></blockquote>
+
+<h3>腾讯</h3>
+
+<p><a href="http://mta.qq.com/">腾讯云分析</a></p>
+
+<h3>百度</h3>
+
+<p><a href="http://index.baidu.com/">百度指数</a></p>
+
+<p><a href="http://data.baidu.com/">百度数据研究中心</a></p>
+
+<p><a href="http://sinan.baidu.com/">百度司南</a></p>
+
+<h3>阿里巴巴</h3>
+
+<p><a href="http://www.umeng.com/apps/4100008dd65107258db11ef4/reports">友盟</a></p>
+
+<p><a href="mofang.taobao.com">数据魔方</a></p>
+
+<p><a href="wo.taobao.com">淘宝情报</a></p>
+
+<p><a href="shu.taobao.com">淘宝指数</a></p>
+
+<p><a href="http://fuwu.taobao.com/">淘宝卖家服务</a></p>
+
+<h3>其它</h3>
+
+<p><a href="https://analytics.talkingdata.net/webpage/Summarize.jsp">腾云天下游戏数据分析</a></p>
+
+<blockquote><p>Q：<strong>我没有数据怎么办？</strong></p></blockquote>
+
+<p>利用开放数据，现在很多数据（特别是政府的）都向外开放，你可以基于这些数据来做一些分析产品，或者和直接卖数据的公司合作。</p>
+
+<h3>可以挖掘的行业和数据</h3>
+
+<ul>
+<li>互联网数据</li>
+<li>电信行业数据</li>
+<li>航空数据</li>
+<li>医疗数据</li>
+<li>房地产</li>
+<li>零售业和服务业</li>
+<li>媒体和娱乐</li>
+<li>人口统计</li>
+<li>商业和金融</li>
+<li>体育和游戏</li>
+<li>天气</li>
+<li>卫生和健康</li>
+<li>政府</li>
+<li>地理信息数据</li>
+</ul>
+
+
+<h3>开放数据资源</h3>
+
+<p>AWS公共数据集：<a href="http://aws.amazon.com/cn/publicdatasets/">http://aws.amazon.com/cn/publicdatasets/</a></p>
+
+<p>数据堂：<a href="http://www.datatang.com/">http://www.datatang.com/</a></p>
+
+<p>MLcomp：<a href="http://mlcomp.org/">http://mlcomp.org/</a></p>
+
+<p>个人收集的数据集合（各个类型比较杂）：<a href="https://delicious.com/pskomoroch/dataset">https://delicious.com/pskomoroch/dataset</a></p>
+
+<p>quora的回答比较丰富：<a href="http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public">http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public</a></p>
+
+<p>气候监测数据集：<a href="http://cdiac.ornl.gov/ftp/ndp026b">http://cdiac.ornl.gov/ftp/ndp026b</a>
+几个实用的测试数据集下载的网站：
+<a href="http://www.cs.toronto.edu/~roweis/data.html">http://www.cs.toronto.edu/~roweis/data.html</a>
+<a href="http://www.cs.toronto.edu/~roweis/data.html">http://www.cs.toronto.edu/~roweis/data.html</a>
+<a href="http://kdd.ics.uci.edu/summary.task.type.html">http://kdd.ics.uci.edu/summary.task.type.html</a>
+<a href="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/">http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/</a>
+<a href="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/">http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/</a>
+<a href="http://www.phys.uni.torun.pl/~duch/software.html">http://www.phys.uni.torun.pl/~duch/software.html</a></p>
+
+<p>在下面的网址可以找到reuters数据集<a href="http://www.research.att.com/~lewis/reuters21578.html">http://www.research.att.com/~lewis/reuters21578.html</a></p>
+
+<p>以下网址上有各种数据集：
+<a href="http://kdd.ics.uci.edu/summary.data.type.html">http://kdd.ics.uci.edu/summary.data.type.html</a></p>
+
+<p>进行文本分类，还有一个数据集是可以用的，即rainbow的数据集
+<a href="http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html">http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html</a></p>
+
+<p>找了很多测试数据集,写论文的同志们肯定需要的,至少能用来检验算法的效果
+可能有一些不能访问,但是总有能访问的吧：</p>
+
+<p>UCI收集的机器学习数据集：
+<a href="ftp://pami.sjtu.edu.cn/">ftp://pami.sjtu.edu.cn/</a>
+<a href="http://www.ics.uci.edu/~mlearn//MLRepository.htm">http://www.ics.uci.edu/~mlearn//MLRepository.htm</a>
+statlib
+<a href="http://liama.ia.ac.cn/SCILAB/scilabindexgb.htm">http://liama.ia.ac.cn/SCILAB/scilabindexgb.htm</a>
+<a href="http://lib.stat.cmu.edu/">http://lib.stat.cmu.edu/</a></p>
+
+<p>样本数据库：
+<a href="http://kdd.ics.uci.edu/">http://kdd.ics.uci.edu/</a>
+<a href="http://www.ics.uci.edu/~mlearn/MLRepository.html">http://www.ics.uci.edu/~mlearn/MLRepository.html</a></p>
+
+<p>关于基金的数据挖掘的网站：
+<a href="http://www.gotofund.com/index.asp">http://www.gotofund.com/index.asp</a>
+<a href="http://lans.ece.utexas.edu/~strehl/">http://lans.ece.utexas.edu/~strehl/</a></p>
+
+<p>reuters数据集：
+<a href="http://www.research.att.com/~lewis/reuters21578.html">http://www.research.att.com/~lewis/reuters21578.html</a></p>
+
+<p>各种数据集：
+<a href="http://kdd.ics.uci.edu/summary.data.type.html">http://kdd.ics.uci.edu/summary.data.type.html</a>
+<a href="http://www.mlnet.org/cgi-bin/mlnetois.pl/?File=datasets.html">http://www.mlnet.org/cgi-bin/mlnetois.pl/?File=datasets.html</a>
+<a href="http://lib.stat.cmu.edu/datasets/">http://lib.stat.cmu.edu/datasets/</a>
+<a href="http://dctc.sjtu.edu.cn/adaptive/datasets/">http://dctc.sjtu.edu.cn/adaptive/datasets/</a>
+<a href="http://fimi.cs.helsinki.fi/data/">http://fimi.cs.helsinki.fi/data/</a>
+<a href="http://www.almaden.ibm.com/software/quest/Resources/index.shtml">http://www.almaden.ibm.com/software/quest/Resources/index.shtml</a>
+<a href="http://miles.cnuce.cnr.it/~palmeri/datam/DCI/">http://miles.cnuce.cnr.it/~palmeri/datam/DCI/</a></p>
+
+<p>进行文本分类&amp;WEB
+<a href="http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html">http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html</a>
+<a href="http://www.w3.org/TR/WD-logfile-960221.html">http://www.w3.org/TR/WD-logfile-960221.html</a>
+<a href="http://www.w3.org/Daemon/User/Config/Logging.html#AccessLog">http://www.w3.org/Daemon/User/Config/Logging.html#AccessLog</a>
+<a href="http://www.w3.org/1998/11/05/WC-workshop/Papers/bala2.html">http://www.w3.org/1998/11/05/WC-workshop/Papers/bala2.html</a>
+<a href="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/">http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/</a>
+<a href="http://www.web-caching.com/traces-logs.html">http://www.web-caching.com/traces-logs.html</a>
+<a href="http://www-2.cs.cmu.edu/webkb">http://www-2.cs.cmu.edu/webkb</a>
+<a href="http://www.cs.auc.dk/research/DP/tdb/TimeCenter/TimeCenterPublications/TR-75.pdf">http://www.cs.auc.dk/research/DP/tdb/TimeCenter/TimeCenterPublications/TR-75.pdf</a>
+<a href="http://www.cs.cornell.edu/projects/kddcup/index.html">http://www.cs.cornell.edu/projects/kddcup/index.html</a></p>
+
+<p>时间序列数据的网址：
+<a href="http://www.stat.wisc.edu/~reinsel/bjr-data/">http://www.stat.wisc.edu/~reinsel/bjr-data/</a></p>
+
+<p>apriori算法的测试数据：
+<a href="http://www.almaden.ibm.com/cs/quest/syndata.html">http://www.almaden.ibm.com/cs/quest/syndata.html</a></p>
+
+<p>数据生成器的链接：
+<a href="http://www.cse.cuhk.edu.hk/~kdd/data_collection.html">http://www.cse.cuhk.edu.hk/~kdd/data_collection.html</a>
+<a href="http://www.almaden.ibm.com/cs/quest/syndata.html">http://www.almaden.ibm.com/cs/quest/syndata.html</a></p>
+
+<p>癌症基因：
+<a href="http://www.broad.mit.edu/cgi-bin/cancer/datasets.cgi">http://www.broad.mit.edu/cgi-bin/cancer/datasets.cgi</a></p>
+
+<p>金融数据：
+<a href="http://lisp.vse.cz/pkdd99/Challenge/chall.htm">http://lisp.vse.cz/pkdd99/Challenge/chall.htm</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Storm]]></title>
+    <link href="http://findhy.com/blog/2014/04/17/storm/"/>
+    <updated>2014-04-17T22:54:04+08:00</updated>
+    <id>http://findhy.com/blog/2014/04/17/storm</id>
+    <content type="html"><![CDATA[<h1>使用场景</h1>
+
+<p>Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。</p>
+
+<p>下面五个特性保证了Storm实时处理的能力：</p>
+
+<ul>
+<li><strong>Fast</strong> &ndash; 快，每个节点每秒可以处理百万个100字节的消息</li>
+<li><strong>Scalable</strong> &ndash; 可扩展，这没得说</li>
+<li><strong>Fault-tolerant</strong> &ndash; 容错，如果workers进程死掉，Storm会自动重启。如果一个节点死掉，会在其它节点上重启workers进程</li>
+<li><strong>Reliable</strong> &ndash; 可靠性，Storm确保每个单元数据（tuple）会被处理最少一次，仅仅当消息处理失败才会发生通知</li>
+<li><strong>Easy to operate</strong> &ndash; 标准的配置适应于生产环境，一旦部署，Storm很容易操作。</li>
+</ul>
+
+
+<!--more-->
+
+
+<h1>Storm架构</h1>
+
+<p>一个Storm集群应该包含下面三类节点</p>
+
+<ul>
+<li><strong>Nimbus Node</strong> &ndash; master节点，相当于Hadoop集群的JobTracker，负责：Uploads computations for execution（不懂）、在集群中分发代码、负责在集群中启动workers进程、监控计算资源如果需要会重新分配workers进程</li>
+<li><strong>ZooKeeper Nodes</strong> &ndash; 负责协调Storm集群，当然也可以由YARN平台来管理</li>
+<li><strong>Supervisor Nodes</strong> &ndash; 通过Zookeeper或者YARN与Nimbus节点通信，根据Nimbus返回的消息来启动和停止workers进程</li>
+</ul>
+
+
+<p><img src="http://findhy.com/images/storm_0.png"></p>
+
+<p>通过下面5个关键点来理解Storm是如何处理数据的：</p>
+
+<ul>
+<li><strong>Tuples</strong> &ndash; 元素的有序列表，例如“4-tuple”可能是（7,1,3,7）</li>
+<li><strong>Streams</strong> &ndash; 一个没有边界的tuples序列</li>
+<li><strong>Spouts</strong> &ndash; 集群中传输的计算资源（例如 Twitter API）</li>
+<li><strong>Bolts</strong> &ndash; 处理输入输出流，可以：启动函数、过滤器、统计或合并数据，或访问数据库</li>
+<li><strong>Topologies</strong> &ndash; 由Spouts和Bolts组成的网络结构</li>
+</ul>
+
+
+<p><img src="http://findhy.com/images/storm_1.png"></p>
+
+<p>数据由spout输入，由bolt处理，然后存入Hadoop中。</p>
+
+<p>更多请访问<a href="http://zh.hortonworks.com/labs/storm/">这里</a></p>
+
+<p>可以从<a href="http://zh.hortonworks.com/hadoop-tutorial/processing-streaming-data-near-real-time-apache-storm/">这里</a>开始练习。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[「写给大家的设计书」]]></title>
+    <link href="http://findhy.com/blog/2014/03/23/how-do-design/"/>
+    <updated>2014-03-23T21:13:47+08:00</updated>
+    <id>http://findhy.com/blog/2014/03/23/how-do-design</id>
+    <content type="html"><![CDATA[<p>最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。</p>
+
+<blockquote><p>Q：<strong>我为什么要学设计，有啥用？</strong></p></blockquote>
+
+<p>很多行业都有专业的设计学科，如建筑设计、美术设计等。那非设计专业的人为什么要学点设计呢？首先是对设计的理解，我觉得设计就是：<strong>建立与外界连接的桥梁</strong>。连接第一个层次就是沟通顺畅或者别人可以理解你，第二个层次是让人爽心悦目和产生共鸣。</p>
+
+<p><strong>如果这样来理解设计，那我们无时无刻不在设计或者参与设计，如何设计公司网站的首页、如何设计博客、如何设计简历、如何设计你的名片，如何写邮件、写文章等等，这些都需要设计，因为我们需要通过它们来与外界沟通</strong>。</p>
+
+<p>网页设计中，怎么样做到让访问者既能够很直观的了解网站的主题和用途，并且愿意停留呢？Google的首页是一个很好的例子，整个网页通过对比突出一个搜索框，你完全不需要思考就知道该怎么用了，不让用户思考是它设计的成功之处。苹果的产品不管在易用性和美观上都是好的设计，还有写邮件或者文章，怎么样让读者很快明白你所表达的意思也是需要设计的。</p>
+
+<!--more-->
+
+
+<blockquote><h2>如何做好设计？</h2></blockquote>
+
+<p>作者将设计原理浓缩为4个词：「<strong>亲密性、对齐、重复和对比</strong>」。你需要做的就是学习这4个原则并且运行它们就可以了，结果会让你大吃一惊。</p>
+
+<h3>1、亲密性</h3>
+
+<p>彼此相关的项组织在一起，形成一个视觉单元。亲密性的思想并不是说所有的一切都要更靠近，其真正的含义是：如果某些元素在理解上存在关联，或者互相之间存在某种关系，那么这些元素在视觉上也应该有关联。除此以外，其它孤立的元素或者元素组则不应存在亲密性。位置是否靠近可以提现出元素是否存在关系。</p>
+
+<p>这是一个网页，信息杂乱无章。</p>
+
+<p><img src="http://findhy.com/images/design-1.png"></p>
+
+<p>利用亲密性原则分组之后，是不是效果完全不同。</p>
+
+<p><img src="http://findhy.com/images/design-2.png"></p>
+
+<h3>2、对齐</h3>
+
+<p>「任何元素不能在页面上随意安放,每一项都应与页面上的某个内容存在某种视觉联系。」</p>
+
+<p>页面没有对齐效果</p>
+
+<p><img src="http://findhy.com/images/design-3.png"></p>
+
+<p>左对齐后</p>
+
+<p><img src="http://findhy.com/images/design-4.png"></p>
+
+<p>有时候页面可以采用不同的对齐方式，但是还要让元素联系起来，就像下面这张图片，如果没有那一条横线，效果就会差很多。</p>
+
+<p><img src="http://findhy.com/images/design-5.png"></p>
+
+<h3>3、重复</h3>
+
+<p>设计的某些方面需要在整个作品中重复。重复的元素可以是一种粗字体、一条粗线，某个项目符号、颜色、设计要素，某种格式、空间关系等。重复可以把设计中单独的部分统一起来，让设计作品具有连续性是一个整体。</p>
+
+<p><img src="http://findhy.com/images/design-6.png"></p>
+
+<p>注意不要把重复用的太滥，而应当尽量采用“多样性实现统一”。也就是说，如果一个重复元素很明确（如一个圆），那么可以采用多种不同方式重复这个圆，而不是简单的重复同一个圆。</p>
+
+<h3>4、对比</h3>
+
+<p>对比是增加视觉效果的最佳途径之一，很容易吸引读者。对比的一个重要原则是：<strong>要实现有效的对比，对比就必须强烈，千万别畏畏缩缩</strong>。如果两个项不完全相同，就让它们截然不同。不应该使用12点的字体与14点的字体进行对比，也不要用0.5点的线和1点的线进行对比，深棕色和黑色对比也不合适，所以掌握了这个原则才能用好对比。</p>
+
+<p>将上面的网页图加上对比效果后。</p>
+
+<p><img src="http://findhy.com/images/design-7.png"></p>
+
+<blockquote><p>Q：<strong>你会了吗？</strong></p></blockquote>
+
+<ul>
+<li><strong>亲密性</strong>：如果相关就让它们更亲密吧。</li>
+<li><strong>对齐</strong>：对齐可以让页面保持统一。</li>
+<li><strong>重复</strong>：重复能够保证一致性，重复的元素可以是项目符号、字体、线条、颜色等等。</li>
+<li><strong>对比</strong>：对比能够产生更强的视觉效果，对比方式可以是粗细、字体、颜色、空间等等。注意想形成对比，就加大力度。</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Oracle DBA如何转型到Hadoop平台]]></title>
+    <link href="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/"/>
+    <updated>2014-03-20T15:02:44+08:00</updated>
+    <id>http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas</id>
+    <content type="html"><![CDATA[<p>Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在<a href="http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/">这里</a>。对于国内的一些DBA想转型Hadoop的可以参考一下。</p>
+
+<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
+
+<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
+我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
+
+<!--more-->
+
+
+<p></p>
+
+<blockquote><p>Q：<strong>公司会录用一个没有Hadoop工作经验的DBA吗，如果会，看重的是什么呢？</strong></p></blockquote>
+
+<p>A：我坚信DBAs完全有能力成为优秀的Hadoop专家 &ndash; 但这不代表所有的DBAs。下面是一些我觉得必备的技能：</p>
+
+<ul>
+<li><strong>适应命令行操作</strong>：只会鼠标操作点击的DBAs和ETL工程师不合适</li>
+<li><strong>Linux经验</strong>：Hadoop是运行在Linux上的，所以你需要非常适应Linux的文件系统、工具还有命令行，你还要理解CPU调度和IO等相关概念。</li>
+<li><strong>网络方面的知识</strong>：<a href="http://www.technology-training.co.uk/understandingtheiso7layermodel_10.php">ISO7层网络架构</a>，ssh原理，主机名称解析（/etc/hosts）,还有交换机。</li>
+<li><strong>良好SQL能力</strong>：你需要熟练使用SQL语句，有数据仓库分区和并行处理经验、ETL经验和性能优化经验的优先。</li>
+<li><strong>编程能力</strong>：不一定是Java，但是你要会写批处理脚本，不管是用Perl、Python还是其他语言，要会用伪代码来解决一些简单的问题，如果你不会编程，那就有问题了。</li>
+<li><strong>解决问题能力</strong>：Hadoop没有Oracle那么成熟，所以你必须要学会用Google或者其他方式来搜索和解决问题，这个很重要。</li>
+<li><strong>更高级的职位，我还关注系统和架构方面的能力</strong>：比如你做过飞行调度系统或者其他相似的东西。</li>
+<li><strong>因为我们需要面对客户，所以沟通能力也很重要</strong>：如何倾听？如何向客户解释一个负责的技术问题？当我质疑你的时候该如何反应？</li>
+</ul>
+
+
+<p>或许这些太多了，但是我觉得这些你转型Hadoop平台必备的技能。</p>
+
+<blockquote><p>Q：<strong>怎么开始学习Hadoop？</strong></p></blockquote>
+
+<p>A：首先你需要在自己的电脑上搭建一个Hadoop集群环境，这个网上的资料很多。然后你可以导入一些数据到Hadoop中来分析，这里有一个例子是用Flume导入Twitter数据然后用Hive来分析：</p>
+
+<ul>
+<li><a href="http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/">http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/</a></li>
+<li><a href="http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/">http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/</a></li>
+</ul>
+
+
+<p>还有就是买一些Hadoop方面的书籍，比如「Hadoop权威指南」、「Hadoop实战」等等。
+推荐看下<a href="http://dongxicheng.org/mapreduce-nextgen/hadoope-every-day/">这里</a>，是一些Hadoop方面的学习资源。</p>
+
+<blockquote><p>Q：<strong>我需要学习Java吗？</strong></p></blockquote>
+
+<p>A：你不需要成为一个特别专业的Java开发人员，但是你需要能够看懂Java源代码，因为Hadoop就是Java写的，还有Hive UDFS也需要Java来编写，相信我，不是很难，比SQL简单多了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[YARN，Hadoop平台的操作系统]]></title>
+    <link href="http://findhy.com/blog/2014/03/20/yarn/"/>
+    <updated>2014-03-20T10:55:35+08:00</updated>
+    <id>http://findhy.com/blog/2014/03/20/yarn</id>
+    <content type="html"><![CDATA[<p>YARN是Hadoop2.0版本推出的全新数据处理平台。通过YARN，用户可以在Hadoop平台中根据不同的应用场景选择不同的计算框架（MR、TEZ等），而且可以同时处理同一批数据。</p>
+
+<!--more-->
+
+
+<h2>YARN的目标</h2>
+
+<ul>
+<li>伸缩性：不再局限于MapReduce，可以集成其它实时性、流处理等计算模型</li>
+<li>效率：有效的资源管理和性能预测</li>
+<li>资源共享：资源共享与合理分配</li>
+</ul>
+
+
+<h2>应用情况</h2>
+
+<p>Hadoop2.0加入YARN后与1.0比较，如下图：<br/>
+<img src="http://findhy.com/images/yarn-1.png"></p>
+
+<p>YARN从2012年9月开始在Yahoo!测试，并且从2013年1月开始已经在生产环境部署超过30000个节点，处理数据325PB。最近Microsoft, EBay, Twitter and Xing等商业公司也已经开始基于YARN来开发框架。</p>
+
+<h2>伸缩性</h2>
+
+<p>YARN将原来的MapReduce抽象为两层，资源管理和计算引擎，资源管理部分相当于Hadoop平台的操作系统，负责资源的分配和协调。并且可以在这个操作系统上面部署多种计算引擎。<br/>
+<img src="http://findhy.com/images/yarn-2.png"></p>
+
+<h2>效率&amp;共享</h2>
+
+<p>YARN允许在一个集群上运行多个计算引擎，数据和CPU、IO等资源都是共享的，由YARN来协调资源的分配和利用，它有这些特点：</p>
+
+<ul>
+<li>资源管理和监控</li>
+<li>多租户</li>
+<li>安全</li>
+<li>高可用</li>
+<li>灾难恢复</li>
+</ul>
+
+
+<p><img src="http://findhy.com/images/yarn-3.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[存储系统-I/O]]></title>
+    <link href="http://findhy.com/blog/2014/03/16/io/"/>
+    <updated>2014-03-16T15:40:50+08:00</updated>
+    <id>http://findhy.com/blog/2014/03/16/io</id>
+    <content type="html"><![CDATA[<p>存储系统瓶颈往往在于I/O，因此需要对I/O有一个整体而清晰的认识，也算是一次总结。I/O涉及的范围比较广，包括硬件架构和网络结构等方面，本篇文章试图从应用层面来分析：</p>
+
+<!--more-->
+
+
+<h2>1、性能参数</h2>
+
+<p>I/O顾名思义就是数据输入和输出，在计算机中，不同的硬件或者介质I/O性能表现是不同的，下面是常见硬件性能参数。
+<img src="http://findhy.com/images/IO-1.png"><br/>
+从上表可以看出，「千兆网络发送1MB数据」、「异地机房之间网络来回」、「SATA磁盘寻道」、「从SATA磁盘顺序读取1MB数据」是比较消耗时间的，都是10ms级别的。
+因此我们在设计存储引擎的时候需要考虑如下因素：<strong>减少在网络间传输数据（特别是跨机架甚至跨机房）、减少发生磁盘寻道</strong>。</p>
+
+<h2>2、案例分析</h2>
+
+<p>所有的存储引擎在设计时候都需要根据业务需求（写多还是读多）设计解决方案来提高I/O效率。以HDFS为例来说明，看它是如何设计的。</p>
+
+<h3>2.1、数据冗余策略</h3>
+
+<p>Client申请将数据写入HDFS中，HDFS默认会将数据存3个副本（可以设置，默认为3）。<br/>
+第一个副本放在Client所在的DataNode上（如果Client不在集群中，则随机选取一个负载较低的DataNode）<br/>
+第二个副本放在与第一个副本节点不同机架中的DataNode（随机）<br/>
+第三个副本放在与第二个副本节点同一个机架中另外一个DataNode节点（随机）</p>
+
+<p>数据放在不同机架中是为了可靠性（机架的单点故障）。<br/>
+后两个副本放在同一个机架是为了减少数据在网络节点中传输，看下图：
+<img src="http://findhy.com/images/IO-2.png"></p>
+
+<h3>2.2、Combiner</h3>
+
+<p>以HDFS为数据存储的基础之上，是MapReduce计算框架，分为两个阶段Map和Reduce，流程可以参考下图：<br/>
+<img src="http://findhy.com/images/IO-3.png"><br/>
+数据在网络间传输发生在Shuffle阶段，Shuffle是指将Map输出的结果排序并按Key哈希分发到Reduce节点的过程，这个过程不可避免，所以只能尽量减少传输的数据量。
+Combiner就是在Map端对数据进行一次本地Reduce，对数据量进行一次瘦身，但是必须保证对最终Reduce的结果没有影响，例如求最大值的MapReduce程序，只需要传输Map输出结果最大的那个值。</p>
+
+<p>如何优化Shuffle减少传输的数据量是MapReduce优化的重点。例如Spark的Shuffle实现，可以参考<a href="http://jerryshao.me/architecture/2014/01/04/spark-shuffle-detail-investigation/">这里</a>。</p>
+
+<h3>2.3、HDFS块大小</h3>
+
+<p>HDFS默认块大小是64MB，如果太小就会增加磁盘寻道的时间，如果太大造成Map执行时间过长，因为Map任务通常一次处理一个块的数据。所以块的大小设置直接影响MapReduce的性能。</p>
+
+<h2>3、方法总结</h2>
+
+<p>I/O优化策略可以简单的从上面两个方面来入手，同时需要结合相应的业务需求（<strong>系统吞吐量和响应时间、可用性（99.99）、一致性、可扩展性</strong>），来选择合适的解决方案。常见的优化手段有：</p>
+
+<p><strong>成组提交</strong>：REDO日志先放在内存缓存区中，然后定期顺序写入磁盘，提供效率<br/>
+<strong>checkpoint（检查点技术）</strong>：解决内存不足无法缓存所有的更新操作  <br/>
+<strong>数据压缩</strong>：减少数据量，提高写入和传输速度。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Hackable Text Editor for the 21st Century]]></title>
+    <link href="http://findhy.com/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/"/>
+    <updated>2014-02-27T09:57:57+08:00</updated>
+    <id>http://findhy.com/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century</id>
+    <content type="html"><![CDATA[<p>See more : <a href="http://atom.io/">http://atom.io/</a></p>
+
+<!--more-->
+
+
+<p>The web is not without its faults, but two decades of development has forged it into an incredibly malleable and powerful platform. So when we set out to write a text editor that we ourselves would want to extend, web technology was the obvious choice. But first, we had to free it from its chains.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Become a Hacker]]></title>
+    <link href="http://findhy.com/blog/2014/02/24/how-to-become-a-hacker/"/>
+    <updated>2014-02-24T20:08:45+08:00</updated>
+    <id>http://findhy.com/blog/2014/02/24/how-to-become-a-hacker</id>
+    <content type="html"><![CDATA[<p>From：<a href="http://www.catb.org/esr/faqs/hacker-howto.html">http://www.catb.org/esr/faqs/hacker-howto.html</a></p>
+
+<p>Some Questions</p>
+
+<!-- more -->
+
+
+<p>Q:How do I tell if I am already a hacker?</p>
+
+<p>A:Ask yourself the following three questions:</p>
+
+<p>Do you speak code, fluently?</p>
+
+<p>Do you identify with the goals and values of the hacker community?</p>
+
+<p>Has a well-established member of the hacker community ever called you a hacker?</p>
+
+<p>If you can answer yes to all three of these questions, you are already a hacker. No two alone are sufficient.</p>
+
+<p>The first test is about skills. You probably pass it if you have the minimum technical skills described earlier in this document. You blow right through it if you have had a substantial amount of code accepted by an open-source development project.</p>
+
+<p>The second test is about attitude. If the five principles of the hacker mindset seemed obvious to you, more like a description of the way you already live than anything novel, you are already halfway to passing it. That&rsquo;s the inward half; the other, outward half is the degree to which you identify with the hacker community&rsquo;s long-term projects.</p>
+
+<p>Here is an incomplete but indicative list of some of those projects: Does it matter to you that Linux improve and spread? Are you passionate about software freedom? Hostile to monopolies? Do you act on the belief that computers can be instruments of empowerment that make the world a richer and more humane place?</p>
+
+<p>But a note of caution is in order here. The hacker community has some specific, primarily defensive political interests — two of them are defending free-speech rights and fending off &ldquo;intellectual-property&rdquo; power grabs that would make open source illegal. Some of those long-term projects are civil-liberties organizations like the Electronic Frontier Foundation, and the outward attitude properly includes support of them. But beyond that, most hackers view attempts to systematize the hacker attitude into an explicit political program with suspicion; we&rsquo;ve learned, the hard way, that these attempts are divisive and distracting. If someone tries to recruit you to march on your capitol in the name of the hacker attitude, they&rsquo;ve missed the point. The right response is probably “Shut up and show them the code.”</p>
+
+<p>The third test has a tricky element of recursiveness about it. I observed in the section called “What Is a Hacker?” that being a hacker is partly a matter of belonging to a particular subculture or social network with a shared history, an inside and an outside. In the far past, hackers were a much less cohesive and self-aware group than they are today. But the importance of the social-network aspect has increased over the last thirty years as the Internet has made connections with the core of the hacker subculture easier to develop and maintain. One easy behavioral index of the change is that, in this century, we have our own T-shirts.</p>
+
+<p>Sociologists, who study networks like those of the hacker culture under the general rubric of &ldquo;invisible colleges&rdquo;, have noted that one characteristic of such networks is that they have gatekeepers — core members with the social authority to endorse new members into the network. Because the &ldquo;invisible college&rdquo; that is hacker culture is a loose and informal one, the role of gatekeeper is informal too. But one thing that all hackers understand in their bones is that not every hacker is a gatekeeper. Gatekeepers have to have a certain degree of seniority and accomplishment before they can bestow the title. How much is hard to quantify, but every hacker knows it when they see it.</p>
+
+<p>Q:Will you teach me how to hack?</p>
+
+<p>A:Since first publishing this page, I&rsquo;ve gotten several requests a week (often several a day) from people to &ldquo;teach me all about hacking&rdquo;. Unfortunately, I don&rsquo;t have the time or energy to do this; my own hacking projects, and working as an open-source advocate, take up 110% of my time.</p>
+
+<p>Even if I did, hacking is an attitude and skill you basically have to teach yourself. You&rsquo;ll find that while real hackers want to help you, they won&rsquo;t respect you if you beg to be spoon-fed everything they know.</p>
+
+<p>Learn a few things first. Show that you&rsquo;re trying, that you&rsquo;re capable of learning on your own. Then go to the hackers you meet with specific questions.</p>
+
+<p>If you do email a hacker asking for advice, here are two things to know up front. First, we&rsquo;ve found that people who are lazy or careless in their writing are usually too lazy and careless in their thinking to make good hackers — so take care to spell correctly, and use good grammar and punctuation, otherwise you&rsquo;ll probably be ignored. Secondly, don&rsquo;t dare ask for a reply to an ISP account that&rsquo;s different from the account you&rsquo;re sending from; we find people who do that are usually thieves using stolen accounts, and we have no interest in rewarding or assisting thievery.</p>
+
+<p>Q:How can I get started, then?</p>
+
+<p>A:The best way for you to get started would probably be to go to a LUG (Linux user group) meeting. You can find such groups on the LDP General Linux Information Page; there is probably one near you, possibly associated with a college or university. LUG members will probably give you a Linux if you ask, and will certainly help you install one and get started.</p>
+
+<p>Your next step (and your first step if you can&rsquo;t find a LUG nearby) should be to find an open-source project that interests you. Start reading code and reviewing bugs. Learn to contribute, and work your way in.</p>
+
+<p>The only way in is by working to improve your skills. If you ask me personally for advice on how to get started, I will tell you these exact same things, because I don&rsquo;t have any magic shortcuts for you. I will also mentally write you off as a probable loser &ndash; because if you lacked the stamina to read this FAQ and the intelligence to understand from it that the only way in is by working to improve your skills, you&rsquo;re hopeless.</p>
+
+<p>Q:When do you have to start? Is it too late for me to learn?</p>
+
+<p>A:Any age at which you are motivated to start is a good age. Most people seem to get interested between ages 15 and 20, but I know of exceptions in both directions.</p>
+
+<p>Q:How long will it take me to learn to hack?</p>
+
+<p>A:That depends on how talented you are and how hard you work at it. Most people who try can acquire a respectable skill set in eighteen months to two years, if they concentrate. Don&rsquo;t think it ends there, though; in hacking (as in many other fields) it takes about ten years to achieve mastery. And if you are a real hacker, you will spend the rest of your life learning and perfecting your craft.</p>
+
+<p>Q:Is Visual Basic a good language to start with?</p>
+
+<p>A:If you&rsquo;re asking this question, it almost certainly means you&rsquo;re thinking about trying to hack under Microsoft Windows. This is a bad idea in itself. When I compared trying to learn to hack under Windows to trying to learn to dance while wearing a body cast, I wasn&rsquo;t kidding. Don&rsquo;t go there. It&rsquo;s ugly, and it never stops being ugly.</p>
+
+<p>There is a specific problem with Visual Basic; mainly that it&rsquo;s not portable. Though there is a prototype open-source implementations of Visual Basic, the applicable ECMA standards don&rsquo;t cover more than a small set of its programming interfaces. On Windows most of its library support is proprietary to a single vendor (Microsoft); if you aren&rsquo;t extremely careful about which features you use — more careful than any newbie is really capable of being — you&rsquo;ll end up locked into only those platforms Microsoft chooses to support. If you&rsquo;re starting on a Unix, much better languages with better libraries are available. Python, for example.</p>
+
+<p>Also, like other Basics, Visual Basic is a poorly-designed language that will teach you bad programming habits. No, don&rsquo;t ask me to describe them in detail; that explanation would fill a book. Learn a well-designed language instead.</p>
+
+<p>One of those bad habits is becoming dependent on a single vendor&rsquo;s libraries, widgets, and development tools. In general, any language that isn&rsquo;t fully supported under at least Linux or one of the BSDs, and/or at least three different vendors&#8217; operating systems, is a poor one to learn to hack in.</p>
+
+<p>Q:Would you help me to crack a system, or teach me how to crack?</p>
+
+<p>A:No. Anyone who can still ask such a question after reading this FAQ is too stupid to be educable even if I had the time for tutoring. Any emailed requests of this kind that I get will be ignored or answered with extreme rudeness.</p>
+
+<p>Q:How can I get the password for someone else&rsquo;s account?</p>
+
+<p>A:This is cracking. Go away, idiot.</p>
+
+<p>Q:How can I break into/read/monitor someone else&rsquo;s email?</p>
+
+<p>A:This is cracking. Get lost, moron.</p>
+
+<p>Q:How can I steal channel op privileges on IRC?</p>
+
+<p>A:This is cracking. Begone, cretin.</p>
+
+<p>Q:I&rsquo;ve been cracked. Will you help me fend off further attacks?</p>
+
+<p>A:No. Every time I&rsquo;ve been asked this question so far, it&rsquo;s been from some poor sap running Microsoft Windows. It is not possible to effectively secure Windows systems against crack attacks; the code and architecture simply have too many flaws, which makes securing Windows like trying to bail out a boat with a sieve. The only reliable prevention starts with switching to Linux or some other operating system that is designed to at least be capable of security.</p>
+
+<p>Q:I&rsquo;m having problems with my Windows software. Will you help me?</p>
+
+<p>A:Yes. Go to a DOS prompt and type &ldquo;format c:&rdquo;. Any problems you are experiencing will cease within a few minutes.</p>
+
+<p>Q:Where can I find some real hackers to talk with?</p>
+
+<p>A:The best way is to find a Unix or Linux user&rsquo;s group local to you and go to their meetings (you can find links to several lists of user groups on the LDP site at ibiblio).</p>
+
+<p>(I used to say here that you wouldn&rsquo;t find any real hackers on IRC, but I&rsquo;m given to understand this is changing. Apparently some real hacker communities, attached to things like GIMP and Perl, have IRC channels now.)</p>
+
+<p>Q:Can you recommend useful books about hacking-related subjects?</p>
+
+<p>A:I maintain a Linux Reading List HOWTO that you may find helpful. The Loginataka may also be interesting.</p>
+
+<p>For an introduction to Python, see the tutorial on the Python site.</p>
+
+<p>Q:Do I need to be good at math to become a hacker?</p>
+
+<p>A:No. Hacking uses very little formal mathematics or arithmetic. In particular, you won&rsquo;t usually need trigonometry, calculus or analysis (there are exceptions to this in a handful of specific application areas like 3-D computer graphics). Knowing some formal logic and Boolean algebra is good. Some grounding in finite mathematics (including finite-set theory, combinatorics, and graph theory) can be helpful.</p>
+
+<p>Much more importantly: you need to be able to think logically and follow chains of exact reasoning, the way mathematicians do. While the content of most mathematics won&rsquo;t help you, you will need the discipline and intelligence to handle mathematics. If you lack the intelligence, there is little hope for you as a hacker; if you lack the discipline, you&rsquo;d better grow it.</p>
+
+<p>I think a good way to find out if you have what it takes is to pick up a copy of Raymond Smullyan&rsquo;s book What Is The Name Of This Book?. Smullyan&rsquo;s playful logical conundrums are very much in the hacker spirit. Being able to solve them is a good sign; enjoying solving them is an even better one.</p>
+
+<p>Q:What language should I learn first?</p>
+
+<p>A:XHTML (the latest dialect of HTML) if you don&rsquo;t already know it. There are a lot of glossy, hype-intensive bad HTML books out there, and distressingly few good ones. The one I like best is HTML: The Definitive Guide.</p>
+
+<p>But HTML is not a full programming language. When you&rsquo;re ready to start programming, I would recommend starting with Python. You will hear a lot of people recommending Perl, but it&rsquo;s harder to learn and (in my opinion) less well designed.</p>
+
+<p>C is really important, but it&rsquo;s also much more difficult than either Python or Perl. Don&rsquo;t try to learn it first.</p>
+
+<p>Windows users, do not settle for Visual Basic. It will teach you bad habits, and it&rsquo;s not portable off Windows. Avoid.</p>
+
+<p>Q:What kind of hardware do I need?</p>
+
+<p>A:It used to be that personal computers were rather underpowered and memory-poor, enough so that they placed artificial limits on a hacker&rsquo;s learning process. This stopped being true in the mid-1990s; any machine from an Intel 486DX50 up is more than powerful enough for development work, X, and Internet communications, and the smallest disks you can buy today are plenty big enough.</p>
+
+<p>The important thing in choosing a machine on which to learn is whether its hardware is Linux-compatible (or BSD-compatible, should you choose to go that route). Again, this will be true for almost all modern machines. The only really sticky areas are modems and wireless cards; some machines have Windows-specific hardware that won&rsquo;t work with Linux.</p>
+
+<p>There&rsquo;s a FAQ on hardware compatibility; the latest version is here.</p>
+
+<p>Q:I want to contribute. Can you help me pick a problem to work on?</p>
+
+<p>A:No, because I don&rsquo;t know your talents or interests. You have to be self-motivated or you won&rsquo;t stick, which is why having other people choose your direction almost never works.</p>
+
+<p>Try this. Watch the project announcements scroll by on Freshmeat for a few days. When you see one that makes you think &ldquo;Cool! I&rsquo;d like to work on that!&rdquo;, join it.</p>
+
+<p>Q:Do I need to hate and bash Microsoft?</p>
+
+<p>A:No, you don&rsquo;t. Not that Microsoft isn&rsquo;t loathsome, but there was a hacker culture long before Microsoft and there will still be one long after Microsoft is history. Any energy you spend hating Microsoft would be better spent on loving your craft. Write good code — that will bash Microsoft quite sufficiently without polluting your karma.</p>
+
+<p>Q:But won&rsquo;t open-source software leave programmers unable to make a living?</p>
+
+<p>A:This seems unlikely — so far, the open-source software industry seems to be creating jobs rather than taking them away. If having a program written is a net economic gain over not having it written, a programmer will get paid whether or not the program is going to be open-source after it&rsquo;s done. And, no matter how much &ldquo;free&rdquo; software gets written, there always seems to be more demand for new and customized applications. I&rsquo;ve written more about this at the Open Source pages.</p>
+
+<p>Q:Where can I get a free Unix?</p>
+
+<p>A:If you don&rsquo;t have a Unix installed on your machine yet, elsewhere on this page I include pointers to where to get the most commonly used free Unix. To be a hacker you need motivation and initiative and the ability to educate yourself. Start now&hellip;</p>
+]]></content>
+  </entry>
+  
+</feed>

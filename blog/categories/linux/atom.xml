@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linux | Findhy]]></title>
+  <link href="http://findhy.com/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://findhy.com/"/>
+  <updated>2014-06-03T21:18:21+08:00</updated>
+  <id>http://findhy.com/</id>
+  <author>
+    <name><![CDATA[Findhy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Nginx在Linux上的安装和配置]]></title>
+    <link href="http://findhy.com/blog/2014/05/17/nginx-on-linux/"/>
+    <updated>2014-05-17T07:12:34+08:00</updated>
+    <id>http://findhy.com/blog/2014/05/17/nginx-on-linux</id>
+    <content type="html"><![CDATA[<p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
+
+<h3>1.配置nginx的yum源</h3>
+
+<pre><code>sudo vi /etc/yum.repos.d/nginx.repo
+</code></pre>
+
+<p>添加下面的内容：</p>
+
+<pre><code>[nginx]
+name=nginx repo 
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ 
+gpgcheck=0 
+enabled=1
+</code></pre>
+
+<p>保存退出</p>
+
+<h3>2.安装</h3>
+
+<pre><code>sudo yum install nginx
+</code></pre>
+
+<h3>3.启动Nginx</h3>
+
+<pre><code>sudo /etc/init.d/nginx start
+</code></pre>
+
+<p>访问：<a href="http://localhost">http://localhost</a></p>
+
+<h3>4.其它命令</h3>
+
+<pre><code>停止nginx服务：# /etc/init.d/nginx stop 
+启动nginx服务：# /etc/init.d/nginx start 
+编辑nginx配置文件：# vi /etc/nginx/nginx.conf
+</code></pre>
+
+<h3>5.反向代理配置</h3>
+
+<pre><code>sudo vi /etc/nginx/nginx.conf
+</code></pre>
+
+<p>配置：</p>
+
+<pre><code>upstream rexster {
+    server 127.0.0.1:8182 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+upstream yarn {
+    server 127.0.0.1:8089 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+upstream storm {
+    server 127.0.0.1:7070 weight=1 max_fails=1 fail_timeout=10s;
+}
+
+server {
+    listen 80;
+    server_name yarn.xxx.com;
+    location / {
+        proxy_pass http://yarn;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    # redirect server error pages to the static page /50x.html
+}
+server {
+    listen 80;
+    server_name storm.xxx.com;
+    location / {
+        proxy_pass http://storm;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    # redirect server error pages to the static page /50x.html
+}
+</code></pre>
+
+<p>输入域名测试，跳转成功</p>
+]]></content>
+  </entry>
+  
+</feed>
