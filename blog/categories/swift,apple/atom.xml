@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Swift，Apple | Findhy]]></title>
+  <link href="http://findhy.com/blog/categories/swift,apple/atom.xml" rel="self"/>
+  <link href="http://findhy.com/"/>
+  <updated>2014-06-04T10:13:55+08:00</updated>
+  <id>http://findhy.com/</id>
+  <author>
+    <name><![CDATA[Findhy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Swift Introduction]]></title>
+    <link href="http://findhy.com/blog/2014/06/04/swift/"/>
+    <updated>2014-06-04T09:51:16+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/04/swift</id>
+    <content type="html"><![CDATA[<p>Swift是Apple下一代开发语言，并且为了保证兼容性，Swift代码可以和Objective-C代码共存（官方解释是：New Swift code co-exists along side your existing Objective-C files in the same project）。下面介绍一下它的特性：</p>
+
+<ul>
+<li>并行（parallel）：it runs multiple programs concurrently as soon as their inputs are available, reducing the need for complex parallel programming</li>
+<li>简单（easy）：Short, simple scripts can do large-scale work. The same script runs on multicore computers, clusters, grids, clouds, and supercomputers</li>
+<li>快（fast）：it can run a million programs, thousands at a time, launching hundreds per second</li>
+<li>灵活（flexible）：its being used in many fields of science, engineering, and business. Read the case studies</li>
+</ul>
+
+
+<p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
+]]></content>
+  </entry>
+  
+</feed>
