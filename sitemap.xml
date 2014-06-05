@@ -26,7 +26,7 @@
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/04/17/storm/</loc>
-        <lastmod>2014-06-03T21:16:06+08:00</lastmod>
+        <lastmod>2014-06-05T20:05:19+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/04/21/big-data-business/</loc>
@@ -38,11 +38,11 @@
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/</loc>
-        <lastmod>2014-06-03T21:16:06+08:00</lastmod>
+        <lastmod>2014-06-05T20:07:28+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/05/17/storm-on-yarn/</loc>
-        <lastmod>2014-06-03T21:16:06+08:00</lastmod>
+        <lastmod>2014-06-05T20:06:37+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/05/17/nginx-on-linux/</loc>
@@ -50,15 +50,11 @@
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/05/18/kafka/</loc>
-        <lastmod>2014-06-03T21:16:06+08:00</lastmod>
+        <lastmod>2014-06-05T20:05:36+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/05/18/protocol-buffers/</loc>
         <lastmod>2014-06-03T21:16:06+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://findhy.com/blog/2014/06/03/test-blog-move/</loc>
-        <lastmod>2014-06-03T21:18:10+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/blog/2014/06/04/swift/</loc>
@@ -70,11 +66,11 @@
     </url>
     <url>
         <loc>http://findhy.com/blog/archives/</loc>
-        <lastmod>2014-06-05T19:52:00+08:00</lastmod>
+        <lastmod>2014-06-05T20:07:28+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/</loc>
-        <lastmod>2014-06-05T19:52:00+08:00</lastmod>
+        <lastmod>2014-06-05T20:07:28+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/robots.txt</loc>

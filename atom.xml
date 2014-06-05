@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-05T20:02:13+08:00</updated>
+  <updated>2014-06-05T20:07:36+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -97,15 +97,6 @@ Save settings? [y/N] y
 
 
 <p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Test_blog_move]]></title>
-    <link href="http://findhy.com/blog/2014/06/03/test-blog-move/"/>
-    <updated>2014-06-03T21:17:39+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/03/test-blog-move</id>
-    <content type="html"><![CDATA[<p>test_blog_move</p>
 ]]></content>
   </entry>
   
@@ -251,7 +242,7 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Kafka介绍]]></title>
+    <title type="html"><![CDATA[Kafka Introduction]]></title>
     <link href="http://findhy.com/blog/2014/05/18/kafka/"/>
     <updated>2014-05-18T10:25:44+08:00</updated>
     <id>http://findhy.com/blog/2014/05/18/kafka</id>
@@ -470,6 +461,9 @@ source /etc/profile
 </code></pre>
 
 <p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
+
+<!--more-->
+
 
 <h2>Storm-on-YARN搭建</h2>
 
@@ -746,6 +740,9 @@ Ssh slave2
 </code></pre>
 
 <p>首次会让输入yes，后面就可以直接登录了</p>
+
+<!--more-->
+
 
 <h3>5.JDK安装</h3>
 
@@ -1086,7 +1083,7 @@ statlib
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Storm]]></title>
+    <title type="html"><![CDATA[Storm Introduction]]></title>
     <link href="http://findhy.com/blog/2014/04/17/storm/"/>
     <updated>2014-04-17T22:54:04+08:00</updated>
     <id>http://findhy.com/blog/2014/04/17/storm</id>

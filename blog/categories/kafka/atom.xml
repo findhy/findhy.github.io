@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kafka | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/kafka/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-05T20:02:13+08:00</updated>
+  <updated>2014-06-05T20:07:36+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Kafka介绍]]></title>
+    <title type="html"><![CDATA[Kafka Introduction]]></title>
     <link href="http://findhy.com/blog/2014/05/18/kafka/"/>
     <updated>2014-05-18T10:25:44+08:00</updated>
     <id>http://findhy.com/blog/2014/05/18/kafka</id>
