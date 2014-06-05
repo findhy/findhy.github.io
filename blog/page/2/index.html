@@ -9,7 +9,8 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。 Q：我为什么要学设计，有啥用？ 很多行业都有专业的设计学科，如建筑设计、美术设计等。 &hellip;">
+  <meta name="description" content="使用场景 Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。 下面五个特性保证了Storm实时处理的能力： Fast &ndash; 快，每个节点每秒可以处理百万个100字节的消息
+Scalable & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/17/storm/">Storm Introduction</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-17T22:54:04+08:00" pubdate data-updated="true">Apr 17<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>使用场景</h1>
+
+<p>Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。</p>
+
+<p>下面五个特性保证了Storm实时处理的能力：</p>
+
+<ul>
+<li><strong>Fast</strong> &ndash; 快，每个节点每秒可以处理百万个100字节的消息</li>
+<li><strong>Scalable</strong> &ndash; 可扩展，这没得说</li>
+<li><strong>Fault-tolerant</strong> &ndash; 容错，如果workers进程死掉，Storm会自动重启。如果一个节点死掉，会在其它节点上重启workers进程</li>
+<li><strong>Reliable</strong> &ndash; 可靠性，Storm确保每个单元数据（tuple）会被处理最少一次，仅仅当消息处理失败才会发生通知</li>
+<li><strong>Easy to operate</strong> &ndash; 标准的配置适应于生产环境，一旦部署，Storm很容易操作。</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/17/storm/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -340,6 +395,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/05/big-data-open-source/">大数据 - 开放数据资源</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置</a>
