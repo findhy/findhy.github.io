@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-04T10:29:46+08:00</updated>
+  <updated>2014-06-05T19:42:23+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[S3cmd 配置]]></title>
+    <link href="http://findhy.com/blog/2014/06/05/s3cmd-config/"/>
+    <updated>2014-06-05T18:52:03+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/05/s3cmd-config</id>
+    <content type="html"><![CDATA[<h4>1.安装python-pip</h4>
+
+<pre><code>yum install python-pip
+</code></pre>
+
+<p>如果提示No package python-pip available，先安装<a href="http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm">epel-release-6-8.noarch.rpm</a></p>
+
+<h4>2.安装s3cmd</h4>
+
+<pre><code>pip install s3cmd
+</code></pre>
+
+<h4>3.配置s3cmd</h4>
+
+<pre><code>s3cmd --configure
+</code></pre>
+
+<p>分别输入Access Key和Secret Key</p>
+
+<pre><code>Access Key:
+Secret Key:
+</code></pre>
+
+<p>回车，如果提示：</p>
+
+<pre><code>Encryption password is used to protect your files from reading
+by unauthorized persons while in transfer to S3
+Encryption password:
+</code></pre>
+
+<p>输入当前登录的操作系统用户</p>
+
+<h4>4.HTTPS协议选择no</h4>
+
+<pre><code>Use HTTPS protocol [No]: no
+</code></pre>
+
+<h4>5.代理不填直接回车</h4>
+
+<pre><code>HTTP Proxy server name: 
+</code></pre>
+
+<h4>6.最后就是测试保存</h4>
+
+<pre><code>Test access with supplied credentials? [Y/n] y
+Save settings? [y/N] y
+</code></pre>
+
+<h4>7.测试</h4>
+
+<pre><code>s3cmd ls
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Swift Introduction]]></title>
