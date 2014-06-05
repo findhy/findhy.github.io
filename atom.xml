@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Findhy]]></title>
+  <title><![CDATA[Findhy'S Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-05T19:50:14+08:00</updated>
+  <updated>2014-06-05T19:55:38+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -72,6 +72,11 @@ Save settings? [y/N] y
 <h4>7.测试</h4>
 
 <pre><code>s3cmd ls
+</code></pre>
+
+<h4>8.下载整个目录</h4>
+
+<pre><code>s3cmd get --recursive dir_name
 </code></pre>
 ]]></content>
   </entry>
