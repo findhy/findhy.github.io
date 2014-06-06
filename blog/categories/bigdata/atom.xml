@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bigdata | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/bigdata/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-06T16:46:51+08:00</updated>
+  <updated>2014-06-06T17:28:35+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,71 +14,170 @@
 
   
   <entry>
-    <title type="html"><![CDATA[大数据 - 开放数据资源]]></title>
-    <link href="http://findhy.com/blog/2014/06/05/big-data-open-source/"/>
-    <updated>2014-06-05T20:43:54+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/05/big-data-open-source</id>
-    <content type="html"><![CDATA[<p>大数据时代没有数据是玩不转的，真正拥有大数据的公司少之又少，更何况是个人开发者呢。数据有很多，最接近用户诉求、最能够精准定位用户需求的数据是最具有商业价值的，像搜索、电商、社交，而拥有这些数据的公司：Google、Facebook、百度、阿里巴巴、亚马逊等，它们首先会通过广告、增值服务等形式来将数据变现，肯定不会将数据开放出来，而且未来数据会越来越成为一个公司的核心竞争力。</p>
+    <title type="html"><![CDATA[大数据时代下的商机]]></title>
+    <link href="http://findhy.com/blog/2014/04/21/big-data-business/"/>
+    <updated>2014-04-21T22:57:30+08:00</updated>
+    <id>http://findhy.com/blog/2014/04/21/big-data-business</id>
+    <content type="html"><![CDATA[<p>大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？</p>
 
-<p>对于大数据研究人员或者创业者，我们有哪些数据可以使用呢？我简单整理了一下。</p>
+<blockquote><p>Q：<strong>大数据时代有哪些商业模式？</strong></p></blockquote>
 
-<h3>1.数据分类</h3>
+<h3>数据租售</h3>
 
-<p>我将数据分为两类：</p>
+<p>直接卖数据API，代表公司有twitter。</p>
+
+<h3>数据服务</h3>
+
+<p>卖数据产品、数据分析结果，代表公司有BAT。这个是目前最流行也是最容易变现的模式，而且同样的数据可以打包成不同服务和产品出售，转化率很高，下面有例子，但是前提是你要有数据。</p>
+
+<h3>数据技术</h3>
+
+<p>提供大数据技术支持，代表公司有cloudera。</p>
+
+<!--more-->
+
+
+<p></p>
+
+<blockquote><p>Q：<strong>有哪些大数据产品？</strong></p></blockquote>
+
+<h3>腾讯</h3>
+
+<p><a href="http://mta.qq.com/">腾讯云分析</a></p>
+
+<h3>百度</h3>
+
+<p><a href="http://index.baidu.com/">百度指数</a></p>
+
+<p><a href="http://data.baidu.com/">百度数据研究中心</a></p>
+
+<p><a href="http://sinan.baidu.com/">百度司南</a></p>
+
+<h3>阿里巴巴</h3>
+
+<p><a href="http://www.umeng.com/apps/4100008dd65107258db11ef4/reports">友盟</a></p>
+
+<p><a href="mofang.taobao.com">数据魔方</a></p>
+
+<p><a href="wo.taobao.com">淘宝情报</a></p>
+
+<p><a href="shu.taobao.com">淘宝指数</a></p>
+
+<p><a href="http://fuwu.taobao.com/">淘宝卖家服务</a></p>
+
+<h3>其它</h3>
+
+<p><a href="https://analytics.talkingdata.net/webpage/Summarize.jsp">腾云天下游戏数据分析</a></p>
+
+<blockquote><p>Q：<strong>我没有数据怎么办？</strong></p></blockquote>
+
+<p>利用开放数据，现在很多数据（特别是政府的）都向外开放，你可以基于这些数据来做一些分析产品，或者和直接卖数据的公司合作。</p>
+
+<h3>可以挖掘的行业和数据</h3>
 
 <ul>
-<li>静态大数据（Batch Data）：通常是一个备份数据集，容量往往很大</li>
-<li>动态流数据（Streaming Data）：这是实时变动的数据，数据不断的更新和涌入</li>
+<li>互联网数据</li>
+<li>电信行业数据</li>
+<li>航空数据</li>
+<li>医疗数据</li>
+<li>房地产</li>
+<li>零售业和服务业</li>
+<li>媒体和娱乐</li>
+<li>人口统计</li>
+<li>商业和金融</li>
+<li>体育和游戏</li>
+<li>天气</li>
+<li>卫生和健康</li>
+<li>政府</li>
+<li>地理信息数据</li>
 </ul>
 
 
-<h3>2.数据来源</h3>
+<h3>开放数据资源</h3>
 
-<h4>2.1 政府/非盈利机构（部分）</h4>
+<p>AWS公共数据集：<a href="http://aws.amazon.com/cn/publicdatasets/">http://aws.amazon.com/cn/publicdatasets/</a></p>
 
-<p>国内：<br/>
-<a href="http://www.stats.gov.cn/">http://www.stats.gov.cn/</a></p>
+<p>数据堂：<a href="http://www.datatang.com/">http://www.datatang.com/</a></p>
 
-<p><a href="http://www.bosidata.com/">http://www.bosidata.com/</a></p>
+<p>MLcomp：<a href="http://mlcomp.org/">http://mlcomp.org/</a></p>
 
-<p><a href="http://www.cnnic.cn/">http://www.cnnic.cn/</a></p>
+<p>个人收集的数据集合（各个类型比较杂）：<a href="https://delicious.com/pskomoroch/dataset">https://delicious.com/pskomoroch/dataset</a></p>
 
-<p><a href="http://www.eguan.cn/">http://www.eguan.cn/</a></p>
+<p>quora的回答比较丰富：<a href="http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public">http://www.quora.com/Data/Where-can-I-find-large-datasets-open-to-the-public</a></p>
 
-<p>国外：<br/>
-如果你在AWS上，这上面的可以看看，直接从S3 get下来。<br/>
-<a href="http://aws.amazon.com/datasets">http://aws.amazon.com/datasets</a></p>
+<p>气候监测数据集：<a href="http://cdiac.ornl.gov/ftp/ndp026b">http://cdiac.ornl.gov/ftp/ndp026b</a>
+几个实用的测试数据集下载的网站：
+<a href="http://www.cs.toronto.edu/~roweis/data.html">http://www.cs.toronto.edu/~roweis/data.html</a>
+<a href="http://www.cs.toronto.edu/~roweis/data.html">http://www.cs.toronto.edu/~roweis/data.html</a>
+<a href="http://kdd.ics.uci.edu/summary.task.type.html">http://kdd.ics.uci.edu/summary.task.type.html</a>
+<a href="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/">http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/</a>
+<a href="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/">http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/</a>
+<a href="http://www.phys.uni.torun.pl/~duch/software.html">http://www.phys.uni.torun.pl/~duch/software.html</a></p>
 
-<p>freebase包含了很多开源项目的数据
-<a href="https://developers.google.com/freebase/data">https://developers.google.com/freebase/data</a></p>
+<p>在下面的网址可以找到reuters数据集<a href="http://www.research.att.com/~lewis/reuters21578.html">http://www.research.att.com/~lewis/reuters21578.html</a></p>
 
-<p>这是一个很有商业价值的数据，包含互联网上所有的网页信息，相当于Google的数据
-<a href="http://commoncrawl.org/data/">http://commoncrawl.org/data/</a></p>
+<p>以下网址上有各种数据集：
+<a href="http://kdd.ics.uci.edu/summary.data.type.html">http://kdd.ics.uci.edu/summary.data.type.html</a></p>
 
-<p>想做一些项目，Wikipedia的数据足够了，它既有Batch Data，也有Streaming Data。
-<a href="http://en.wikipedia.org/wiki/Wikipedia:Database_download">http://en.wikipedia.org/wiki/Wikipedia:Database_download</a></p>
+<p>进行文本分类，还有一个数据集是可以用的，即rainbow的数据集
+<a href="http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html">http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html</a></p>
 
-<h4>2.2 商业公司</h4>
+<p>找了很多测试数据集,写论文的同志们肯定需要的,至少能用来检验算法的效果
+可能有一些不能访问,但是总有能访问的吧：</p>
 
-<p>商业公司开放的数据通常都是有限制条件的，往往以一种合作的方式，而且基本上都是Streaming Data数据接口，案例有很多，像Twitter、腾讯、新浪微博，都有开放数据接口给个人开发者。<br/>
-Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">https://dev.twitter.com/docs/api/1.1/post/statuses/filter</a></p>
+<p>UCI收集的机器学习数据集：
+<a href="ftp://pami.sjtu.edu.cn/">ftp://pami.sjtu.edu.cn/</a>
+<a href="http://www.ics.uci.edu/~mlearn//MLRepository.htm">http://www.ics.uci.edu/~mlearn//MLRepository.htm</a>
+statlib
+<a href="http://liama.ia.ac.cn/SCILAB/scilabindexgb.htm">http://liama.ia.ac.cn/SCILAB/scilabindexgb.htm</a>
+<a href="http://lib.stat.cmu.edu/">http://lib.stat.cmu.edu/</a></p>
 
-<p>腾讯：<a href="http://open.qq.com/">http://open.qq.com/</a></p>
+<p>样本数据库：
+<a href="http://kdd.ics.uci.edu/">http://kdd.ics.uci.edu/</a>
+<a href="http://www.ics.uci.edu/~mlearn/MLRepository.html">http://www.ics.uci.edu/~mlearn/MLRepository.html</a></p>
 
-<p>新浪微博：<a href="http://open.weibo.com/">http://open.weibo.com/</a></p>
+<p>关于基金的数据挖掘的网站：
+<a href="http://www.gotofund.com/index.asp">http://www.gotofund.com/index.asp</a>
+<a href="http://lans.ece.utexas.edu/~strehl/">http://lans.ece.utexas.edu/~strehl/</a></p>
 
-<p>商业公司希望通过开放平台来构建一个以它为中心的生态系统，当然数据开放只是其中一部分。</p>
+<p>reuters数据集：
+<a href="http://www.research.att.com/~lewis/reuters21578.html">http://www.research.att.com/~lewis/reuters21578.html</a></p>
 
-<h4>2.3 其它数据资源社区</h4>
+<p>各种数据集：
+<a href="http://kdd.ics.uci.edu/summary.data.type.html">http://kdd.ics.uci.edu/summary.data.type.html</a>
+<a href="http://www.mlnet.org/cgi-bin/mlnetois.pl/?File=datasets.html">http://www.mlnet.org/cgi-bin/mlnetois.pl/?File=datasets.html</a>
+<a href="http://lib.stat.cmu.edu/datasets/">http://lib.stat.cmu.edu/datasets/</a>
+<a href="http://dctc.sjtu.edu.cn/adaptive/datasets/">http://dctc.sjtu.edu.cn/adaptive/datasets/</a>
+<a href="http://fimi.cs.helsinki.fi/data/">http://fimi.cs.helsinki.fi/data/</a>
+<a href="http://www.almaden.ibm.com/software/quest/Resources/index.shtml">http://www.almaden.ibm.com/software/quest/Resources/index.shtml</a>
+<a href="http://miles.cnuce.cnr.it/~palmeri/datam/DCI/">http://miles.cnuce.cnr.it/~palmeri/datam/DCI/</a></p>
 
-<p>数据堂（主要是国内的政府机构数据）：<a href="http://www.datatang.com/">http://www.datatang.com/</a></p>
+<p>进行文本分类&amp;WEB
+<a href="http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html">http://www-2.cs.cmu.edu/afs/cs/project/theo-11/www/naive-bayes.html</a>
+<a href="http://www.w3.org/TR/WD-logfile-960221.html">http://www.w3.org/TR/WD-logfile-960221.html</a>
+<a href="http://www.w3.org/Daemon/User/Config/Logging.html#AccessLog">http://www.w3.org/Daemon/User/Config/Logging.html#AccessLog</a>
+<a href="http://www.w3.org/1998/11/05/WC-workshop/Papers/bala2.html">http://www.w3.org/1998/11/05/WC-workshop/Papers/bala2.html</a>
+<a href="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/">http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb/</a>
+<a href="http://www.web-caching.com/traces-logs.html">http://www.web-caching.com/traces-logs.html</a>
+<a href="http://www-2.cs.cmu.edu/webkb">http://www-2.cs.cmu.edu/webkb</a>
+<a href="http://www.cs.auc.dk/research/DP/tdb/TimeCenter/TimeCenterPublications/TR-75.pdf">http://www.cs.auc.dk/research/DP/tdb/TimeCenter/TimeCenterPublications/TR-75.pdf</a>
+<a href="http://www.cs.cornell.edu/projects/kddcup/index.html">http://www.cs.cornell.edu/projects/kddcup/index.html</a></p>
 
-<p>本文整理参考：  <br/>
-<a href="http://www.quora.com/Where-can-I-find-large-datasets-open-to-the-public">http://www.quora.com/Where-can-I-find-large-datasets-open-to-the-public</a></p>
+<p>时间序列数据的网址：
+<a href="http://www.stat.wisc.edu/~reinsel/bjr-data/">http://www.stat.wisc.edu/~reinsel/bjr-data/</a></p>
 
-<p><a href="http://www.datapanda.net/123/">http://www.datapanda.net/123/</a></p>
+<p>apriori算法的测试数据：
+<a href="http://www.almaden.ibm.com/cs/quest/syndata.html">http://www.almaden.ibm.com/cs/quest/syndata.html</a></p>
 
-<p><a href="http://www.zhihu.com/question/19969760">http://www.zhihu.com/question/19969760</a></p>
+<p>数据生成器的链接：
+<a href="http://www.cse.cuhk.edu.hk/~kdd/data_collection.html">http://www.cse.cuhk.edu.hk/~kdd/data_collection.html</a>
+<a href="http://www.almaden.ibm.com/cs/quest/syndata.html">http://www.almaden.ibm.com/cs/quest/syndata.html</a></p>
+
+<p>癌症基因：
+<a href="http://www.broad.mit.edu/cgi-bin/cancer/datasets.cgi">http://www.broad.mit.edu/cgi-bin/cancer/datasets.cgi</a></p>
+
+<p>金融数据：
+<a href="http://lisp.vse.cz/pkdd99/Challenge/chall.htm">http://lisp.vse.cz/pkdd99/Challenge/chall.htm</a></p>
 ]]></content>
   </entry>
   

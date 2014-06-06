@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: YARN | Findhy's Blog]]></title>
+  <link href="http://findhy.com/blog/categories/yarn/atom.xml" rel="self"/>
+  <link href="http://findhy.com/"/>
+  <updated>2014-06-06T17:28:35+08:00</updated>
+  <id>http://findhy.com/</id>
+  <author>
+    <name><![CDATA[Findhy]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[YARN，Hadoop平台的操作系统]]></title>
+    <link href="http://findhy.com/blog/2014/03/20/yarn/"/>
+    <updated>2014-03-20T10:55:35+08:00</updated>
+    <id>http://findhy.com/blog/2014/03/20/yarn</id>
+    <content type="html"><![CDATA[<p>YARN是Hadoop2.0版本推出的全新数据处理平台。通过YARN，用户可以在Hadoop平台中根据不同的应用场景选择不同的计算框架（MR、TEZ等），而且可以同时处理同一批数据。</p>
+
+<!--more-->
+
+
+<h2>YARN的目标</h2>
+
+<ul>
+<li>伸缩性：不再局限于MapReduce，可以集成其它实时性、流处理等计算模型</li>
+<li>效率：有效的资源管理和性能预测</li>
+<li>资源共享：资源共享与合理分配</li>
+</ul>
+
+
+<h2>应用情况</h2>
+
+<p>Hadoop2.0加入YARN后与1.0比较，如下图：<br/>
+<img src="/images/yarn-1.png"></p>
+
+<p>YARN从2012年9月开始在Yahoo!测试，并且从2013年1月开始已经在生产环境部署超过30000个节点，处理数据325PB。最近Microsoft, EBay, Twitter and Xing等商业公司也已经开始基于YARN来开发框架。</p>
+
+<h2>伸缩性</h2>
+
+<p>YARN将原来的MapReduce抽象为两层，资源管理和计算引擎，资源管理部分相当于Hadoop平台的操作系统，负责资源的分配和协调。并且可以在这个操作系统上面部署多种计算引擎。<br/>
+<img src="/images/yarn-2.png"></p>
+
+<h2>效率&amp;共享</h2>
+
+<p>YARN允许在一个集群上运行多个计算引擎，数据和CPU、IO等资源都是共享的，由YARN来协调资源的分配和利用，它有这些特点：</p>
+
+<ul>
+<li>资源管理和监控</li>
+<li>多租户</li>
+<li>安全</li>
+<li>高可用</li>
+<li>灾难恢复</li>
+</ul>
+
+
+<p><img src="/images/yarn-3.png"></p>
+]]></content>
+  </entry>
+  
+</feed>
