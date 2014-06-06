@@ -101,63 +101,12 @@
 </ul>
 
 
-<h3>2.数据来源</h3>
-
-<h4>2.1 政府/非盈利机构（部分）</h4>
-
-<p>国内：<br/>
-<a href="http://www.stats.gov.cn/">http://www.stats.gov.cn/</a></p>
-
-<p><a href="http://www.bosidata.com/">http://www.bosidata.com/</a></p>
-
-<p><a href="http://www.cnnic.cn/">http://www.cnnic.cn/</a></p>
-
-<p><a href="http://www.eguan.cn/">http://www.eguan.cn/</a></p>
-
-<p>国外：<br/>
-如果你在AWS上，这上面的可以看看，直接从S3 get下来。<br/>
-<a href="http://aws.amazon.com/datasets">http://aws.amazon.com/datasets</a></p>
-
-<p>freebase包含了很多开源项目的数据<br/>
-<a href="https://developers.google.com/freebase/data">https://developers.google.com/freebase/data</a></p>
-
-<p>这是一个很有商业价值的数据，包含互联网上所有的网页信息，相当于Google的数据
-<a href="http://commoncrawl.org/data/">http://commoncrawl.org/data/</a></p>
-
-<p>想做一些项目，Wikipedia的数据足够了，它既有Batch Data，也有Streaming Data。
-<a href="http://en.wikipedia.org/wiki/Wikipedia:Database_download">http://en.wikipedia.org/wiki/Wikipedia:Database_download</a></p>
-
-<h4>2.2 商业公司</h4>
-
-<p>商业公司开放的数据通常都是有限制条件的，往往以一种合作的方式，而且基本上都是Streaming Data数据接口，案例有很多，像Twitter、腾讯、新浪微博，都有开放数据接口给个人开发者。<br/>
-Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">https://dev.twitter.com/docs/api/1.1/post/statuses/filter</a></p>
-
-<p>腾讯：<a href="http://open.qq.com/">http://open.qq.com/</a></p>
-
-<p>新浪微博：<a href="http://open.weibo.com/">http://open.weibo.com/</a></p>
-
-<p>商业公司希望通过开放平台来构建一个以它为中心的生态系统，当然数据开放只是其中一部分。</p>
-
-<h4>2.3 其它数据资源社区</h4>
-
-<p>数据堂（主要是国内的政府机构数据）：<a href="http://www.datatang.com/">http://www.datatang.com/</a></p>
-
-<p>本文整理参考：  <br/>
-<a href="http://www.quora.com/Where-can-I-find-large-datasets-open-to-the-public">http://www.quora.com/Where-can-I-find-large-datasets-open-to-the-public</a></p>
-
-<p><a href="http://www.datapanda.net/123/">http://www.datapanda.net/123/</a></p>
-
-<p><a href="http://www.zhihu.com/question/19969760">http://www.zhihu.com/question/19969760</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/05/big-data-open-source/'>http://findhy.com/blog/2014/06/05/big-data-open-source/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/05/big-data-open-source/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -193,129 +142,12 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
 
   <div class="entry-content"><p>s3cmd是AWS S3的命令行工具，可以用来下载、上传、同步文件，还可以配置权限。</p>
 
-<h3>一、配置</h3>
-
-<h4>1.安装python-pip</h4>
-
-<pre><code>yum install python-pip
-</code></pre>
-
-<p>如果提示No package python-pip available，先安装<a href="http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm">epel-release-6-8.noarch.rpm</a></p>
-
-<pre><code>rpm -ivh epel-release-6-8.noarch.rpm
-</code></pre>
-
-<h4>2.安装s3cmd</h4>
-
-<pre><code>pip install s3cmd
-</code></pre>
-
-<h4>3.配置s3cmd</h4>
-
-<pre><code>s3cmd --configure
-</code></pre>
-
-<p>分别输入Access Key和Secret Key</p>
-
-<pre><code>Access Key:
-Secret Key:
-</code></pre>
-
-<p>回车，如果提示：</p>
-
-<pre><code>Encryption password is used to protect your files from reading
-by unauthorized persons while in transfer to S3
-Encryption password:
-</code></pre>
-
-<p>输入当前登录的操作系统用户</p>
-
-<h4>4.HTTPS协议选择no</h4>
-
-<pre><code>Use HTTPS protocol [No]: no
-</code></pre>
-
-<h4>5.代理不填直接回车</h4>
-
-<pre><code>HTTP Proxy server name: 
-</code></pre>
-
-<h4>6.最后就是测试保存</h4>
-
-<pre><code>Test access with supplied credentials? [Y/n] y
-Save settings? [y/N] y
-</code></pre>
-
-<h4>7.测试</h4>
-
-<pre><code>s3cmd ls
-</code></pre>
-
-<h4>8.下载整个目录</h4>
-
-<pre><code>s3cmd get --recursive dir_name
-</code></pre>
-
-<h3>二、使用</h3>
-
-<h4>1.查看所有的Buckets</h4>
-
-<pre><code>s3cmd ls
-</code></pre>
-
-<h4>2.创建Buckets</h4>
-
-<pre><code>s3cmd mb s3://my-bucket-name
-</code></pre>
-
-<h4>3.删除空Buckets</h4>
-
-<pre><code>s3cmd rb s3://my-bucket-name
-</code></pre>
-
-<h4>4.上传</h4>
-
-<pre><code>上传单个文件：s3cmd put file.txt s3://my-bucket-name/file.txt
-批量上传：s3cmd put ./* s3://my-bucket-name/
-上传整个目录：s3cmd put -r dir1 s3://my-bucket-name/
-上传目录下所有文件：s3cmd put -r dir1/ s3://my-bucket-name/
-</code></pre>
-
-<h4>5.下载</h4>
-
-<pre><code>下载单个文件：s3cmd get s3://my-bucket-name/file.txt file.txt
-下载整个目录下的文件：s3cmd get -r  s3://my-bucket-name/bucket_dir ./
-</code></pre>
-
-<h4>6.删除文件</h4>
-
-<pre><code>s3cmd del s3://my-bucket-name/file.txt
-</code></pre>
-
-<h4>7.查看空间大小</h4>
-
-<pre><code>s3cmd du -H s3://my-bucket-name
-</code></pre>
-
-<h4>8.同步</h4>
-
-<pre><code>同步当前目录下所有文件：s3cmd sync  ./  s3://my-bucket-name/
-只列出不同步：s3cmd sync  --dry-run ./  s3://my-bucket-name/
-同步且删除本地不存在的文件：s3cmd sync  --delete-removed ./  s3://my-bucket-name/
-不检验跳过本地已经存在的文件：s3cmd sync  --skip-existing ./  s3://my-bucket-name/
-排除包含文件规则：s3cmd sync --dry-run --exclude '*.txt' --include 'dir2/*' ./ 
-更多参考这里：http://s3tools.org/s3cmd-sync
-</code></pre>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/05/s3cmd-config/'>http://findhy.com/blog/2014/06/05/s3cmd-config/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/05/s3cmd-config/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -359,14 +191,15 @@ Save settings? [y/N] y
 </ul>
 
 
-<p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a><p class='post-footer'></p>
+<p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
 
-<pre><code>        original link:
-        &lt;a href='http://findhy.com/blog/2014/06/04/swift/'&gt;http://findhy.com/blog/2014/06/04/swift/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
-        &lt;/p&gt;
-</code></pre>
+<p class='post-footer'>
+            original link:
+            <a href='http://findhy.com/blog/2014/06/04/swift/'>http://findhy.com/blog/2014/06/04/swift/</a><br/>
+            written by <a href='http://findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
+            </p>
+
 </div>
   
   
@@ -492,38 +325,12 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 </ul>
 
 
-<h4>Kafka的部署结构图</h4>
-
-<p><img src="/images/kafka.png"></p>
-
-<h4>为什么要用Kafka</h4>
-
-<ul>
-<li>统一消息入口<br/>
-Storm流数据平台需要处理的数据多种多样，如果直接用Storm来接入，会需要写很多的接口，这样必然不是最佳的解决方案，加了一层Kafka之后，Storm只需要处理来自Kafka的数据，由Kafka对接数据源。</li>
-<li>消息持久化<br/>
-直接用Storm或者其它MQ会发生数据丢失的可能，而Kafka是把数据持久化到磁盘上面而且会有复制备份，所以不会发生数据丢失。</li>
-<li>支持分布式<br/>
-支持分布式保证了架构的健壮性、弹性扩展和容错。</li>
-</ul>
-
-
-<p>Kafka在数据平台中的位置如图：<br/>
-<img src="/images/kafka_hadoop.png"></p>
-
-<p>Kafka作为消息中间件，为Storm提供数据来源。<br/>
-Zookeeper为Kafka、Storm、HBase提供分布式协调服务，所以单独部署，不用HBase自带的Zookeeper。<br/>
-HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/18/kafka/'>http://findhy.com/blog/2014/05/18/kafka/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/18/kafka/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -939,21 +746,12 @@ Apache Lucene</em></li>
 </ul>
 
 
-<p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
-
-<p>更多关于Titan的文档可以看<a href="https://github.com/thinkaurelius/titan/wiki">这里</a></p>
-
-<p>可以从<a href="https://github.com/thinkaurelius/titan/wiki/Getting-Started">这里</a>开始</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/14/titan-graph-db/'>http://findhy.com/blog/2014/05/14/titan-graph-db/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/14/titan-graph-db/">Read on &rarr;</a>
+    </footer>
   
 
 

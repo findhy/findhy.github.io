@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kafka | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/kafka/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-06T17:30:21+08:00</updated>
+  <updated>2014-06-06T17:33:02+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -27,6 +27,9 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 <li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
 <li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
 </ul>
+
+
+<!--more-->
 
 
 <h4>Kafka的部署结构图</h4>

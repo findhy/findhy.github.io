@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AWS | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/aws/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-06T17:30:21+08:00</updated>
+  <updated>2014-06-06T17:33:02+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-06-05T18:52:03+08:00</updated>
     <id>http://findhy.com/blog/2014/06/05/s3cmd-config</id>
     <content type="html"><![CDATA[<p>s3cmd是AWS S3的命令行工具，可以用来下载、上传、同步文件，还可以配置权限。</p>
+
+<!--more-->
+
 
 <h3>一、配置</h3>
 

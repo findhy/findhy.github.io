@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-06T17:30:21+08:00</updated>
+  <updated>2014-06-06T17:33:02+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -30,6 +30,9 @@
 <li>静态大数据（Batch Data）：通常是一个备份数据集，容量往往很大</li>
 <li>动态流数据（Streaming Data）：这是实时变动的数据，数据不断的更新和涌入</li>
 </ul>
+
+
+<!--more-->
 
 
 <h3>2.数据来源</h3>
@@ -96,6 +99,9 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
     <updated>2014-06-05T18:52:03+08:00</updated>
     <id>http://findhy.com/blog/2014/06/05/s3cmd-config</id>
     <content type="html"><![CDATA[<p>s3cmd是AWS S3的命令行工具，可以用来下载、上传、同步文件，还可以配置权限。</p>
+
+<!--more-->
+
 
 <h3>一、配置</h3>
 
@@ -236,14 +242,15 @@ Save settings? [y/N] y
 </ul>
 
 
-<p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a><p class='post-footer'></p>
+<p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
 
-<pre><code>        original link:
-        &lt;a href='http://findhy.com/blog/2014/06/04/swift/'&gt;http://findhy.com/blog/2014/06/04/swift/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
-        &lt;/p&gt;
-</code></pre>
+<p class='post-footer'>
+            original link:
+            <a href='http://findhy.com/blog/2014/06/04/swift/'>http://findhy.com/blog/2014/06/04/swift/</a><br/>
+            written by <a href='http://findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
@@ -410,6 +417,9 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 <li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
 <li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
 </ul>
+
+
+<!--more-->
 
 
 <h4>Kafka的部署结构图</h4>
@@ -1090,6 +1100,9 @@ Apache Lucene</em></li>
   标准图API：Blueprints</em></li>
 <li>Apache2 license 开源协议</li>
 </ul>
+
+
+<!--more-->
 
 
 <p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
