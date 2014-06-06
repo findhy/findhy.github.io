@@ -167,7 +167,7 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置和使用</a></h1>
     
     
       <p class="meta">
@@ -190,7 +190,11 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
   </header>
 
 
-  <div class="entry-content"><h4>1.安装python-pip</h4>
+  <div class="entry-content"><p>s3cmd是AWS S3的命令行工具，可以用来下载、上传、同步文件，还可以配置权限。</p>
+
+<h3>一、配置</h3>
+
+<h4>1.安装python-pip</h4>
 
 <pre><code>yum install python-pip
 </code></pre>
@@ -249,6 +253,57 @@ Save settings? [y/N] y
 <h4>8.下载整个目录</h4>
 
 <pre><code>s3cmd get --recursive dir_name
+</code></pre>
+
+<h3>二、使用</h3>
+
+<h4>1.查看所有的Buckets</h4>
+
+<pre><code>s3cmd ls
+</code></pre>
+
+<h4>2.创建Buckets</h4>
+
+<pre><code>s3cmd mb s3://my-bucket-name
+</code></pre>
+
+<h4>3.删除空Buckets</h4>
+
+<pre><code>s3cmd rb s3://my-bucket-name
+</code></pre>
+
+<h4>4.上传</h4>
+
+<pre><code>上传单个文件：s3cmd put file.txt s3://my-bucket-name/file.txt
+批量上传：s3cmd put ./* s3://my-bucket-name/
+上传整个目录：s3cmd put -r dir1 s3://my-bucket-name/
+上传目录下所有文件：s3cmd put -r dir1/ s3://my-bucket-name/
+</code></pre>
+
+<h4>5.下载</h4>
+
+<pre><code>下载单个文件：s3cmd get s3://my-bucket-name/file.txt file.txt
+下载整个目录下的文件：s3cmd get -r  s3://my-bucket-name/bucket_dir ./
+</code></pre>
+
+<h4>6.删除文件</h4>
+
+<pre><code>s3cmd del s3://my-bucket-name/file.txt
+</code></pre>
+
+<h4>7.查看空间大小</h4>
+
+<pre><code>s3cmd du -H s3://my-bucket-name
+</code></pre>
+
+<h4>8.同步</h4>
+
+<pre><code>同步当前目录下所有文件：s3cmd sync  ./  s3://my-bucket-name/
+只列出不同步：s3cmd sync  --dry-run ./  s3://my-bucket-name/
+同步且删除本地不存在的文件：s3cmd sync  --delete-removed ./  s3://my-bucket-name/
+不检验跳过本地已经存在的文件：s3cmd sync  --skip-existing ./  s3://my-bucket-name/
+排除包含文件规则：s3cmd sync --dry-run --exclude '*.txt' --include 'dir2/*' ./ 
+更多参考这里：http://s3tools.org/s3cmd-sync
 </code></pre>
 </div>
   
@@ -938,7 +993,7 @@ Apache Lucene</em></li>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置</a>
+        <a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置和使用</a>
       </li>
     
       <li class="post">
