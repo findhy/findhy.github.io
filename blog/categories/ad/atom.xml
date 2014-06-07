@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AD | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/ad/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T14:59:05+08:00</updated>
+  <updated>2014-06-07T15:02:22+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -32,19 +32,22 @@
 <h4>2.参与方</h4>
 
 <p>在互联网广告整个生命周期中，一般会有四个参与方，这里引用微软一篇文章里面的图：
-<img src="/images/ad1.png"> <br/>
-需求方(Demand): 图中的广告主，可以是广告主(advertiser),也可以是代表广告主利益的代理商(agency)
-供给方(Supply): 图中的网页出版商，一般指互联网媒体，有流量的且可以提供广告位的媒体方。
-受众(Audience)：图中的网络用户，就是广告面向的用户
-广告平台：这个在下一节详细讲</p>
+<img src="/images/ad1.png"></p>
+
+<ul>
+<li>需求方(Demand): 图中的广告主，可以是广告主(advertiser),也可以是代表广告主利益的代理商(agency)</li>
+<li>供给方(Supply): 图中的网页出版商，一般指互联网媒体，有流量的且可以提供广告位的媒体方。</li>
+<li>受众(Audience)：图中的网络用户，就是广告面向的用户</li>
+<li>广告平台：这个在下一节详细讲</li>
+</ul>
+
 
 <h4>3.广告分类</h4>
 
 <p>引用刘鹏计算广告学：</p>
 
-<pre><code>品牌广告(Brand Awareness): 希望借助媒体的力量来快速接触大量用户,以达到宣传品牌形象,提升中长期购买率与利润空间的目的。
-效果广告(Direct Response): 希望能利用广告手段马上带来大量的购买行为。
-</code></pre>
+<blockquote><p>品牌广告(Brand Awareness): 希望借助媒体的力量来快速接触大量用户,以达到宣传品牌形象,提升中长期购买率与利润空间的目的。
+效果广告(Direct Response): 希望能利用广告手段马上带来大量的购买行为。</p></blockquote>
 
 <h3>二、广告平台</h3>
 
