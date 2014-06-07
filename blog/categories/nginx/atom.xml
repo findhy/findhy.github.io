@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Nginx | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/nginx/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,11 +14,14 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Nginx在Linux上的安装和配置]]></title>
+    <title type="html"><![CDATA[Nginx Install on Centos]]></title>
     <link href="http://findhy.com/blog/2014/05/17/nginx-on-linux/"/>
     <updated>2014-05-17T07:12:34+08:00</updated>
     <id>http://findhy.com/blog/2014/05/17/nginx-on-linux</id>
     <content type="html"><![CDATA[<p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
+
+<!--more-->
+
 
 <h3>1.配置nginx的yum源</h3>
 

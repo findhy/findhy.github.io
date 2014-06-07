@@ -64,7 +64,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/06/07/computational-advertising/">计算广告学</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/07/computational-advertising/">Computational Advertising</a></h1>
     
     
       <p class="meta">
@@ -105,7 +105,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/06/05/big-data-open-source/">大数据 - 开放数据资源</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/05/big-data-open-source/">Open Datasource</a></h1>
     
     
       <p class="meta">
@@ -132,16 +132,6 @@
 
 <p>对于大数据研究人员或者创业者，我们有哪些数据可以使用呢？我简单整理了一下。</p>
 
-<h3>1.数据分类</h3>
-
-<p>我将数据分为两类：</p>
-
-<ul>
-<li>静态大数据（Batch Data）：通常是一个备份数据集，容量往往很大</li>
-<li>动态流数据（Streaming Data）：这是实时变动的数据，数据不断的更新和涌入</li>
-</ul>
-
-
 </div>
   
   
@@ -158,7 +148,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置和使用</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/05/s3cmd-config/">S3cmd Configure</a></h1>
     
     
       <p class="meta">
@@ -224,25 +214,12 @@
 
   <div class="entry-content"><p>Swift是Apple下一代开发语言，并且为了保证兼容性，Swift代码可以和Objective-C代码共存（官方解释是：New Swift code co-exists along side your existing Objective-C files in the same project）。下面介绍一下它的特性：</p>
 
-<ul>
-<li>并行（parallel）：it runs multiple programs concurrently as soon as their inputs are available, reducing the need for complex parallel programming</li>
-<li>简单（easy）：Short, simple scripts can do large-scale work. The same script runs on multicore computers, clusters, grids, clouds, and supercomputers</li>
-<li>快（fast）：it can run a million programs, thousands at a time, launching hundreds per second</li>
-<li>灵活（flexible）：its being used in many fields of science, engineering, and business. Read the case studies</li>
-</ul>
-
-
-<p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/04/swift/'>http://findhy.com/blog/2014/06/04/swift/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/04/swift/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -277,44 +254,6 @@
 
 
   <div class="entry-content"><p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
-
-<h3>1.RPC模型</h3>
-
-<p>一个简单的RPC调用模型如下图所示：<br/>
-<img src="/images/rpc_1.png"></p>
-
-<p>当我们在选型RPC框架的时候需要关注的几个核心问题是：</p>
-
-<ul>
-<li>传输的协议和数据（JSON、XML等）是什么？</li>
-<li>如何高效的数据存储和传输？</li>
-<li>服务器端处理请求的方式？</li>
-</ul>
-
-
-<h3>2.不建议的方案</h3>
-
-<ul>
-<li>SOAP：基于XML，传输的数据太多</li>
-<li>CORBA：多度设计而且重量级，<a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a></li>
-<li>DCOM, COM+ :主要用于windows客户端程序</li>
-<li>HTTP/JSON/XML/Plain Text：基于HTTP协议的，这种在简单的场景下是可以用的，像hessian，但缺点是缺乏更复杂的协议描述，只能传输简单的对象，而且JSON/XML都太重了</li>
-</ul>
-
-
-<h3>3.建议方案</h3>
-
-<ul>
-<li>Protocol Buffers</li>
-<li>Apache Thrift</li>
-<li>Apache Avro</li>
-<li>Message Pack</li>
-<li>kryo</li>
-<li>BSON</li>
-</ul>
-
-
-<p>上面这些序列化框架共同的特点的是：有接口描述（IDL）、性能较高、版本控制和基于二进制的数据传输。下面重点介绍前三个。</p>
 
 </div>
   
@@ -358,14 +297,6 @@
   <div class="entry-content"><p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
 Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
 
-<ul>
-<li>高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。</li>
-<li>可扩展：集群设计可以保证弹性扩展而不停机</li>
-<li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
-<li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
-</ul>
-
-
 </div>
   
   
@@ -382,7 +313,7 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/17/nginx-on-linux/">Nginx在Linux上的安装和配置</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/17/nginx-on-linux/">Nginx Install on Centos</a></h1>
     
     
       <p class="meta">
@@ -407,95 +338,12 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 
   <div class="entry-content"><p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
 
-<h3>1.配置nginx的yum源</h3>
-
-<pre><code>sudo vi /etc/yum.repos.d/nginx.repo
-</code></pre>
-
-<p>添加下面的内容：</p>
-
-<pre><code>[nginx]
-name=nginx repo 
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ 
-gpgcheck=0 
-enabled=1
-</code></pre>
-
-<p>保存退出</p>
-
-<h3>2.安装</h3>
-
-<pre><code>sudo yum install nginx
-</code></pre>
-
-<h3>3.启动Nginx</h3>
-
-<pre><code>sudo /etc/init.d/nginx start
-</code></pre>
-
-<p>访问：<a href="http://localhost">http://localhost</a></p>
-
-<h3>4.其它命令</h3>
-
-<pre><code>停止nginx服务：# /etc/init.d/nginx stop 
-启动nginx服务：# /etc/init.d/nginx start 
-编辑nginx配置文件：# vi /etc/nginx/nginx.conf
-</code></pre>
-
-<h3>5.反向代理配置</h3>
-
-<pre><code>sudo vi /etc/nginx/nginx.conf
-</code></pre>
-
-<p>配置：</p>
-
-<pre><code>upstream rexster {
-    server 127.0.0.1:8182 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-upstream yarn {
-    server 127.0.0.1:8089 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-upstream storm {
-    server 127.0.0.1:7070 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-server {
-    listen 80;
-    server_name yarn.xxx.com;
-    location / {
-        proxy_pass http://yarn;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    # redirect server error pages to the static page /50x.html
-}
-server {
-    listen 80;
-    server_name storm.xxx.com;
-    location / {
-        proxy_pass http://storm;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    # redirect server error pages to the static page /50x.html
-}
-</code></pre>
-
-<p>输入域名测试，跳转成功</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/17/nginx-on-linux/'>http://findhy.com/blog/2014/05/17/nginx-on-linux/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/17/nginx-on-linux/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -506,7 +354,7 @@ server {
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN安装说明</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN Install</a></h1>
     
     
       <p class="meta">
@@ -531,90 +379,6 @@ server {
 
   <div class="entry-content"><p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
 
-<p>环境说明</p>
-
-<pre><code>master 10.0.1.252  
-slave1 10.0.1.252  
-slave2 10.0.1.252  
-</code></pre>
-
-<p>软件版本</p>
-
-<pre><code>https://github.com/anfeng/storm-yarn/archive/master.zip  
-Storm-0.9.0-win21  
-zookeeper-3.4.5-cdh5.0.0-beta-2  
-apache-maven-3.1.0  
-</code></pre>
-
-<h2>Zookeeper集群搭建</h2>
-
-<hr />
-
-<p>Storm需要使用zookeeper来协调整个集群，但是storm并不用zookeeper来传递消息，所以zookeeper的负载很低，大多数情况下，单个节点的zookeeper就够了，所以我们这里就只部署一台机子的zookeeper，后面再扩展到集群。</p>
-
-<h3>1.安装JDK</h3>
-
-<p>前面Hadoop集群已经安装了，只要保证JDK版本在1.6以上就可以了。</p>
-
-<h3>2.下载和解压zookeeper安装包</h3>
-
-<p>因为我们用的是CDH的Hadoop发行版，所以这里zookeeper也用CDH的，到这里下载：</p>
-
-<pre><code>wget http://archive-primary.cloudera.com/cdh5/cdh/5/zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
-</code></pre>
-
-<p>解压</p>
-
-<pre><code>tar –zxvf zookeeper-3.4.5-cdh5.0.0-beta-2.tar.gz
-</code></pre>
-
-<h3>3.修改zoo.cfg配置文件</h3>
-
-<p>进入zookeeper安装目录/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2/conf，将zoo_sample.cfg重命名为zoo.cfg</p>
-
-<pre><code>mv zoo_sample.cfg zoo.cfg
-</code></pre>
-
-<p>修改zoo.cfg文件，增加：</p>
-
-<pre><code>tickTime=2000
-dataDir=/home/hadoop/zookeeper-data
-clientPort=2181
-initLimit=5
-syncLimit=2
-server.1=master:2888:3888
-</code></pre>
-
-<p>创建这个目录：/home/hadoop/zookeeper-data</p>
-
-<h3>4.修改myid</h3>
-
-<p>在/home/hadoop/zookeeper-data目录下创建文件myid，里面内容为server的ID，这里写：1</p>
-
-<h3>5.配置zookeeper的环境变量</h3>
-
-<p>vi /etc/profile，增加：</p>
-
-<pre><code>export ZOOKEEPER_HOME=/home/hadoop/zookeeper-3.4.5-cdh5.0.0-beta-2
-export PATH=$PATH:$ZOOKEEPER_HOME/bin
-
-source /etc/profile
-</code></pre>
-
-<h3>6.启动zookeeper</h3>
-
-<pre><code>./bin/zkServer.sh start
-</code></pre>
-
-<h3>7.测试Zookeeper</h3>
-
-<p>测试Zookeeper客户端是否可用</p>
-
-<pre><code>./bin/zkCli.sh -server 127.0.0.1:2181
-</code></pre>
-
-<p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
-
 </div>
   
   
@@ -631,7 +395,7 @@ source /etc/profile
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2安装说明</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos</a></h1>
     
     
       <p class="meta">
@@ -667,63 +431,6 @@ slave2 10.0.1.252
 JDK 1.7.0_45
 </code></pre>
 
-<h2>开始安装</h2>
-
-<hr />
-
-<h3>1.创建用户</h3>
-
-<pre><code>useradd hadoop
-</code></pre>
-
-<h3>2.修改密码</h3>
-
-<pre><code>passwd hadoop
-</code></pre>
-
-<h3>3.修改HOSTS文件</h3>
-
-<pre><code>10.0.1.252 master  
-10.0.1.253 slave1  
-10.0.1.254 slave2  
-</code></pre>
-
-<h3>4.节点互信配置</h3>
-
-<p>在每个节点执行</p>
-
-<pre><code>ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-cat ~/.ssh/id_dsa.pub &gt;~/.ssh/authorized_keys
-</code></pre>
-
-<p>更改权限</p>
-
-<pre><code>[hadoop@master .ssh]$ chmod 600 authorized_keys
-[hadoop@master ~]$ chmod 700 .ssh/
-</code></pre>
-
-<p>在master节点操作<br/>
-拷贝其它节点的公钥到authorized_keys文件中</p>
-
-<pre><code>[hadoop@master .ssh]$ ssh hadoop@slave1 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
-[hadoop@master .ssh]$ ssh hadoop@slave2 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
-</code></pre>
-
-<p>然后将公钥拷贝到其它节点</p>
-
-<pre><code>[hadoop@master .ssh]$ scp authorized_keys hadoop@slave1:~/.ssh/
-[hadoop@master .ssh]$ scp authorized_keys hadoop@slave2:~/.ssh/
-</code></pre>
-
-<p>测试一下，不需要密码就可以访问</p>
-
-<pre><code>ssh master  
-Ssh slave1  
-Ssh slave2  
-</code></pre>
-
-<p>首次会让输入yes，后面就可以直接登录了</p>
-
 </div>
   
   
@@ -740,7 +447,7 @@ Ssh slave2
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/05/14/titan-graph-db/">Titan图数据库介绍</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/05/14/titan-graph-db/">Titan Introduction</a></h1>
     
     
       <p class="meta">
@@ -764,28 +471,6 @@ Ssh slave2
 
 
   <div class="entry-content"><p>Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：</p>
-
-<ul>
-<li>弹性和性能的线性扩展</li>
-<li>容错性</li>
-<li>多数据中心的高可用性和热备份</li>
-<li>支持事务的ACID和最终一致性</li>
-<li>支持多种不同的后端存储<br/>
-<em>Apache Cassandra（分布式）<br/>
-Apache HBase（分布式）<br/>
-Oracle BerkeleyDB（本地的）<br/>
-Persistit（本地）</em></li>
-<li>支持多种后端索引  <br/>
-<em>ElasticSearch<br/>
-Apache Lucene</em></li>
-<li>与图形处理栈TinkerPop原生集成   <br/>
-  <em>图查询语言Gremlin<br/>
-  对象到图的映射器Frames<br/>
-  图服务器Rexster<br/>
-  标准图API：Blueprints</em></li>
-<li>Apache2 license 开源协议</li>
-</ul>
-
 
 </div>
   
@@ -822,12 +507,12 @@ Apache Lucene</em></li>
     <li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
 <li class='category'><a href='/blog/categories/aws/'>AWS (1)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>Bigdata (1)</a></li>
-<li class='category'><a href='/blog/categories/freedata/'>Freedata (1)</a></li>
 <li class='category'><a href='/blog/categories/hadoop/'>Hadoop (2)</a></li>
 <li class='category'><a href='/blog/categories/io/'>IO (1)</a></li>
 <li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
 <li class='category'><a href='/blog/categories/kafka/'>Kafka (1)</a></li>
 <li class='category'><a href='/blog/categories/nginx/'>Nginx (1)</a></li>
+<li class='category'><a href='/blog/categories/opendata/'>Opendata (1)</a></li>
 <li class='category'><a href='/blog/categories/others/'>Others (2)</a></li>
 <li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
@@ -841,15 +526,15 @@ Apache Lucene</em></li>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/06/07/computational-advertising/">计算广告学</a>
+        <a href="/blog/2014/06/07/computational-advertising/">Computational Advertising</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/06/05/big-data-open-source/">大数据 - 开放数据资源</a>
+        <a href="/blog/2014/06/05/big-data-open-source/">Open Datasource</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/06/05/s3cmd-config/">S3cmd 配置和使用</a>
+        <a href="/blog/2014/06/05/s3cmd-config/">S3cmd Configure</a>
       </li>
     
       <li class="post">
@@ -865,19 +550,19 @@ Apache Lucene</em></li>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/05/17/nginx-on-linux/">Nginx在Linux上的安装和配置</a>
+        <a href="/blog/2014/05/17/nginx-on-linux/">Nginx Install on Centos</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN安装说明</a>
+        <a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN Install</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2安装说明</a>
+        <a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/05/14/titan-graph-db/">Titan图数据库介绍</a>
+        <a href="/blog/2014/05/14/titan-graph-db/">Titan Introduction</a>
       </li>
     
       <li class="post">

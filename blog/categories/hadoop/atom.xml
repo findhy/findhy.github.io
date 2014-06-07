@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hadoop | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/hadoop/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2安装说明]]></title>
+    <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos]]></title>
     <link href="http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/"/>
     <updated>2014-05-14T23:08:37+08:00</updated>
     <id>http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install</id>
@@ -30,6 +30,9 @@ slave2 10.0.1.252
 <pre><code>Hadoop 2.2.0-cdh5.0.0-beta-2  
 JDK 1.7.0_45
 </code></pre>
+
+<!--more-->
+
 
 <h2>开始安装</h2>
 
@@ -87,9 +90,6 @@ Ssh slave2
 </code></pre>
 
 <p>首次会让输入yes，后面就可以直接登录了</p>
-
-<!--more-->
-
 
 <h3>5.JDK安装</h3>
 
@@ -231,15 +231,15 @@ scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hado
     <id>http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas</id>
     <content type="html"><![CDATA[<p>Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在<a href="http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/">这里</a>。对于国内的一些DBA想转型Hadoop的可以参考一下。</p>
 
-<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
-
-<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
-我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
-
 <!--more-->
 
 
 <p></p>
+
+<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
+
+<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
+我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
 
 <blockquote><p>Q：<strong>公司会录用一个没有Hadoop工作经验的DBA吗，如果会，看重的是什么呢？</strong></p></blockquote>
 

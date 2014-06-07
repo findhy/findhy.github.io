@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kafka | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/kafka/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -21,15 +21,15 @@
     <content type="html"><![CDATA[<p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
 Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
 
+<!--more-->
+
+
 <ul>
 <li>高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。</li>
 <li>可扩展：集群设计可以保证弹性扩展而不停机</li>
 <li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
 <li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
 </ul>
-
-
-<!--more-->
 
 
 <h4>Kafka的部署结构图</h4>

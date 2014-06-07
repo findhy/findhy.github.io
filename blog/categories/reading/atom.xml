@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Reading | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/reading/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -20,6 +20,9 @@
     <id>http://findhy.com/blog/2014/03/23/how-do-design</id>
     <content type="html"><![CDATA[<p>最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。</p>
 
+<!--more-->
+
+
 <blockquote><p>Q：<strong>我为什么要学设计，有啥用？</strong></p></blockquote>
 
 <p>很多行业都有专业的设计学科，如建筑设计、美术设计等。那非设计专业的人为什么要学点设计呢？首先是对设计的理解，我觉得设计就是：<strong>建立与外界连接的桥梁</strong>。连接第一个层次就是沟通顺畅或者别人可以理解你，第二个层次是让人爽心悦目和产生共鸣。</p>
@@ -27,9 +30,6 @@
 <p><strong>如果这样来理解设计，那我们无时无刻不在设计或者参与设计，如何设计公司网站的首页、如何设计博客、如何设计简历、如何设计你的名片，如何写邮件、写文章等等，这些都需要设计，因为我们需要通过它们来与外界沟通</strong>。</p>
 
 <p>网页设计中，怎么样做到让访问者既能够很直观的了解网站的主题和用途，并且愿意停留呢？Google的首页是一个很好的例子，整个网页通过对比突出一个搜索框，你完全不需要思考就知道该怎么用了，不让用户思考是它设计的成功之处。苹果的产品不管在易用性和美观上都是好的设计，还有写邮件或者文章，怎么样让读者很快明白你所表达的意思也是需要设计的。</p>
-
-<!--more-->
-
 
 <blockquote><h2>如何做好设计？</h2></blockquote>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[计算广告学]]></title>
+    <title type="html"><![CDATA[Computational Advertising]]></title>
     <link href="http://findhy.com/blog/2014/06/07/computational-advertising/"/>
     <updated>2014-06-07T12:50:40+08:00</updated>
     <id>http://findhy.com/blog/2014/06/07/computational-advertising</id>
@@ -112,13 +112,16 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[大数据 - 开放数据资源]]></title>
+    <title type="html"><![CDATA[Open Datasource]]></title>
     <link href="http://findhy.com/blog/2014/06/05/big-data-open-source/"/>
     <updated>2014-06-05T20:43:54+08:00</updated>
     <id>http://findhy.com/blog/2014/06/05/big-data-open-source</id>
     <content type="html"><![CDATA[<p>大数据时代没有数据是玩不转的，真正拥有大数据的公司少之又少，更何况是个人开发者呢。数据有很多，最接近用户诉求、最能够精准定位用户需求的数据是最具有商业价值的，像搜索、电商、社交，而拥有这些数据的公司：Google、Facebook、百度、阿里巴巴、亚马逊等，它们首先会通过广告、增值服务等形式来将数据变现，肯定不会将数据开放出来，而且未来数据会越来越成为一个公司的核心竞争力。</p>
 
 <p>对于大数据研究人员或者创业者，我们有哪些数据可以使用呢？我简单整理了一下。</p>
+
+<!--more-->
+
 
 <h3>1.数据分类</h3>
 
@@ -192,7 +195,7 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[S3cmd 配置和使用]]></title>
+    <title type="html"><![CDATA[S3cmd Configure]]></title>
     <link href="http://findhy.com/blog/2014/06/05/s3cmd-config/"/>
     <updated>2014-06-05T18:52:03+08:00</updated>
     <id>http://findhy.com/blog/2014/06/05/s3cmd-config</id>
@@ -332,6 +335,9 @@ Save settings? [y/N] y
     <id>http://findhy.com/blog/2014/06/04/swift</id>
     <content type="html"><![CDATA[<p>Swift是Apple下一代开发语言，并且为了保证兼容性，Swift代码可以和Objective-C代码共存（官方解释是：New Swift code co-exists along side your existing Objective-C files in the same project）。下面介绍一下它的特性：</p>
 
+<!--more-->
+
+
 <ul>
 <li>并行（parallel）：it runs multiple programs concurrently as soon as their inputs are available, reducing the need for complex parallel programming</li>
 <li>简单（easy）：Short, simple scripts can do large-scale work. The same script runs on multicore computers, clusters, grids, clouds, and supercomputers</li>
@@ -358,6 +364,9 @@ Save settings? [y/N] y
     <updated>2014-05-18T15:53:37+08:00</updated>
     <id>http://findhy.com/blog/2014/05/18/protocol-buffers</id>
     <content type="html"><![CDATA[<p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
+
+<!--more-->
+
 
 <h3>1.RPC模型</h3>
 
@@ -396,9 +405,6 @@ Save settings? [y/N] y
 
 
 <p>上面这些序列化框架共同的特点的是：有接口描述（IDL）、性能较高、版本控制和基于二进制的数据传输。下面重点介绍前三个。</p>
-
-<!--more-->
-
 
 <h3>4.Protocol Buffers</h3>
 
@@ -509,15 +515,15 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
     <content type="html"><![CDATA[<p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
 Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
 
+<!--more-->
+
+
 <ul>
 <li>高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。</li>
 <li>可扩展：集群设计可以保证弹性扩展而不停机</li>
 <li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
 <li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
 </ul>
-
-
-<!--more-->
 
 
 <h4>Kafka的部署结构图</h4>
@@ -554,11 +560,14 @@ HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Nginx在Linux上的安装和配置]]></title>
+    <title type="html"><![CDATA[Nginx Install on Centos]]></title>
     <link href="http://findhy.com/blog/2014/05/17/nginx-on-linux/"/>
     <updated>2014-05-17T07:12:34+08:00</updated>
     <id>http://findhy.com/blog/2014/05/17/nginx-on-linux</id>
     <content type="html"><![CDATA[<p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
+
+<!--more-->
+
 
 <h3>1.配置nginx的yum源</h3>
 
@@ -651,11 +660,14 @@ server {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Storm-on-YARN安装说明]]></title>
+    <title type="html"><![CDATA[Storm-on-YARN Install]]></title>
     <link href="http://findhy.com/blog/2014/05/17/storm-on-yarn/"/>
     <updated>2014-05-17T06:37:52+08:00</updated>
     <id>http://findhy.com/blog/2014/05/17/storm-on-yarn</id>
     <content type="html"><![CDATA[<p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
+
+<!--more-->
+
 
 <p>环境说明</p>
 
@@ -740,9 +752,6 @@ source /etc/profile
 </code></pre>
 
 <p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
-
-<!--more-->
-
 
 <h2>Storm-on-YARN搭建</h2>
 
@@ -954,7 +963,7 @@ source /etc/profile
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2安装说明]]></title>
+    <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos]]></title>
     <link href="http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/"/>
     <updated>2014-05-14T23:08:37+08:00</updated>
     <id>http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install</id>
@@ -970,6 +979,9 @@ slave2 10.0.1.252
 <pre><code>Hadoop 2.2.0-cdh5.0.0-beta-2  
 JDK 1.7.0_45
 </code></pre>
+
+<!--more-->
+
 
 <h2>开始安装</h2>
 
@@ -1027,9 +1039,6 @@ Ssh slave2
 </code></pre>
 
 <p>首次会让输入yes，后面就可以直接登录了</p>
-
-<!--more-->
-
 
 <h3>5.JDK安装</h3>
 
@@ -1172,11 +1181,14 @@ scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hado
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Titan图数据库介绍]]></title>
+    <title type="html"><![CDATA[Titan Introduction]]></title>
     <link href="http://findhy.com/blog/2014/05/14/titan-graph-db/"/>
     <updated>2014-05-14T22:35:18+08:00</updated>
     <id>http://findhy.com/blog/2014/05/14/titan-graph-db</id>
     <content type="html"><![CDATA[<p>Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：</p>
+
+<!--more-->
+
 
 <ul>
 <li>弹性和性能的线性扩展</li>
@@ -1198,9 +1210,6 @@ Apache Lucene</em></li>
   标准图API：Blueprints</em></li>
 <li>Apache2 license 开源协议</li>
 </ul>
-
-
-<!--more-->
 
 
 <p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
@@ -1226,6 +1235,11 @@ Apache Lucene</em></li>
     <id>http://findhy.com/blog/2014/04/21/big-data-business</id>
     <content type="html"><![CDATA[<p>大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？</p>
 
+<!--more-->
+
+
+<p></p>
+
 <blockquote><p>Q：<strong>大数据时代有哪些商业模式？</strong></p></blockquote>
 
 <h3>数据租售</h3>
@@ -1239,11 +1253,6 @@ Apache Lucene</em></li>
 <h3>数据技术</h3>
 
 <p>提供大数据技术支持，代表公司有cloudera。</p>
-
-<!--more-->
-
-
-<p></p>
 
 <blockquote><p>Q：<strong>有哪些大数据产品？</strong></p></blockquote>
 
@@ -1406,6 +1415,9 @@ statlib
 
 <p>下面五个特性保证了Storm实时处理的能力：</p>
 
+<!--more-->
+
+
 <ul>
 <li><strong>Fast</strong> &ndash; 快，每个节点每秒可以处理百万个100字节的消息</li>
 <li><strong>Scalable</strong> &ndash; 可扩展，这没得说</li>
@@ -1413,9 +1425,6 @@ statlib
 <li><strong>Reliable</strong> &ndash; 可靠性，Storm确保每个单元数据（tuple）会被处理最少一次，仅仅当消息处理失败才会发生通知</li>
 <li><strong>Easy to operate</strong> &ndash; 标准的配置适应于生产环境，一旦部署，Storm很容易操作。</li>
 </ul>
-
-
-<!--more-->
 
 
 <h1>Storm架构</h1>
@@ -1467,6 +1476,9 @@ statlib
     <id>http://findhy.com/blog/2014/03/23/how-do-design</id>
     <content type="html"><![CDATA[<p>最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。</p>
 
+<!--more-->
+
+
 <blockquote><p>Q：<strong>我为什么要学设计，有啥用？</strong></p></blockquote>
 
 <p>很多行业都有专业的设计学科，如建筑设计、美术设计等。那非设计专业的人为什么要学点设计呢？首先是对设计的理解，我觉得设计就是：<strong>建立与外界连接的桥梁</strong>。连接第一个层次就是沟通顺畅或者别人可以理解你，第二个层次是让人爽心悦目和产生共鸣。</p>
@@ -1474,9 +1486,6 @@ statlib
 <p><strong>如果这样来理解设计，那我们无时无刻不在设计或者参与设计，如何设计公司网站的首页、如何设计博客、如何设计简历、如何设计你的名片，如何写邮件、写文章等等，这些都需要设计，因为我们需要通过它们来与外界沟通</strong>。</p>
 
 <p>网页设计中，怎么样做到让访问者既能够很直观的了解网站的主题和用途，并且愿意停留呢？Google的首页是一个很好的例子，整个网页通过对比突出一个搜索框，你完全不需要思考就知道该怎么用了，不让用户思考是它设计的成功之处。苹果的产品不管在易用性和美观上都是好的设计，还有写邮件或者文章，怎么样让读者很快明白你所表达的意思也是需要设计的。</p>
-
-<!--more-->
-
 
 <blockquote><h2>如何做好设计？</h2></blockquote>
 
@@ -1553,15 +1562,15 @@ statlib
     <id>http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas</id>
     <content type="html"><![CDATA[<p>Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在<a href="http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/">这里</a>。对于国内的一些DBA想转型Hadoop的可以参考一下。</p>
 
-<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
-
-<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
-我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
-
 <!--more-->
 
 
 <p></p>
+
+<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
+
+<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
+我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
 
 <blockquote><p>Q：<strong>公司会录用一个没有Hadoop工作经验的DBA吗，如果会，看重的是什么呢？</strong></p></blockquote>
 

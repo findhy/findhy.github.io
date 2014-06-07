@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bigdata | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/bigdata/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -20,6 +20,11 @@
     <id>http://findhy.com/blog/2014/04/21/big-data-business</id>
     <content type="html"><![CDATA[<p>大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？</p>
 
+<!--more-->
+
+
+<p></p>
+
 <blockquote><p>Q：<strong>大数据时代有哪些商业模式？</strong></p></blockquote>
 
 <h3>数据租售</h3>
@@ -33,11 +38,6 @@
 <h3>数据技术</h3>
 
 <p>提供大数据技术支持，代表公司有cloudera。</p>
-
-<!--more-->
-
-
-<p></p>
 
 <blockquote><p>Q：<strong>有哪些大数据产品？</strong></p></blockquote>
 

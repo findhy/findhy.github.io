@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AWS | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/aws/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[S3cmd 配置和使用]]></title>
+    <title type="html"><![CDATA[S3cmd Configure]]></title>
     <link href="http://findhy.com/blog/2014/06/05/s3cmd-config/"/>
     <updated>2014-06-05T18:52:03+08:00</updated>
     <id>http://findhy.com/blog/2014/06/05/s3cmd-config</id>

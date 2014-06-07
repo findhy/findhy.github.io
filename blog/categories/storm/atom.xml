@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Storm | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/storm/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:10:13+08:00</updated>
+  <updated>2014-06-07T15:37:48+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,11 +14,14 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Storm-on-YARN安装说明]]></title>
+    <title type="html"><![CDATA[Storm-on-YARN Install]]></title>
     <link href="http://findhy.com/blog/2014/05/17/storm-on-yarn/"/>
     <updated>2014-05-17T06:37:52+08:00</updated>
     <id>http://findhy.com/blog/2014/05/17/storm-on-yarn</id>
     <content type="html"><![CDATA[<p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
+
+<!--more-->
+
 
 <p>环境说明</p>
 
@@ -103,9 +106,6 @@ source /etc/profile
 </code></pre>
 
 <p>测试结果，看到进入到了zookeeper的命令行就是成功了：</p>
-
-<!--more-->
-
 
 <h2>Storm-on-YARN搭建</h2>
 
@@ -319,6 +319,9 @@ source /etc/profile
 
 <p>下面五个特性保证了Storm实时处理的能力：</p>
 
+<!--more-->
+
+
 <ul>
 <li><strong>Fast</strong> &ndash; 快，每个节点每秒可以处理百万个100字节的消息</li>
 <li><strong>Scalable</strong> &ndash; 可扩展，这没得说</li>
@@ -326,9 +329,6 @@ source /etc/profile
 <li><strong>Reliable</strong> &ndash; 可靠性，Storm确保每个单元数据（tuple）会被处理最少一次，仅仅当消息处理失败才会发生通知</li>
 <li><strong>Easy to operate</strong> &ndash; 标准的配置适应于生产环境，一旦部署，Storm很容易操作。</li>
 </ul>
-
-
-<!--more-->
 
 
 <h1>Storm架构</h1>
