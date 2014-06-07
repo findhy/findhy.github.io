@@ -3,7 +3,7 @@ layout: post
 title: "Nginx在Linux上的安装和配置"
 date: 2014-05-17 07:12:34 +0800
 comments: true
-categories: Linux
+categories: Nginx
 ---
 Nginx是一个高性能的HTTP和反向代理服务器，官网在[这里](http://nginx.org/)。
 

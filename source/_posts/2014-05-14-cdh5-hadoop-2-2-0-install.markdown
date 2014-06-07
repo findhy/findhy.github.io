@@ -53,7 +53,7 @@ categories: Hadoop
     Ssh slave2  
   
 首次会让输入yes，后面就可以直接登录了
-
+<!--more-->
 ###5.JDK安装###
 
 用java –version检查是否安装了JDK，如果没有安装，则参照下面的连接安装：

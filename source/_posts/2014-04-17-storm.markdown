@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Storm"
+title: "Storm Introduction"
 date: 2014-04-17 22:54:04 +0800
 comments: true
-categories: Hadoop
+categories: Storm
 ---
 #使用场景
 Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。

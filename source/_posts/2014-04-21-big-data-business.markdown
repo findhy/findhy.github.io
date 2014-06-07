@@ -3,7 +3,7 @@ layout: post
 title: "大数据时代下的商机"
 date: 2014-04-21 22:57:30 +0800
 comments: true
-categories: 
+categories: Bigdata
 ---
 大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？
 

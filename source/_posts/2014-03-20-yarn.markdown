@@ -3,7 +3,7 @@ layout: post
 title: "YARN，Hadoop平台的操作系统"
 date: 2014-03-20 10:55:35 +0800
 comments: true
-categories: Hadoop
+categories: YARN
 ---
 
 YARN是Hadoop2.0版本推出的全新数据处理平台。通过YARN，用户可以在Hadoop平台中根据不同的应用场景选择不同的计算框架（MR、TEZ等），而且可以同时处理同一批数据。

@@ -1,0 +1,16 @@
+---
+layout: post
+title: "Swift Introduction"
+date: 2014-06-04 09:51:16 +0800
+comments: true
+categories: IOS
+---
+Swift是Apple下一代开发语言，并且为了保证兼容性，Swift代码可以和Objective-C代码共存（官方解释是：New Swift code co-exists along side your existing Objective-C files in the same project）。下面介绍一下它的特性：
+
+- 并行（parallel）：it runs multiple programs concurrently as soon as their inputs are available, reducing the need for complex parallel programming
+- 简单（easy）：Short, simple scripts can do large-scale work. The same script runs on multicore computers, clusters, grids, clouds, and supercomputers
+- 快（fast）：it can run a million programs, thousands at a time, launching hundreds per second
+- 灵活（flexible）：its being used in many fields of science, engineering, and business. Read the case studies
+
+官网：http://swift-lang.org/
+
