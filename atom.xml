@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-06T17:33:02+08:00</updated>
+  <updated>2014-06-07T11:11:49+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -40,13 +40,10 @@
 <h4>2.1 政府/非盈利机构（部分）</h4>
 
 <p>国内：<br/>
-<a href="http://www.stats.gov.cn/">http://www.stats.gov.cn/</a></p>
-
-<p><a href="http://www.bosidata.com/">http://www.bosidata.com/</a></p>
-
-<p><a href="http://www.cnnic.cn/">http://www.cnnic.cn/</a></p>
-
-<p><a href="http://www.eguan.cn/">http://www.eguan.cn/</a></p>
+<a href="http://www.stats.gov.cn/  ">http://www.stats.gov.cn/  </a>
+<a href="http://www.bosidata.com/  ">http://www.bosidata.com/  </a>
+<a href="http://www.cnnic.cn/  ">http://www.cnnic.cn/  </a>
+<a href="http://www.eguan.cn/">http://www.eguan.cn/</a></p>
 
 <p>国外：<br/>
 如果你在AWS上，这上面的可以看看，直接从S3 get下来。<br/>
@@ -60,6 +57,9 @@
 
 <p>想做一些项目，Wikipedia的数据足够了，它既有Batch Data，也有Streaming Data。
 <a href="http://en.wikipedia.org/wiki/Wikipedia:Database_download">http://en.wikipedia.org/wiki/Wikipedia:Database_download</a></p>
+
+<p>这是一个开放数据源的集合，里面有很多公开的金融的社会统计数据，可以下载也可是可视化显示，非常适合研究和教学<br/>
+<a href="http://www.quandl.com/">http://www.quandl.com/</a></p>
 
 <h4>2.2 商业公司</h4>
 
