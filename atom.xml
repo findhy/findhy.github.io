@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-07T15:04:55+08:00</updated>
+  <updated>2014-06-07T15:08:30+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -31,16 +31,12 @@
 
 <h4>2.参与方</h4>
 
-<p>在互联网广告整个生命周期中，一般会有四个参与方，这里引用微软一篇文章里面的图：
-<img src="http://findhy.com/images/ad1.png"></p>
-
-<ul>
-<li>需求方(Demand): 图中的广告主，可以是广告主(advertiser),也可以是代表广告主利益的代理商(agency)</li>
-<li>供给方(Supply): 图中的网页出版商，一般指互联网媒体，有流量的且可以提供广告位的媒体方。</li>
-<li>受众(Audience)：图中的网络用户，就是广告面向的用户</li>
-<li>广告平台：这个在下一节详细讲</li>
-</ul>
-
+<p>在互联网广告整个生命周期中，一般会有四个参与方，这里引用微软一篇文章里面的图：<br/>
+<img src="http://findhy.com/images/ad1.png"> <br/>
+&ndash; 需求方(Demand): 图中的广告主，可以是广告主(advertiser),也可以是代表广告主利益的代理商(agency)
+&ndash; 供给方(Supply): 图中的网页出版商，一般指互联网媒体，有流量的且可以提供广告位的媒体方。
+&ndash; 受众(Audience)：图中的网络用户，就是广告面向的用户
+&ndash; 广告平台：这个在下一节详细讲</p>
 
 <h4>3.广告分类</h4>
 
@@ -98,7 +94,8 @@
 <p>雅虎的相关研究论文<br/>
 <a href="http://research.yahoo.com/Computational_Advertising">http://research.yahoo.com/Computational_Advertising</a></p>
 
-<p><a href="http://www.zhihu.com/question/20363959">http://www.zhihu.com/question/20363959</a></p>
+<p>知乎讨论<br/>
+<a href="http://www.zhihu.com/question/20363959">http://www.zhihu.com/question/20363959</a></p>
 
 <p class='post-footer'>
             original link:
