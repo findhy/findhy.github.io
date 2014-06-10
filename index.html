@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Kafka的介绍参加这篇文章：Kafka Introduction，本文将Kafka、MQ、JMS这几个概念重新梳理一下，当然它们之间是有包含的关系，还有已经有了那么多的MQ产品，为什么LinkedIn还要开发Kafka呢？ ">
+  <meta name="description" content="Spouts是Storm中的Topology对应的消息生产者，消息将从Spouts发出，消息的单位是tuple，本文讲解Spouts核心方法以及Spouts方法的生命周期。相关接口方法看这里：ISpout。Spouts在Storm中的位置可以参考下图： ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -58,6 +58,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/storm-spouts-lifecycle/">Storm Spouts Lifecycle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-10T15:16:53+08:00" pubdate data-updated="true">Jun 10<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Spouts是Storm中的Topology对应的消息生产者，消息将从Spouts发出，消息的单位是tuple，本文讲解Spouts核心方法以及Spouts方法的生命周期。相关接口方法看这里：<a href="http://storm.incubator.apache.org/apidocs/backtype/storm/spout/ISpout.html">ISpout</a>。Spouts在Storm中的位置可以参考下图：<br/>
+<img src="/images/storm-concepts.png"></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/10/storm-spouts-lifecycle/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -431,58 +473,6 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-14T23:08:37+08:00" pubdate data-updated="true">May 14<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>环境说明</p>
-
-<pre><code>master 10.0.1.252  
-slave1 10.0.1.252  
-slave2 10.0.1.252  
-</code></pre>
-
-<p>软件版本</p>
-
-<pre><code>Hadoop 2.2.0-cdh5.0.0-beta-2  
-JDK 1.7.0_45
-</code></pre>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -516,7 +506,7 @@ JDK 1.7.0_45
 <li class='category'><a href='/blog/categories/others/'>Others (2)</a></li>
 <li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
-<li class='category'><a href='/blog/categories/storm/'>Storm (2)</a></li>
+<li class='category'><a href='/blog/categories/storm/'>Storm (3)</a></li>
 <li class='category'><a href='/blog/categories/titan/'>Titan (1)</a></li>
 <li class='category'><a href='/blog/categories/yarn/'>YARN (1)</a></li>
 
@@ -524,6 +514,10 @@ JDK 1.7.0_45
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/10/storm-spouts-lifecycle/">Storm Spouts Lifecycle</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/10/kafka-vs-mq-vs-jms/">Kafka vs MQ vs JMS</a>
