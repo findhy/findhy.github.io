@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Storm | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/storm/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-10T17:43:31+08:00</updated>
+  <updated>2014-06-10T17:48:38+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -181,9 +181,15 @@ public interface ISpout extends Serializable {
      *
      * &lt;p&gt;This includes the:&lt;/p&gt;
      *
-     * @param conf The Storm configuration for this spout. This is the configuration provided to the topology merged in with cluster configuration on this machine.
-     * @param context This object can be used to get information about this task's place within the topology, including the task id and component id of this task, input and output information, etc.
-     * @param collector The collector is used to emit tuples from this spout. Tuples can be emitted at any time, including the open and close methods. The collector is thread-safe and should be saved as an instance variable of this spout object.
+     * @param conf The Storm configuration for this spout. This is the configuration 
+     * provided to the topology merged in with cluster configuration on this machine.
+     * @param context This object can be used to get information about this task's place 
+     * within the topology, including the task id and component id of this task, input 
+     * and output information, etc.
+     * 
+     * @param collector The collector is used to emit tuples from this spout. 
+     * Tuples can be emitted at any time, including the open and close methods. 
+     * The collector is thread-safe and should be saved as an instance variable of this spout object.
      */
     void open(Map conf, TopologyContext context, SpoutOutputCollector collector);
 
@@ -217,8 +223,9 @@ public interface ISpout extends Serializable {
     void deactivate();
 
     /**
-     * spout发射Tuple时被调用，该方法必须是非阻塞的（non-blocking），这样如果Spout没有tuples可以发射了，这个方法也会返回
-     * nextTuple, ack, and fail这几个方法在同一个spout task同一个线程里面是会被循环调用的，当没有tuples可以发射了，应该让线程sleep一段时间
+     * spout发射Tuple时被调用，该方法必须是非阻塞的（non-blocking），这样如果Spout没有tuples可以发射了，
+     * 这个方法也会返回，nextTuple, ack, and fail这几个方法在同一个spout task同一个线程里面是会被循环调用的，
+     * 当没有tuples可以发射了，应该让线程sleep一段时间
      * 这样就不会占用太多的CPU资源了
      * 
      * When this method is called, Storm is requesting that the Spout emit tuples to the 
@@ -242,7 +249,8 @@ public interface ISpout extends Serializable {
 
     /**
      * 如果msgId对应的tuples处理失败，该方法会被调用，通常的实现会将tuples重新放回队列，让它多一段时间可以被处理
-     * 上面两个方法ack和fail是Storm保证数据一定被处理和避免重复处理的机制，参数msgId就是每次发射tuples的时候spout提供的一个
+     * 上面两个方法ack和fail是Storm保证数据一定被处理和避免重复处理的机制，
+     * 参数msgId就是每次发射tuples的时候spout提供的一个
      * message-id，后面可以通过这个message-id来追踪这个tuple
      * 
      * The tuple emitted by this spout with the msgId identifier has failed to be
