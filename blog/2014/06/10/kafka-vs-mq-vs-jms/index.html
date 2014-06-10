@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Kafka的介绍参加这篇文章：Kafka Introduction，本文将Kafka、MQ、JMS这几个概念重新梳理一下，当然它们之间是有包含的关系，还有已经有了那么多的MQ，为什么LinkedIn还有开发Kafka呢？ 1.MQ MQ的全称是Message Queue，中文名叫消息队列， &hellip;">
+  <meta name="description" content="Kafka的介绍参加这篇文章：Kafka Introduction，本文将Kafka、MQ、JMS这几个概念重新梳理一下，当然它们之间是有包含的关系，还有已经有了那么多的MQ产品，为什么LinkedIn还要开发Kafka呢？ 1.MQ MQ的全称是Message Queue，中文名叫消息队列， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
   </header>
 
 
-<div class="entry-content"><p>Kafka的介绍参加这篇文章：<a href="http://findhy.com/blog/2014/05/18/kafka/">Kafka Introduction</a>，本文将Kafka、MQ、JMS这几个概念重新梳理一下，当然它们之间是有包含的关系，还有已经有了那么多的MQ，为什么LinkedIn还有开发Kafka呢？</p>
+<div class="entry-content"><p>Kafka的介绍参加这篇文章：<a href="http://findhy.com/blog/2014/05/18/kafka/">Kafka Introduction</a>，本文将Kafka、MQ、JMS这几个概念重新梳理一下，当然它们之间是有包含的关系，还有已经有了那么多的MQ产品，为什么LinkedIn还要开发Kafka呢？</p>
 
 <!--more-->
 
@@ -94,7 +94,8 @@
 <p>MQ的全称是Message Queue，中文名叫消息队列，是一种进程间通信或同一进程的不同线程间的通信方式，进程将消息存入链表数据结构中，然后其它拥有权限的进程去读取消息，这个过程是异步的，就是说消息接受者需要去轮询消息队列。详细可以参考Wikipedia的介绍：<a href="http://zh.wikipedia.org/wiki/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">Message Queue</a>。</p>
 
 <p>MQ是一种标准或者是一种通信方式，它是一个逻辑概念或者一个定义，不是一个具体的产品，但是有很多产品按照它定义的标准来实现，包括：JBoss Messaging、JORAM、<strong>Apache ActiveMQ</strong>、Sun Open Message Queue、Apache Qpid、HTTPSQS、Sparrow、Starling、<strong>Kestrel</strong>、<strong>RabbitMQ</strong>、Beanstalkd、<strong>Amazon SQS</strong>、<strong>Kafka</strong>、<strong>ZeroMQ</strong>、EagleMQ、IronMQ、FQueue、Spring AMQP、HornetQ、MQSSave、FFMQ、JMS4Spread、mom4j、OpenJMS、UberMQ等。这些都是Message Queue，关于这些产品的介绍可以去Google，或者参考下面两个链接：
-<a href="http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or%E3%80%81http://www.open-open.com/53.htm%E3%80%82">http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or%E3%80%81http://www.open-open.com/53.htm%E3%80%82</a></p>
+<a href="http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or  ">http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or  </a>
+<a href="http://www.open-open.com/53.htm%E3%80%82">http://www.open-open.com/53.htm%E3%80%82</a></p>
 
 <h3>2.JMS</h3>
 
@@ -104,11 +105,11 @@
 
 <p>Kafka的介绍以及特性还有它在hadoop生态系统中的位置，可以参考这篇文章：<a href="http://findhy.com/blog/2014/05/18/kafka/">Kafka Introduction</a>，已经有了那么多的MQ产品，LinkedIn为什么还要再开发Kafka呢？目前业界比较成熟的MQ产品RabbitMQ、ZeroMQ、ActiveMQ，Kafka和它们相比有哪些优势？</p>
 
-<p>关于RabbitMQ、ZeroMQ、ActiveMQ这几个的对比，可以参考这几篇文章：<br/>
+<p>关于RabbitMQ、ZeroMQ、ActiveMQ这几个的对比，可以参考这里：<br/>
 <a href="http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or  ">http://stackoverflow.com/questions/731233/activemq-or-rabbitmq-or-zeromq-or  </a>
 <a href="http://itindex.net/detail/43897-%E6%B6%88%E6%81%AF-%E4%B8%AD%E9%97%B4%E4%BB%B6-%E6%8A%80%E6%9C%AF">http://itindex.net/detail/43897-%E6%B6%88%E6%81%AF-%E4%B8%AD%E9%97%B4%E4%BB%B6-%E6%8A%80%E6%9C%AF</a></p>
 
-<p>Kafka与RabbitMQ比较可以看这篇文章：<br/>
+<p>Kafka与RabbitMQ比较可以参考这里：<br/>
 <a href="http://www.quora.com/RabbitMQ/RabbitMQ-vs-Kafka-which-one-for-durable-messaging-with-good-query-features">http://www.quora.com/RabbitMQ/RabbitMQ-vs-Kafka-which-one-for-durable-messaging-with-good-query-features</a></p>
 
 <p>Kafka拥有更高的吞吐量和更好的分布式支持。</p>
