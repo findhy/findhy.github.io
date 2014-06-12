@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Spouts是Storm中的Topology对应的消息生产者，消息将从Spouts发出，消息的单位是tuple，本文讲解Spouts核心方法以及Spouts方法的生命周期。相关接口方法看这里：ISpout。Spouts在Storm中的位置可以参考下图： ">
+  <meta name="description" content="本文涉及到几个概念后面细说，Websocket协议、socket.io、Java-WebSocket，核心都是围绕Websocket，最后重点讲解在Java端实现Websocket的访问。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -58,6 +58,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/12/java-websocket/">Java-WebSocket</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-12T22:51:51+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文涉及到几个概念后面细说，Websocket协议、socket.io、Java-WebSocket，核心都是围绕Websocket，最后重点讲解在Java端实现Websocket的访问。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/12/java-websocket/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -432,47 +473,6 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/17/storm-on-yarn/">Storm-on-YARN Install</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-17T06:37:52+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/17/storm-on-yarn/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -508,12 +508,17 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
 <li class='category'><a href='/blog/categories/storm/'>Storm (3)</a></li>
 <li class='category'><a href='/blog/categories/titan/'>Titan (1)</a></li>
+<li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
 <li class='category'><a href='/blog/categories/yarn/'>YARN (1)</a></li>
 
   </ul>
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/12/java-websocket/">Java-WebSocket</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/10/storm-spouts-lifecycle/">Storm Spouts Lifecycle</a>
@@ -589,10 +594,6 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
     
       <li class="post">
         <a href="/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/">A Hackable Text Editor for the 21st Century</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/24/how-to-become-a-hacker/">How to Become a Hacker</a>
       </li>
     
   </ul>

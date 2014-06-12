@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-10T17:49:06+08:00</updated>
+  <updated>2014-06-13T00:05:36+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,147 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java-WebSocket]]></title>
+    <link href="http://findhy.com/blog/2014/06/12/java-websocket/"/>
+    <updated>2014-06-12T22:51:51+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/12/java-websocket</id>
+    <content type="html"><![CDATA[<p>本文涉及到几个概念后面细说，Websocket协议、socket.io、Java-WebSocket，核心都是围绕Websocket，最后重点讲解在Java端实现Websocket的访问。</p>
+
+<!--more-->
+
+
+<h3>1.Websocket协议</h3>
+
+<p>首先解释一下Websocket协议，<a href="http://zh.wikipedia.org/wiki/WebSocket">Wikipedia</a>的定义是：</p>
+
+<blockquote><p>WebSocket是HTML5开始提供的一种浏览器与服务器间进行全双工通讯的网络技术</p></blockquote>
+
+<p>什么是【全双工】？可以理解为双方经过对方确认可以互传数据了。客户端和服务器端建立<a href="http://zh.wikipedia.org/wiki/%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE">TCP</a>连接的时候需要经过三次握手过程才能达到全双工的连接状态。在WebSocket API中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。</p>
+
+<p>在Websocket协议之前，浏览器和服务器端最常用的是HTTP协议，而HTTP协议是半双工，服务器端无法实时向客户端发送消息，但是很多场景下我们又有这样的需求，以前的解决方案是浏览器端做轮询或者用Comet做长连接，两种方案都比较消耗资源。</p>
+
+<p>Websocket协议的出现完全解决了这个问题，服务器端可实现主动推送数据到客户端。现在主流的浏览器Chrome、Firefox等都已经支持Websocket协议了。</p>
+
+<p>而在服务器端，主流的web服务器和编程语言都对Websocket进行了支持，下面摘自Wikipedia：</p>
+
+<ul>
+<li>php &ndash; <a href="http://code.google.com/p/phpwebsocket/">http://code.google.com/p/phpwebsocket/</a></li>
+<li>jetty &ndash; <a href="http://jetty.codehaus.org/jetty/">http://jetty.codehaus.org/jetty/</a> (版本7开始支持websocket)</li>
+<li>netty &ndash; <a href="http://www.jboss.org/netty">http://www.jboss.org/netty</a></li>
+<li>ruby &ndash; <a href="http://github.com/gimite/web-socket-ruby">http://github.com/gimite/web-socket-ruby</a></li>
+<li>Kaazing &ndash; <a href="http://www.kaazing.org/confluence/display/KAAZING/Home">http://www.kaazing.org/confluence/display/KAAZING/Home</a></li>
+<li>Tomcat &ndash; <a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> (7.0.26支持websocket)</li>
+<li>WebLogic &ndash; <a href="http://www.oracle.com/us/products/middleware/cloud-app-foundation/-">http://www.oracle.com/us/products/middleware/cloud-app-foundation/-</a> weblogic/overview/index.html (12.1.2 开始支持)</li>
+<li>node.js &ndash; <a href="https://github.com/Worlize/WebSocket-Node">https://github.com/Worlize/WebSocket-Node</a></li>
+<li>node.js &ndash; <a href="http://socket.io">http://socket.io</a></li>
+<li>nginx &ndash; <a href="http://nginx.com/">http://nginx.com/</a></li>
+<li>mojolicious &ndash; <a href="http://mojolicio.us/">http://mojolicio.us/</a></li>
+<li>python &ndash; <a href="https://github.com/abourget/gevent-socketio">https://github.com/abourget/gevent-socketio</a></li>
+<li>Django &ndash; <a href="https://github.com/stephenmcd/django-socketio">https://github.com/stephenmcd/django-socketio</a></li>
+<li>Java &ndash; <a href="http://java-websocket.org/">http://java-websocket.org/</a></li>
+</ul>
+
+
+<h3>2.socket.io</h3>
+
+<p><a href="http://socket.io/">socket.io</a>一个是基于Node.js架构体系的，支持Websocket的协议用于时时通信的一个软件包。socket.io给跨浏览器构建实时应用提供了完整的封装，socket.io完全由javascript实现。Node.js实现Websocket访问的方式有很多种，socket.io是最常用的的。</p>
+
+<p>和Node.js一样，socket.io是基于事件驱动模型，它使用Websocket协议，但同时对Adobe Flash sockets、JSONP polling、AJAX long polling也提供支持，它的源代码在这里<a href="https://github.com/Automattic/socket.io">socket.io-github</a>。</p>
+
+<p>所以socket.io是一个对Websocket协议封装的javascript库，我们可以用它来完成客户端和服务器端的代码。</p>
+
+<h3>3.Java-WebSocket</h3>
+
+<p>我们有时会有这样的需求，就是在后台Java端去调用一个Websocket接口的服务，比如在Android端去请求一个公共Websocket服务，<a href="http://java-websocket.org/">Java-WebSocket</a>就是为了这样的需求而产生的，你可以完全用Java代码来实现Websocket的服务器端和客户端，而且它支持WSS，WSS是安全的Websocket连接，类似于HTTPS，下面我们来看一个客户端的例子，用Java实现用读取Wikipedia提供的Websocket接口：当前谁在Wikipedia上修改了文章，代码如下：</p>
+
+<pre><code>package storm.kafka.websocket;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_10;
+import org.java_websocket.framing.Framedata;
+import org.java_websocket.handshake.ServerHandshake;
+
+/**
+ * This example demonstrates how to create a websocket connection to a server.
+ * Only the most important callbacks are overloaded.
+ */
+public class TestWebsocket extends WebSocketClient {
+
+    public TestWebsocket(URI serverUri, Draft draft) {
+        super(serverUri, draft);
+    }
+
+    public TestWebsocket(URI serverURI) {
+        super(serverURI);
+    }
+
+    @Override
+    public void onOpen(ServerHandshake handshakedata) {
+        System.out.println("opened connection");
+        // if you plan to refuse connection based on ip or httpfields overload:
+        // onWebsocketHandshakeReceivedAsClient
+    }
+
+    @Override
+    public void onMessage(String message) {
+        System.out.println("received: " + message);
+    }
+
+    public void onFragment(Framedata fragment) {
+        System.out.println("received fragment: "
+                + new String(fragment.getPayloadData().array()));
+    }
+
+    @Override
+    public void onClose(int code, String reason, boolean remote) {
+        // The codecodes are documented in class
+        // org.java_websocket.framing.CloseFrame
+        System.out.println("Connection closed by "
+                + (remote ? "remote peer" : "us"));
+    }
+
+    @Override
+    public void onError(Exception ex) {
+        ex.printStackTrace();
+        // if the error is fatal then onClose will be called additionally
+    }
+
+    public static void main(String[] args) throws URISyntaxException {
+        TestWebsocket c = new TestWebsocket(new URI("ws://wikimon.hatnote.com:9000"),
+                new Draft_10()); // more about drafts here:
+                                    // http://github.com/TooTallNate/Java-WebSocket/wiki/Drafts
+        c.connect();
+    }
+
+}
+</code></pre>
+
+<p>执行结果如下：</p>
+
+<pre><code>opened connection
+received: {"action": "edit", "change_size": 7, "flags": "M", "is_anon": false, "is_bot": false, "is_minor": true, "is_new": false, "is_unpatrolled": false, "ns": "Main", "page_title": "Siege of Amida (502\u2013503)", "parent_rev_id": "612641484", "rev_id": "575212259", "summary": "categorized for missing coordinate data", "url": "http://en.wikipedia.org/w/index.php?diff=612641484&amp;oldid=575212259", "user": "Kevinsam"}
+received: {"action": "edit", "change_size": 38, "flags": null, "geo_ip": {"areacode": "", "city": "", "country_code": "US", "country_name": "United States", "ip": "71.167.104.60", "latitude": 38, "longitude": -97, "metro_code": "", "region_code": "", "region_name": "", "zipcode": ""}, "is_anon": true, "is_bot": false, "is_minor": false, "is_new": false, "is_unpatrolled": false, "ns": "Main", "page_title": "KMOV", "parent_rev_id": "612641485", "rev_id": "612641166", "summary": "/* History */", "url": "http://en.wikipedia.org/w/index.php?diff=612641485&amp;oldid=612641166", "user": "71.167.104.60"}
+</code></pre>
+
+<h3>4.总结</h3>
+
+<p>Websocket协议是为了解决服务器推送数据到客户端而出现的由于HTTP协议的解决方案，基于Websocket协议又有很多实现，实现包括客户端和服务器端，客户端体现在主流的浏览器现在基本上都支持Websocket协议，服务器端体现在各个web服务器都对Websocket提供支持，各个编程语言也提供相应的实现包，让我们针对Websocket的开发更容易。</p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://findhy.com/blog/2014/06/12/java-websocket/'>http://findhy.com/blog/2014/06/12/java-websocket/</a><br/>
+            written by <a href='http://findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
+            </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Storm Spouts Lifecycle]]></title>
@@ -2070,168 +2211,6 @@ Combiner就是在Map端对数据进行一次本地Reduce，对数据量进行一
 
 <pre><code>        original link:
         &lt;a href='http://findhy.com/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/'&gt;http://findhy.com/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
-        &lt;/p&gt;
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Become a Hacker]]></title>
-    <link href="http://findhy.com/blog/2014/02/24/how-to-become-a-hacker/"/>
-    <updated>2014-02-24T20:08:45+08:00</updated>
-    <id>http://findhy.com/blog/2014/02/24/how-to-become-a-hacker</id>
-    <content type="html"><![CDATA[<p>From：<a href="http://www.catb.org/esr/faqs/hacker-howto.html">http://www.catb.org/esr/faqs/hacker-howto.html</a></p>
-
-<p>Some Questions</p>
-
-<!-- more -->
-
-
-<p>Q:How do I tell if I am already a hacker?</p>
-
-<p>A:Ask yourself the following three questions:</p>
-
-<p>Do you speak code, fluently?</p>
-
-<p>Do you identify with the goals and values of the hacker community?</p>
-
-<p>Has a well-established member of the hacker community ever called you a hacker?</p>
-
-<p>If you can answer yes to all three of these questions, you are already a hacker. No two alone are sufficient.</p>
-
-<p>The first test is about skills. You probably pass it if you have the minimum technical skills described earlier in this document. You blow right through it if you have had a substantial amount of code accepted by an open-source development project.</p>
-
-<p>The second test is about attitude. If the five principles of the hacker mindset seemed obvious to you, more like a description of the way you already live than anything novel, you are already halfway to passing it. That&rsquo;s the inward half; the other, outward half is the degree to which you identify with the hacker community&rsquo;s long-term projects.</p>
-
-<p>Here is an incomplete but indicative list of some of those projects: Does it matter to you that Linux improve and spread? Are you passionate about software freedom? Hostile to monopolies? Do you act on the belief that computers can be instruments of empowerment that make the world a richer and more humane place?</p>
-
-<p>But a note of caution is in order here. The hacker community has some specific, primarily defensive political interests — two of them are defending free-speech rights and fending off &ldquo;intellectual-property&rdquo; power grabs that would make open source illegal. Some of those long-term projects are civil-liberties organizations like the Electronic Frontier Foundation, and the outward attitude properly includes support of them. But beyond that, most hackers view attempts to systematize the hacker attitude into an explicit political program with suspicion; we&rsquo;ve learned, the hard way, that these attempts are divisive and distracting. If someone tries to recruit you to march on your capitol in the name of the hacker attitude, they&rsquo;ve missed the point. The right response is probably “Shut up and show them the code.”</p>
-
-<p>The third test has a tricky element of recursiveness about it. I observed in the section called “What Is a Hacker?” that being a hacker is partly a matter of belonging to a particular subculture or social network with a shared history, an inside and an outside. In the far past, hackers were a much less cohesive and self-aware group than they are today. But the importance of the social-network aspect has increased over the last thirty years as the Internet has made connections with the core of the hacker subculture easier to develop and maintain. One easy behavioral index of the change is that, in this century, we have our own T-shirts.</p>
-
-<p>Sociologists, who study networks like those of the hacker culture under the general rubric of &ldquo;invisible colleges&rdquo;, have noted that one characteristic of such networks is that they have gatekeepers — core members with the social authority to endorse new members into the network. Because the &ldquo;invisible college&rdquo; that is hacker culture is a loose and informal one, the role of gatekeeper is informal too. But one thing that all hackers understand in their bones is that not every hacker is a gatekeeper. Gatekeepers have to have a certain degree of seniority and accomplishment before they can bestow the title. How much is hard to quantify, but every hacker knows it when they see it.</p>
-
-<p>Q:Will you teach me how to hack?</p>
-
-<p>A:Since first publishing this page, I&rsquo;ve gotten several requests a week (often several a day) from people to &ldquo;teach me all about hacking&rdquo;. Unfortunately, I don&rsquo;t have the time or energy to do this; my own hacking projects, and working as an open-source advocate, take up 110% of my time.</p>
-
-<p>Even if I did, hacking is an attitude and skill you basically have to teach yourself. You&rsquo;ll find that while real hackers want to help you, they won&rsquo;t respect you if you beg to be spoon-fed everything they know.</p>
-
-<p>Learn a few things first. Show that you&rsquo;re trying, that you&rsquo;re capable of learning on your own. Then go to the hackers you meet with specific questions.</p>
-
-<p>If you do email a hacker asking for advice, here are two things to know up front. First, we&rsquo;ve found that people who are lazy or careless in their writing are usually too lazy and careless in their thinking to make good hackers — so take care to spell correctly, and use good grammar and punctuation, otherwise you&rsquo;ll probably be ignored. Secondly, don&rsquo;t dare ask for a reply to an ISP account that&rsquo;s different from the account you&rsquo;re sending from; we find people who do that are usually thieves using stolen accounts, and we have no interest in rewarding or assisting thievery.</p>
-
-<p>Q:How can I get started, then?</p>
-
-<p>A:The best way for you to get started would probably be to go to a LUG (Linux user group) meeting. You can find such groups on the LDP General Linux Information Page; there is probably one near you, possibly associated with a college or university. LUG members will probably give you a Linux if you ask, and will certainly help you install one and get started.</p>
-
-<p>Your next step (and your first step if you can&rsquo;t find a LUG nearby) should be to find an open-source project that interests you. Start reading code and reviewing bugs. Learn to contribute, and work your way in.</p>
-
-<p>The only way in is by working to improve your skills. If you ask me personally for advice on how to get started, I will tell you these exact same things, because I don&rsquo;t have any magic shortcuts for you. I will also mentally write you off as a probable loser &ndash; because if you lacked the stamina to read this FAQ and the intelligence to understand from it that the only way in is by working to improve your skills, you&rsquo;re hopeless.</p>
-
-<p>Q:When do you have to start? Is it too late for me to learn?</p>
-
-<p>A:Any age at which you are motivated to start is a good age. Most people seem to get interested between ages 15 and 20, but I know of exceptions in both directions.</p>
-
-<p>Q:How long will it take me to learn to hack?</p>
-
-<p>A:That depends on how talented you are and how hard you work at it. Most people who try can acquire a respectable skill set in eighteen months to two years, if they concentrate. Don&rsquo;t think it ends there, though; in hacking (as in many other fields) it takes about ten years to achieve mastery. And if you are a real hacker, you will spend the rest of your life learning and perfecting your craft.</p>
-
-<p>Q:Is Visual Basic a good language to start with?</p>
-
-<p>A:If you&rsquo;re asking this question, it almost certainly means you&rsquo;re thinking about trying to hack under Microsoft Windows. This is a bad idea in itself. When I compared trying to learn to hack under Windows to trying to learn to dance while wearing a body cast, I wasn&rsquo;t kidding. Don&rsquo;t go there. It&rsquo;s ugly, and it never stops being ugly.</p>
-
-<p>There is a specific problem with Visual Basic; mainly that it&rsquo;s not portable. Though there is a prototype open-source implementations of Visual Basic, the applicable ECMA standards don&rsquo;t cover more than a small set of its programming interfaces. On Windows most of its library support is proprietary to a single vendor (Microsoft); if you aren&rsquo;t extremely careful about which features you use — more careful than any newbie is really capable of being — you&rsquo;ll end up locked into only those platforms Microsoft chooses to support. If you&rsquo;re starting on a Unix, much better languages with better libraries are available. Python, for example.</p>
-
-<p>Also, like other Basics, Visual Basic is a poorly-designed language that will teach you bad programming habits. No, don&rsquo;t ask me to describe them in detail; that explanation would fill a book. Learn a well-designed language instead.</p>
-
-<p>One of those bad habits is becoming dependent on a single vendor&rsquo;s libraries, widgets, and development tools. In general, any language that isn&rsquo;t fully supported under at least Linux or one of the BSDs, and/or at least three different vendors&#8217; operating systems, is a poor one to learn to hack in.</p>
-
-<p>Q:Would you help me to crack a system, or teach me how to crack?</p>
-
-<p>A:No. Anyone who can still ask such a question after reading this FAQ is too stupid to be educable even if I had the time for tutoring. Any emailed requests of this kind that I get will be ignored or answered with extreme rudeness.</p>
-
-<p>Q:How can I get the password for someone else&rsquo;s account?</p>
-
-<p>A:This is cracking. Go away, idiot.</p>
-
-<p>Q:How can I break into/read/monitor someone else&rsquo;s email?</p>
-
-<p>A:This is cracking. Get lost, moron.</p>
-
-<p>Q:How can I steal channel op privileges on IRC?</p>
-
-<p>A:This is cracking. Begone, cretin.</p>
-
-<p>Q:I&rsquo;ve been cracked. Will you help me fend off further attacks?</p>
-
-<p>A:No. Every time I&rsquo;ve been asked this question so far, it&rsquo;s been from some poor sap running Microsoft Windows. It is not possible to effectively secure Windows systems against crack attacks; the code and architecture simply have too many flaws, which makes securing Windows like trying to bail out a boat with a sieve. The only reliable prevention starts with switching to Linux or some other operating system that is designed to at least be capable of security.</p>
-
-<p>Q:I&rsquo;m having problems with my Windows software. Will you help me?</p>
-
-<p>A:Yes. Go to a DOS prompt and type &ldquo;format c:&rdquo;. Any problems you are experiencing will cease within a few minutes.</p>
-
-<p>Q:Where can I find some real hackers to talk with?</p>
-
-<p>A:The best way is to find a Unix or Linux user&rsquo;s group local to you and go to their meetings (you can find links to several lists of user groups on the LDP site at ibiblio).</p>
-
-<p>(I used to say here that you wouldn&rsquo;t find any real hackers on IRC, but I&rsquo;m given to understand this is changing. Apparently some real hacker communities, attached to things like GIMP and Perl, have IRC channels now.)</p>
-
-<p>Q:Can you recommend useful books about hacking-related subjects?</p>
-
-<p>A:I maintain a Linux Reading List HOWTO that you may find helpful. The Loginataka may also be interesting.</p>
-
-<p>For an introduction to Python, see the tutorial on the Python site.</p>
-
-<p>Q:Do I need to be good at math to become a hacker?</p>
-
-<p>A:No. Hacking uses very little formal mathematics or arithmetic. In particular, you won&rsquo;t usually need trigonometry, calculus or analysis (there are exceptions to this in a handful of specific application areas like 3-D computer graphics). Knowing some formal logic and Boolean algebra is good. Some grounding in finite mathematics (including finite-set theory, combinatorics, and graph theory) can be helpful.</p>
-
-<p>Much more importantly: you need to be able to think logically and follow chains of exact reasoning, the way mathematicians do. While the content of most mathematics won&rsquo;t help you, you will need the discipline and intelligence to handle mathematics. If you lack the intelligence, there is little hope for you as a hacker; if you lack the discipline, you&rsquo;d better grow it.</p>
-
-<p>I think a good way to find out if you have what it takes is to pick up a copy of Raymond Smullyan&rsquo;s book What Is The Name Of This Book?. Smullyan&rsquo;s playful logical conundrums are very much in the hacker spirit. Being able to solve them is a good sign; enjoying solving them is an even better one.</p>
-
-<p>Q:What language should I learn first?</p>
-
-<p>A:XHTML (the latest dialect of HTML) if you don&rsquo;t already know it. There are a lot of glossy, hype-intensive bad HTML books out there, and distressingly few good ones. The one I like best is HTML: The Definitive Guide.</p>
-
-<p>But HTML is not a full programming language. When you&rsquo;re ready to start programming, I would recommend starting with Python. You will hear a lot of people recommending Perl, but it&rsquo;s harder to learn and (in my opinion) less well designed.</p>
-
-<p>C is really important, but it&rsquo;s also much more difficult than either Python or Perl. Don&rsquo;t try to learn it first.</p>
-
-<p>Windows users, do not settle for Visual Basic. It will teach you bad habits, and it&rsquo;s not portable off Windows. Avoid.</p>
-
-<p>Q:What kind of hardware do I need?</p>
-
-<p>A:It used to be that personal computers were rather underpowered and memory-poor, enough so that they placed artificial limits on a hacker&rsquo;s learning process. This stopped being true in the mid-1990s; any machine from an Intel 486DX50 up is more than powerful enough for development work, X, and Internet communications, and the smallest disks you can buy today are plenty big enough.</p>
-
-<p>The important thing in choosing a machine on which to learn is whether its hardware is Linux-compatible (or BSD-compatible, should you choose to go that route). Again, this will be true for almost all modern machines. The only really sticky areas are modems and wireless cards; some machines have Windows-specific hardware that won&rsquo;t work with Linux.</p>
-
-<p>There&rsquo;s a FAQ on hardware compatibility; the latest version is here.</p>
-
-<p>Q:I want to contribute. Can you help me pick a problem to work on?</p>
-
-<p>A:No, because I don&rsquo;t know your talents or interests. You have to be self-motivated or you won&rsquo;t stick, which is why having other people choose your direction almost never works.</p>
-
-<p>Try this. Watch the project announcements scroll by on Freshmeat for a few days. When you see one that makes you think &ldquo;Cool! I&rsquo;d like to work on that!&rdquo;, join it.</p>
-
-<p>Q:Do I need to hate and bash Microsoft?</p>
-
-<p>A:No, you don&rsquo;t. Not that Microsoft isn&rsquo;t loathsome, but there was a hacker culture long before Microsoft and there will still be one long after Microsoft is history. Any energy you spend hating Microsoft would be better spent on loving your craft. Write good code — that will bash Microsoft quite sufficiently without polluting your karma.</p>
-
-<p>Q:But won&rsquo;t open-source software leave programmers unable to make a living?</p>
-
-<p>A:This seems unlikely — so far, the open-source software industry seems to be creating jobs rather than taking them away. If having a program written is a net economic gain over not having it written, a programmer will get paid whether or not the program is going to be open-source after it&rsquo;s done. And, no matter how much &ldquo;free&rdquo; software gets written, there always seems to be more demand for new and customized applications. I&rsquo;ve written more about this at the Open Source pages.</p>
-
-<p>Q:Where can I get a free Unix?</p>
-
-<p>A:If you don&rsquo;t have a Unix installed on your machine yet, elsewhere on this page I include pointers to where to get the most commonly used free Unix. To be a hacker you need motivation and initiative and the ability to educate yourself. Start now&hellip;
-  <p class='post-footer'></p>
-
-<pre><code>        original link:
-        &lt;a href='http://findhy.com/blog/2014/02/24/how-to-become-a-hacker/'&gt;http://findhy.com/blog/2014/02/24/how-to-become-a-hacker/&lt;/a&gt;&lt;br/&gt;
         written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
         &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
         &lt;/p&gt;
