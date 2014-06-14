@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="本文涉及到几个概念后面细说，Websocket协议、socket.io、Java-WebSocket，核心都是围绕Websocket，最后重点讲解在Java端实现Websocket的访问。 ">
+  <meta name="description" content="我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology： ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -58,6 +58,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/14/kafka-storm-notserializableexception/">Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-14T20:24:15+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/14/kafka-storm-notserializableexception/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -432,47 +473,6 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/17/nginx-on-linux/">Nginx Install on Centos</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-17T07:12:34+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/17/nginx-on-linux/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -501,6 +501,7 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 <li class='category'><a href='/blog/categories/io/'>IO (1)</a></li>
 <li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
 <li class='category'><a href='/blog/categories/kafka/'>Kafka (2)</a></li>
+<li class='category'><a href='/blog/categories/kafka-storm/'>Kafka,Storm (1)</a></li>
 <li class='category'><a href='/blog/categories/nginx/'>Nginx (1)</a></li>
 <li class='category'><a href='/blog/categories/opendata/'>Opendata (1)</a></li>
 <li class='category'><a href='/blog/categories/others/'>Others (2)</a></li>
@@ -515,6 +516,10 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/14/kafka-storm-notserializableexception/">Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/12/java-websocket/">Java-WebSocket</a>
@@ -590,10 +595,6 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
     
       <li class="post">
         <a href="/blog/2014/03/16/io/">存储系统-I/O</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/27/a-hackable-text-editor-for-the-21st-century/">A Hackable Text Editor for the 21st Century</a>
       </li>
     
   </ul>

@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Nginx Install on Centos - Findhy's Blog</title>
+  <title>Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Nginx是一个高性能的HTTP和反向代理服务器，官网在这里。 1.配置nginx的yum源 sudo vi /etc/yum.repos.d/nginx.repo 添加下面的内容： [nginx]
-name=nginx repo baseurl=http://nginx.org/packages &hellip;">
+  <meta name="description" content="我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology： storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ name=nginx repo baseurl=http://nginx.org/packages &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/05/17/nginx-on-linux">
+  <link rel="canonical" href="http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -62,7 +61,7 @@ name=nginx repo baseurl=http://nginx.org/packages &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Nginx Install on Centos</h1>
+      <h1 class="entry-title">Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer</h1>
     
     
       <p class="meta">
@@ -78,101 +77,65 @@ name=nginx repo baseurl=http://nginx.org/packages &hellip;">
   
 
 
-<time datetime="2014-05-17T07:12:34+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+<time datetime="2014-06-14T20:24:15+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
+<div class="entry-content"><p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
 
 <!--more-->
 
 
-<h3>1.配置nginx的yum源</h3>
-
-<pre><code>sudo vi /etc/yum.repos.d/nginx.repo
+<pre><code>storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with-dependencies.jar storm.kafka.topology.CyouStormTopology -c nimbus.host=10.0.1.254
 </code></pre>
 
-<p>添加下面的内容：</p>
+<p>但是报错：</p>
 
-<pre><code>[nginx]
-name=nginx repo 
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ 
-gpgcheck=0 
-enabled=1
+<pre><code>Exception in thread "main" java.lang.RuntimeException: java.io.NotSerializableException: kafka.javaapi.producer.Producer
+    at backtype.storm.utils.Utils.serialize(Utils.java:56)
+    at backtype.storm.topology.TopologyBuilder.createTopology(TopologyBuilder.java:89)
+    at storm.kafka.topology.CyouStormTopology.main(CyouStormTopology.java:32)
+Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
+    at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1183)
+    at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1547)
+    at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1508)
+    at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1431)
+    at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1177)
+    at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:347)
+    at backtype.storm.utils.Utils.serialize(Utils.java:52)
+    ... 2 more
 </code></pre>
 
-<p>保存退出</p>
+<p>后来参考这里的提示：<a href="https://groups.google.com/forum/#!msg/storm-user/heQSeawhC5I/y40-FnQ4hiUJ  ">https://groups.google.com/forum/#!msg/storm-user/heQSeawhC5I/y40-FnQ4hiUJ  </a>
+修改代码如下：</p>
 
-<h3>2.安装</h3>
+<pre><code>    @Override
+    public void prepare(Map stormConf, TopologyContext context,
+            OutputCollector collector) {
+        LOG.info("begin to prepare in bolt from CyouSendToKafkaBolt");
+        this._collerctor = collector;
 
-<pre><code>sudo yum install nginx
+        Properties props = new Properties();
+        props.put("metadata.broker.list", "master:9092");
+        props.put("serializer.class", "kafka.serializer.StringEncoder");
+        props.put("partitioner.class", "storm.kafka.producer.CyouPartitioner");
+        props.put("request.required.acks", "1");
+        ProducerConfig config = new ProducerConfig(props);
+
+        producer = new Producer&lt;String, String&gt;(config);
+    }
 </code></pre>
 
-<h3>3.启动Nginx</h3>
+<p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去执行，最后再次执行就没有问题了。</p>
 
-<pre><code>sudo /etc/init.d/nginx start
-</code></pre>
-
-<p>访问：<a href="http://localhost">http://localhost</a></p>
-
-<h3>4.其它命令</h3>
-
-<pre><code>停止nginx服务：# /etc/init.d/nginx stop 
-启动nginx服务：# /etc/init.d/nginx start 
-编辑nginx配置文件：# vi /etc/nginx/nginx.conf
-</code></pre>
-
-<h3>5.反向代理配置</h3>
-
-<pre><code>sudo vi /etc/nginx/nginx.conf
-</code></pre>
-
-<p>配置：</p>
-
-<pre><code>upstream rexster {
-    server 127.0.0.1:8182 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-upstream yarn {
-    server 127.0.0.1:8089 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-upstream storm {
-    server 127.0.0.1:7070 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-server {
-    listen 80;
-    server_name yarn.xxx.com;
-    location / {
-        proxy_pass http://yarn;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    # redirect server error pages to the static page /50x.html
-}
-server {
-    listen 80;
-    server_name storm.xxx.com;
-    location / {
-        proxy_pass http://storm;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    # redirect server error pages to the static page /50x.html
-}
-</code></pre>
-
-<p>输入域名测试，跳转成功</p>
+<p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用。</p>
 
 <p class='post-footer'>
             original link:
-            <a href='http://findhy.com/blog/2014/05/17/nginx-on-linux/'>http://findhy.com/blog/2014/05/17/nginx-on-linux/</a><br/>
+            <a href='http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/'>http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/</a><br/>
             written by <a href='http://findhy.com'>Findhy</a>
             &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
             </p>
@@ -199,12 +162,12 @@ server {
   
 
 
-<time datetime="2014-05-17T07:12:34+08:00" pubdate data-updated="true">May 17<span>th</span>, 2014</time>
+<time datetime="2014-06-14T20:24:15+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/nginx/'>Nginx</a>
+    <a class='category' href='/blog/categories/kafka-storm/'>Kafka,Storm</a>
   
 </span>
 
@@ -220,10 +183,8 @@ server {
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/17/storm-on-yarn/" title="Previous Post: Storm-on-YARN Install">&laquo; Storm-on-YARN Install</a>
+        <a class="basic-alignment left" href="/blog/2014/06/12/java-websocket/" title="Previous Post: Java-WebSocket">&laquo; Java-WebSocket</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/18/kafka/" title="Next Post: Kafka Introduction">Kafka Introduction &raquo;</a>
       
     </p>
   </footer>
@@ -380,8 +341,8 @@ server {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/05/17/nginx-on-linux/';
-        var disqus_url = 'http://findhy.com/blog/2014/05/17/nginx-on-linux/';
+        var disqus_identifier = 'http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/';
+        var disqus_url = 'http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/';
         var disqus_script = 'embed.js';
       
     (function () {
