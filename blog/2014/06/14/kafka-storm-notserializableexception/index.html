@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology： storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with- &hellip;">
+  <meta name="description" content="我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology： storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
   </header>
 
 
-<div class="entry-content"><p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
+<div class="entry-content"><p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
 
 <!--more-->
 
@@ -129,9 +129,9 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
     }
 </code></pre>
 
-<p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去执行，最后再次执行就没有问题了。</p>
+<p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去初始化，最后再次执行就没有问题了。</p>
 
-<p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用。</p>
+<p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用而造成不会被serialized。</p>
 
 <p class='post-footer'>
             original link:
@@ -167,7 +167,7 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/kafka-storm/'>Kafka,Storm</a>
+    <a class='category' href='/blog/categories/kafka/'>Kafka</a>
   
 </span>
 
@@ -217,8 +217,7 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
 <li class='category'><a href='/blog/categories/hadoop/'>Hadoop (2)</a></li>
 <li class='category'><a href='/blog/categories/io/'>IO (1)</a></li>
 <li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
-<li class='category'><a href='/blog/categories/kafka/'>Kafka (2)</a></li>
-<li class='category'><a href='/blog/categories/kafka-storm/'>Kafka,Storm (1)</a></li>
+<li class='category'><a href='/blog/categories/kafka/'>Kafka (3)</a></li>
 <li class='category'><a href='/blog/categories/nginx/'>Nginx (1)</a></li>
 <li class='category'><a href='/blog/categories/opendata/'>Opendata (1)</a></li>
 <li class='category'><a href='/blog/categories/others/'>Others (2)</a></li>

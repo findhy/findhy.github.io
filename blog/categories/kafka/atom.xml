@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kafka | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/kafka/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-14T21:03:58+08:00</updated>
+  <updated>2014-06-14T21:09:47+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer]]></title>
+    <link href="http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/"/>
+    <updated>2014-06-14T20:24:15+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception</id>
+    <content type="html"><![CDATA[<p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
+
+<!--more-->
+
+
+<pre><code>storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with-dependencies.jar storm.kafka.topology.CyouStormTopology -c nimbus.host=10.0.1.254
+</code></pre>
+
+<p>但是报错：</p>
+
+<pre><code>Exception in thread "main" java.lang.RuntimeException: java.io.NotSerializableException: kafka.javaapi.producer.Producer
+    at backtype.storm.utils.Utils.serialize(Utils.java:56)
+    at backtype.storm.topology.TopologyBuilder.createTopology(TopologyBuilder.java:89)
+    at storm.kafka.topology.CyouStormTopology.main(CyouStormTopology.java:32)
+Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
+    at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1183)
+    at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1547)
+    at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1508)
+    at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1431)
+    at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1177)
+    at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:347)
+    at backtype.storm.utils.Utils.serialize(Utils.java:52)
+    ... 2 more
+</code></pre>
+
+<p>后来参考这里的提示：<a href="https://groups.google.com/forum/#!msg/storm-user/heQSeawhC5I/y40-FnQ4hiUJ  ">https://groups.google.com/forum/#!msg/storm-user/heQSeawhC5I/y40-FnQ4hiUJ  </a>
+修改代码如下：</p>
+
+<pre><code>    @Override
+    public void prepare(Map stormConf, TopologyContext context,
+            OutputCollector collector) {
+        LOG.info("begin to prepare in bolt from CyouSendToKafkaBolt");
+        this._collerctor = collector;
+
+        Properties props = new Properties();
+        props.put("metadata.broker.list", "master:9092");
+        props.put("serializer.class", "kafka.serializer.StringEncoder");
+        props.put("partitioner.class", "storm.kafka.producer.CyouPartitioner");
+        props.put("request.required.acks", "1");
+        ProducerConfig config = new ProducerConfig(props);
+
+        producer = new Producer&lt;String, String&gt;(config);
+    }
+</code></pre>
+
+<p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去初始化，最后再次执行就没有问题了。</p>
+
+<p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用而造成不会被serialized。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kafka vs MQ vs JMS]]></title>
