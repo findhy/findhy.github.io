@@ -79,6 +79,9 @@
 
 <time datetime="2014-06-07T12:50:40+08:00" pubdate data-updated="true">Jun 7<span>th</span>, 2014</time>
         
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://findhy.com">Comments</a>
+        
       </p>
     
   </header>
@@ -209,6 +212,8 @@
     </p>
     
       <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/06/07/computational-advertising/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/06/07/computational-advertising/" >Tweet</a>
   
   
   
@@ -352,6 +357,35 @@
   </ul>
 </section>
 
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/findhy">@findhy</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'findhy',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
 
 
 
@@ -392,6 +426,16 @@
 
 
 
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
 
 
 
