@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Storm | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/storm/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-15T23:08:21+08:00</updated>
+  <updated>2014-06-16T17:21:17+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Storm与Kafka集成开发]]></title>
+    <link href="http://findhy.com/blog/2014/06/16/storm-kafka-dev/"/>
+    <updated>2014-06-16T16:44:35+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/16/storm-kafka-dev</id>
+    <content type="html"><![CDATA[<p>项目源码在这里<a href="https://github.com/findhy/storm-kafka">storm-kafka</a>，里面包括了简单说明和测试过程，照着做就可以了，下面简单介绍一下。</p>
+
+<p><img src="/images/storm-kafka-dev1.png"></p>
+
+<!--more-->
+
+
+<ul>
+<li>数据源：该架构主要用来处理Streaming data，例子使用Wikipedia提供的Websocket接口，实时发送当前在Wikipedia网站编辑内容的用户相关信息</li>
+<li>Websocket：可以参考这篇文章<a href="http://findhy.com/blog/2014/06/12/java-websocket/">Java-Websocket</a>，本框架使用Java语言作为kafka的客户端实现，所以也用的Java来实现Websocket，Kafka也支持其它语言作为client，这里是支持的客户端列表<a href="https://cwiki.apache.org/confluence/display/KAFKA/Clients">kafka-client</a>，用Node.js也是一个不错的选择</li>
+<li>Storm：Storm与Kafka集成的重点在于Storm的Spout部分，这部分直接依赖这个库<a href="https://github.com/wurstmeister/storm-kafka-0.8-plus">storm-kafka-0.8-plus</a>，实现订阅Kafka的Topic</li>
+<li>数据出口：Storm对Streaming data处理完了之后，一般会有两种出口，一是将数据持久化到HBase/Cassandra/Redis这样的NoSql Database中，二是通知前端在可视化界面上实时变动，该框架实现的是Storm将处理完的数据再次发送到Kafka中，前端通过Node.js和socket.io去订阅这个数据就可以(这部分暂未实现)</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Storm Spouts Lifecycle]]></title>
