@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-17T12:01:54+08:00</updated>
+  <updated>2014-06-17T12:06:21+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Titan：下一代分布式图数据库]]></title>
+    <title type="html"><![CDATA[Titan:下一代分布式图数据库]]></title>
     <link href="http://findhy.com/blog/2014/06/17/titan-next-generation-graph-database/"/>
     <updated>2014-06-17T10:23:30+08:00</updated>
     <id>http://findhy.com/blog/2014/06/17/titan-next-generation-graph-database</id>
@@ -23,7 +23,7 @@
 <!--more-->
 
 
-<p>Graph Database作为NoSQL数据库四种存储模式(graph, key-value, column, and document)的其中一种，近年来发展迅猛，因为随着人工智能和社交网络不断发展和融合，数据结构越来越复杂，举个例子，以用户为中心的模型，用户的相关数据可能来源他的社交网络，也可能来源他的网购记录，也可能来源他的个人可穿戴设备等等，这个数据会呈现爆炸性增长，如果用户基数为千万级，再去做关联和流行度分析会非常复杂，Graph Database处理这样的需求具体天生的优势。目前市面上的<a href="http://en.wikipedia.org/wiki/Graph_database#Graph_database_projects">Graph Database</a>有很多，<a href="http://www.neo4j.org/">Neo4j</a>是最为成熟和知名度最高的产品，但因为Neo4j<a href="http://stackoverflow.com/questions/21558589/neo4j-sharding-aspect/21566766#21566766">不支持分片</a>导致其存在可伸缩性的问题，但是貌似Neo4j已经推出相应的解决方案架构，参考这里<a href="http://info.neotechnology.com/rs/neotechnology/images/Understanding%20Neo4j%20Scalability(2">Neo4j HA-1</a>.pdf)、<a href="http://neo4j.com/blog/2013-whats-coming-next-in-neo4j/">Neo4j HA-2</a>。</p>
+<p>Graph Database作为NoSQL数据库四种存储模式(graph, key-value, column, and document)的其中一种，近年来发展迅猛，因为随着人工智能和社交网络不断发展和融合，数据结构越来越复杂，举个例子，以用户为中心的模型，用户的相关数据可能来源他的社交网络，也可能来源他的网购记录，也可能来源他的个人可穿戴设备等等，这个数据会呈现爆炸性增长，如果用户基数为千万级，再去做关联和流行度分析会非常复杂，Graph Database处理这样的需求具体天生的优势。目前市面上的<a href="http://en.wikipedia.org/wiki/Graph_database#Graph_database_projects">Graph Database</a>有很多，<a href="http://www.neo4j.org/">Neo4j</a>是最为成熟和知名度最高的产品，但因为Neo4j<a href="http://stackoverflow.com/questions/21558589/neo4j-sharding-aspect/21566766#21566766">不支持分片</a>导致其存在可伸缩性的问题，但是貌似Neo4j已经推出相应的解决方案架构，参考这里<a href="http://info.neotechnology.com/rs/neotechnology/images/Understanding%20Neo4j%20Scalability(2).pdf">Neo4j HA-1</a>、<a href="http://neo4j.com/blog/2013-whats-coming-next-in-neo4j/">Neo4j HA-2</a>。</p>
 
 <p>Titan作为新一代的Graph Database，还比较年轻，但非常有前途，它的优势有几方面：</p>
 
@@ -31,20 +31,18 @@
 <li>天生支持分布式：横向扩展很容易，并且性能可以线性增长</li>
 <li>性能：Titan官方在Titan-0.1-alpha做过一个<a href="http://thinkaurelius.com/2012/08/06/titan-provides-real-time-big-graph-data/">测试</a>，性能表现非常强劲</li>
 <li>后端存储无关：它可以将数据存储在不同的数据库，目前支持HBase、Cassandra和BerkeleyDB，而且Titan 0.5.0将会集成另外一个模块：Titan/Hadoop，这样会让Titan与现有的数据平台结合更加容易</li>
-<li>后端索引不关：目前支持<a href="http://www.elasticsearch.org/">ElasticSearch</a>和<a href="http://lucene.apache.org/">Apache Lucene</a>两种索引</li>
+<li>后端索引无关：目前支持<a href="http://www.elasticsearch.org/">ElasticSearch</a>和<a href="http://lucene.apache.org/">Apache Lucene</a>两种索引</li>
 <li>支持多数据中心的高可用和热备份</li>
 <li>原生支持<a href="http://www.tinkerpop.com/">tinkerpop</a>：<a href="http://www.tinkerpop.com/">tinkerpop</a>是一系列Graph领域的开源软件栈</li>
 </ul>
 
-
-<p>另外Titan与2014-06-17刚刚发布了里程碑版本<a href="https://groups.google.com/forum/#!topic/aureliusgraphs/cNb4fKoe95M">Titan 0.5.0-M1</a>，增加了很多特性，而且文档更加完善了，而且该版本已经基于接近Titan 1.0版本了，除了不支持TP3。</p>
 
 <p>Titan的架构图：<br/>
 <img src="http://findhy.com/images/titan-next-1.png"></p>
 
 <h4>总结</h4>
 
-<p>目前Titan刚刚发布<a href="https://groups.google.com/forum/#!topic/aureliusgraphs/cNb4fKoe95M">Titan 0.5.0-M1</a>版本，Titan 0.5.0 GA会在七月底发布，这会是一个非常接近1.0版本的产品，对于有需求的公司可以进行预研，对它完全掌握了再投入生产，毕竟Titan在实际生产环境的案例和文档都比较欠缺。但我相信Titan会成为下一代非常出色的Graph Database，我也会继续研究Titan和发布相关Titan相关的文章，希望能为Titan在中国推广做一些贡献，有感兴趣的同学欢迎一起讨论。</p>
+<p>目前Titan刚刚发布<a href="https://groups.google.com/forum/#!topic/aureliusgraphs/cNb4fKoe95M">Titan 0.5.0-M1</a>版本，增加了很多特性，而且文档更加完善了，Titan 0.5.0 GA会在七月底发布，这会是一个非常接近1.0版本的产品，对于有需求的公司可以进行预研，对它完全掌握了再投入生产，毕竟Titan在实际生产环境的案例和技术文档都比较欠缺。但我相信Titan会成为下一代非常出色的Graph Database，我也会继续研究Titan和发布相关Titan相关的文章，希望能为Titan在中国推广做一些贡献，有感兴趣的同学欢迎一起讨论。</p>
 
 <p class='post-footer'>
             original link:
