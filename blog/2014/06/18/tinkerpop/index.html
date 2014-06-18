@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer - Findhy's Blog</title>
+  <title>TinkerPop Introduction - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology： storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with- &hellip;">
-  
+  <meta name="description" content="Titan,TinkerPop">
+  <meta name="keywords" content="Titan,TinkerPop">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception">
+  <link rel="canonical" href="http://findhy.com/blog/2014/06/18/tinkerpop">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -61,7 +61,7 @@
   
   <header>
     
-      <h1 class="entry-title">Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer</h1>
+      <h1 class="entry-title">TinkerPop Introduction</h1>
     
     
       <p class="meta">
@@ -77,7 +77,7 @@
   
 
 
-<time datetime="2014-06-14T20:24:15+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2014</time>
+<time datetime="2014-06-18T15:09:59+08:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://findhy.com">Comments</a>
@@ -87,62 +87,101 @@
   </header>
 
 
-<div class="entry-content"><p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
+<div class="entry-content"><p><a href="http://www.tinkerpop.com/">TinkerPop</a>是Graph领域的一系列开源工具包的集合。下面分别介绍：</p>
 
 <!--more-->
 
 
-<pre><code>storm jar storm-kafka-0.8-plus-test-0.1.0-SNAPSHOT-jar-with-dependencies.jar storm.kafka.topology.CyouStormTopology -c nimbus.host=10.0.1.254
+<h3>Blueprints</h3>
+
+<p>上一篇文章我们讲<a href="http://findhy.com/blog/2014/06/17/graph-database-data-structure/">Graph Database理论知识</a>的时候，提到了图论关于图(Graph)的定义：顶点和边组成的图形，也在后面提到了关于Graph的一系列操作，包括：插入顶点、插入边、获取路径等等。Blueprints是对图这种抽象模型的具体实现，官方定义：<a href="https://github.com/tinkerpop/blueprints/wiki">Blueprints</a>是一系列<a href="https://github.com/tinkerpop/gremlin/wiki/Defining-a-Property-Graph">属性图模型接口(property graph model interface)</a>，那么接下来，什么是属性图模型(property graph model)？满足下面三个条件的图(Graph)被称为属性图(property graphs)：</p>
+
+<ul>
+<li>顶点(vertices)和边(edges)可以包含任意多的key/value的属性</li>
+<li>方向性，边(edges)具有方向性，可以从一个顶点(vertices)指向另外一个顶点(vertices)</li>
+<li>多样性，顶点(vertices)之间的关系边(edges)可以是不同的类型，就是说两个顶点(vertices)可以拥有多种不同类型的边(edges)</li>
+</ul>
+
+
+<p>满足上述三个条件的graph被称为property graphs，下面展现一个property graphs的例子，数据格式可以是<a href="http://graphml.graphdrawing.org/index.html">GraphML</a>或者<a href="https://github.com/tinkerpop/blueprints/wiki/GraphSON-Reader-and-Writer-Library">GraphSON</a>，前者是<a href="https://github.com/tinkerpop/gremlin/blob/master/data/graph-example-1.xml">XML</a>，后者<a href="https://github.com/tinkerpop/gremlin/blob/master/data/graph-example-1.json">JSON</a>，当然JSON会更轻量级。</p>
+
+<p><img src="/images/tinkpop-1.png"></p>
+
+<p>一个property graphs包含下面这些元素</p>
+
+<ul>
+<li>一系列顶点(vertices)
+
+<ul>
+<li>每一个顶点(vertex)有一个唯一标识</li>
+<li>每一个顶点(vertex)有一个或者多个指向其它顶点的边(edge)</li>
+<li>每一个顶点(vertex)有一个或者多个指向自己的边(edge)</li>
+<li>每一个顶点(vertex)包含了一个或多个由map定义的key/value属性</li>
+</ul>
+</li>
+<li>一系列边(edges)
+
+<ul>
+<li>每一个边(edge)有一个唯一标识</li>
+<li>每一个边(edge)具有方向性指向一个顶点(vertex)</li>
+<li>每一个边(edge)有一个label来标识两个顶点(vertex)之间的关系</li>
+<li>每一个边(edge)包含了一个或多个由map定义的key/value属性</li>
+</ul>
+</li>
+</ul>
+
+
+<p>什么是property graphs搞明白之后，我们再来看Blueprints，Blueprints为属性图模型(property graph data model)提供了一套接口、实现还有测试用例，你可以把它想象成JDBC，JDBC对数据库的操作原语进行了封装和实现，只不过JDBC是用来操作关系型数据库，而Blueprints用来操作Graph Database。现在主流的Graph Database都支持Blueprints，而且在TinkerPop整个软件栈中，Blueprints是最底层的基础，就是其它的工具包都是基于它之上的封装和扩展。怎么使用Blueprints？</p>
+
+<p>maven引入：</p>
+
+<pre><code>&lt;dependency&gt;
+   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
+   &lt;version&gt;2.5.0&lt;/version&gt;
+&lt;/dependency&gt;
 </code></pre>
 
-<p>但是报错：</p>
+<p>样例代码：</p>
 
-<pre><code>Exception in thread "main" java.lang.RuntimeException: java.io.NotSerializableException: kafka.javaapi.producer.Producer
-    at backtype.storm.utils.Utils.serialize(Utils.java:56)
-    at backtype.storm.topology.TopologyBuilder.createTopology(TopologyBuilder.java:89)
-    at storm.kafka.topology.CyouStormTopology.main(CyouStormTopology.java:32)
-Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
-    at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1183)
-    at java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1547)
-    at java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1508)
-    at java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1431)
-    at java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1177)
-    at java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:347)
-    at backtype.storm.utils.Utils.serialize(Utils.java:52)
-    ... 2 more
+<pre><code>Graph graph = new Neo4jGraph("/tmp/my_graph");
+Vertex a = graph.addVertex(null);
+Vertex b = graph.addVertex(null);
+a.setProperty("name","marko");
+b.setProperty("name","peter");
+Edge e = graph.addEdge(null, a, b, "knows");
+e.setProperty("since", 2006);
+graph.shutdown();
 </code></pre>
 
-<p>后来参考这里的提示：<a href="https://groups.google.com/forum/#!msg/storm-user/heQSeawhC5I/y40-FnQ4hiUJ  ">https://groups.google.com/forum/#!msg/storm-user/heQSeawhC5I/y40-FnQ4hiUJ  </a>
-修改代码如下：</p>
+<h3>Pipes</h3>
 
-<pre><code>    @Override
-    public void prepare(Map stormConf, TopologyContext context,
-            OutputCollector collector) {
-        LOG.info("begin to prepare in bolt from CyouSendToKafkaBolt");
-        this._collerctor = collector;
+<p><a href="https://github.com/tinkerpop/pipes/wiki">Pipes</a>是一个图数据处理的框架，可以将它理解为管道(Pipe),它最大的好处是管道(Pipe)的输出可以作为其它管道(Pipe)的输入，这样我们就可以实现类似于mapreducer的复杂运算。</p>
 
-        Properties props = new Properties();
-        props.put("metadata.broker.list", "master:9092");
-        props.put("serializer.class", "kafka.serializer.StringEncoder");
-        props.put("partitioner.class", "storm.kafka.producer.CyouPartitioner");
-        props.put("request.required.acks", "1");
-        ProducerConfig config = new ProducerConfig(props);
+<h3>Gremlin</h3>
 
-        producer = new Producer&lt;String, String&gt;(config);
-    }
+<p><a href="https://github.com/tinkerpop/gremlin/wiki">Gremlin</a>是一个图遍历语言，可以用Gremlin来实现图的查询、分析和操作，Gremlin只能适用于支持Blueprints的图数据库，支持多种JVM语言：Java 和 Groovy，文档：<a href="http://gremlindocs.com/">GremlinDocs</a>、<a href="http://sql2gremlin.com/">SQL2Gremlin</a>。</p>
+
+<h3>Frames</h3>
+
+<p><a href="https://github.com/tinkerpop/frames/wiki">Frames</a>是一个object-to-graph映射框架</p>
+
+<h3>Furnace</h3>
+
+<p><a href="https://github.com/tinkerpop/furnace/wiki">Furnace</a>是一个Graph算法包</p>
+
+<h3>Rexster</h3>
+
+<p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是一个Graph Server</p>
+
+<p>TinkerPop的维护人员来自不同的Graph Database产品厂商，像Neo4j、Titan、OrientDB、Bitsy，它在Graph Database领域的地位我理解就像JavaEE里面的Apache。在最新的<a href="https://github.com/tinkerpop/tinkerpop3">TinkerPop3.0</a>版本的时候，TinkerPop将原本分散的各个工具包合并成了一个项目，并且增加了很多特性，Titan0.5版本还不支持TP3，将会在Titan1.0版本时支持，更多的可以看<a href="http://www.tinkerpop.com/docs/current/">TinkerPop3 Story/doc</a>。<p class='post-footer'></p>
+
+<pre><code>        original link:
+        &lt;a href='http://findhy.com/blog/2014/06/18/tinkerpop/'&gt;http://findhy.com/blog/2014/06/18/tinkerpop/&lt;/a&gt;&lt;br/&gt;
+        written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
+        &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
+        &lt;/p&gt;
 </code></pre>
-
-<p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去初始化，最后再次执行就没有问题了。</p>
-
-<p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用而造成不会被serialized。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/'>http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
 
 
@@ -165,12 +204,12 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
   
 
 
-<time datetime="2014-06-14T20:24:15+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2014</time>
+<time datetime="2014-06-18T15:09:59+08:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/kafka/'>Kafka</a>
+    <a class='category' href='/blog/categories/titan/'>Titan</a>
   
 </span>
 
@@ -179,7 +218,7 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/06/18/tinkerpop/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/06/18/tinkerpop/" >Tweet</a>
   
   
   
@@ -188,10 +227,8 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/06/12/java-websocket/" title="Previous Post: Java-WebSocket">&laquo; Java-WebSocket</a>
+        <a class="basic-alignment left" href="/blog/2014/06/17/graph-database-data-structure/" title="Previous Post: Graph Database">&laquo; Graph Database</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/16/storm-kafka-dev/" title="Next Post: Storm与Kafka集成开发">Storm与Kafka集成开发 &raquo;</a>
       
     </p>
   </footer>
@@ -376,8 +413,8 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/';
-        var disqus_url = 'http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/';
+        var disqus_identifier = 'http://findhy.com/blog/2014/06/18/tinkerpop/';
+        var disqus_url = 'http://findhy.com/blog/2014/06/18/tinkerpop/';
         var disqus_script = 'embed.js';
       
     (function () {
