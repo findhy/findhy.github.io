@@ -6,7 +6,7 @@ comments: true
 categories: Bigdata
 ---
 大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？
-
+<!--more--> 
 
 >Q：**大数据时代有哪些商业模式？**
 
@@ -18,8 +18,7 @@ categories: Bigdata
 
 ###数据技术
 提供大数据技术支持，代表公司有cloudera。
-
-<!--more-->  
+ 
 
 >Q：**有哪些大数据产品？**
 

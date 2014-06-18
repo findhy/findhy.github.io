@@ -6,12 +6,12 @@ comments: true
 categories: Hadoop
 ---
 Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在[这里](http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/)。对于国内的一些DBA想转型Hadoop的可以参考一下。
-
+<!--more--> 
 >Q：**如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？**
 
 A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。  
 我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。
-<!--more-->  
+ 
 
 
 > Q：**公司会录用一个没有Hadoop工作经验的DBA吗，如果会，看重的是什么呢？**

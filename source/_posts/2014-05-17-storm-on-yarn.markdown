@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Storm-on-YARN安装说明"
+title: "Storm-on-YARN Install"
 date: 2014-05-17 06:37:52 +0800
 comments: true
 categories: Storm
 ---
 Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。  
-
+<!--more-->
 环境说明  
     master 10.0.1.252  
     slave1 10.0.1.252  
@@ -60,7 +60,7 @@ vi /etc/profile，增加：
 
     ./bin/zkCli.sh -server 127.0.0.1:2181
 测试结果，看到进入到了zookeeper的命令行就是成功了：
-<!--more-->
+
 ## Storm-on-YARN搭建 ##
 ----------
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "s3cmd 配置和使用"
+title: "s3cmd Configure"
 date: 2014-06-05 18:52:03 +0800
 comments: true
 categories: AWS

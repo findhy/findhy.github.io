@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Nginx在Linux上的安装和配置"
+title: "Nginx install on Centos"
 date: 2014-05-17 07:12:34 +0800
 comments: true
 categories: Nginx
 ---
 Nginx是一个高性能的HTTP和反向代理服务器，官网在[这里](http://nginx.org/)。
-
+<!--more-->
 ### 1.配置nginx的yum源 ###
     sudo vi /etc/yum.repos.d/nginx.repo
 添加下面的内容：

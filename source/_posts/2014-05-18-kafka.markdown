@@ -7,12 +7,12 @@ categories: Kafka
 ---
 Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：http://kafka.apache.org/。
 Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：
-
+<!--more-->
 - 高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。
 - 可扩展：集群设计可以保证弹性扩展而不停机
 - 持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能
 - 分布式：分布式集群设计保证了系统的健壮性和容错性  
-<!--more-->
+
 #### Kafka的部署结构图 ####
 {% img /images/kafka.png %} 
 #### 为什么要用Kafka ####

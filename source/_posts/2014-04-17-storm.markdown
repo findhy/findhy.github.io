@@ -9,7 +9,7 @@ categories: Storm
 Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。
 
 下面五个特性保证了Storm实时处理的能力：  
-
+<!--more-->
 
 - **Fast** - 快，每个节点每秒可以处理百万个100字节的消息
 - **Scalable** - 可扩展，这没得说
@@ -17,7 +17,7 @@ Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现
 - **Reliable** - 可靠性，Storm确保每个单元数据（tuple）会被处理最少一次，仅仅当消息处理失败才会发生通知
 - **Easy to operate** - 标准的配置适应于生产环境，一旦部署，Storm很容易操作。
 
-<!--more-->
+
 #Storm架构
 一个Storm集群应该包含下面三类节点
 
