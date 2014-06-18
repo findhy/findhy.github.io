@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-18T17:27:05+08:00</updated>
+  <updated>2014-06-18T17:28:26+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[TinkerPop Introduction]]></title>
+    <title type="html"><![CDATA[TinkerPop]]></title>
     <link href="http://findhy.com/blog/2014/06/18/tinkerpop/"/>
     <updated>2014-06-18T15:09:59+08:00</updated>
     <id>http://findhy.com/blog/2014/06/18/tinkerpop</id>
@@ -105,14 +105,15 @@ graph.shutdown();
 
 <p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是一个Graph Server</p>
 
-<p>TinkerPop的维护人员来自不同的Graph Database产品厂商，像Neo4j、Titan、OrientDB、Bitsy，它在Graph Database领域的地位我理解就像JavaEE里面的Apache。在最新的<a href="https://github.com/tinkerpop/tinkerpop3">TinkerPop3.0</a>版本的时候，TinkerPop将原本分散的各个工具包合并成了一个项目，并且增加了很多特性，Titan0.5版本还不支持TP3，将会在Titan1.0版本时支持，更多的可以看<a href="http://www.tinkerpop.com/docs/current/">TinkerPop3 Story/doc</a>。<p class='post-footer'></p>
+<p>TinkerPop的维护人员来自不同的Graph Database产品厂商，像Neo4j、Titan、OrientDB、Bitsy，它在Graph Database领域的地位我理解就像JavaEE里面的Apache。在最新的<a href="https://github.com/tinkerpop/tinkerpop3">TinkerPop3.0</a>版本的时候，TinkerPop将原本分散的各个工具包合并成了一个项目，并且增加了很多特性，Titan0.5版本还不支持TP3，将会在Titan1.0版本时支持，更多的可以看<a href="http://www.tinkerpop.com/docs/current/">TinkerPop3 Story/doc</a>。</p>
 
-<pre><code>        original link:
-        &lt;a href='http://findhy.com/blog/2014/06/18/tinkerpop/'&gt;http://findhy.com/blog/2014/06/18/tinkerpop/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
-        &lt;/p&gt;
-</code></pre>
+<p class='post-footer'>
+            original link:
+            <a href='http://findhy.com/blog/2014/06/18/tinkerpop/'>http://findhy.com/blog/2014/06/18/tinkerpop/</a><br/>
+            written by <a href='http://findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
