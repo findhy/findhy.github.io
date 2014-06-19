@@ -155,14 +155,6 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
 <p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去初始化，最后再次执行就没有问题了。</p>
 
 <p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用而造成不会被serialized。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/'>http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 </div>
 
 

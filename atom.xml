@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-19T18:09:09+08:00</updated>
+  <updated>2014-06-19T18:32:18+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -191,14 +191,6 @@ vi rexster-hbase-es.xml
 <li>提供<a href="https://github.com/tinkerpop/rexster/wiki/RexPro-Java">RexsterClient</a>客户端去访问Rexster server，包括执行一些Graph的操作</li>
 </ul>
 
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/19/titan-tutorial/'>http://findhy.com/blog/2014/06/19/titan-tutorial/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -218,14 +210,6 @@ vi rexster-hbase-es.xml
 
 
 <p></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/19/titan-classic-get-started/'>http://findhy.com/blog/2014/06/19/titan-classic-get-started/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -277,14 +261,6 @@ rake preview
 
 
 <p></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/'>http://findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -381,14 +357,6 @@ graph.shutdown();
 <p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是一个Graph Server</p>
 
 <p>TinkerPop的维护人员来自不同的Graph Database产品厂商，像Neo4j、Titan、OrientDB、Bitsy，它在Graph Database领域的地位我理解就像JavaEE里面的Apache。在最新的<a href="https://github.com/tinkerpop/tinkerpop3">TinkerPop3.0</a>版本的时候，TinkerPop将原本分散的各个工具包合并成了一个项目，并且增加了很多特性，Titan0.5版本还不支持TP3，将会在Titan1.0版本时支持，更多的可以看<a href="http://www.tinkerpop.com/docs/current/">TinkerPop3 Story/doc</a>。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/18/tinkerpop/'>http://findhy.com/blog/2014/06/18/tinkerpop/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -449,14 +417,6 @@ graph.shutdown();
 <li>set_edge_value(G, x, y, v)：设置节点x和y之间的边(edge)的属性为v</li>
 </ul>
 
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/17/graph-database-data-structure/'>http://findhy.com/blog/2014/06/17/graph-database-data-structure/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -490,14 +450,6 @@ graph.shutdown();
 <h4>总结</h4>
 
 <p>目前Titan刚刚发布<a href="https://groups.google.com/forum/#!topic/aureliusgraphs/cNb4fKoe95M">Titan 0.5.0-M1</a>版本，增加了很多特性，而且文档更加完善了，Titan 0.5.0 GA会在七月底发布，这会是一个非常接近1.0版本的产品，对于有需求的公司可以进行预研，对它完全掌握了再投入生产，毕竟Titan在实际生产环境的案例和技术文档都比较欠缺。但我相信Titan会成为下一代非常出色的Graph Database，我也会继续研究Titan和发布相关Titan相关的文章，希望能为Titan在中国推广做一些贡献，有感兴趣的同学欢迎一起讨论。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/17/titan-next-generation-graph-database/'>http://findhy.com/blog/2014/06/17/titan-next-generation-graph-database/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -519,14 +471,6 @@ graph.shutdown();
 <li>Storm：Storm与Kafka集成的重点在于Storm的Spout部分，这部分直接依赖这个库<a href="https://github.com/wurstmeister/storm-kafka-0.8-plus">storm-kafka-0.8-plus</a>，实现订阅Kafka的Topic</li>
 <li>数据出口：Storm对Streaming data处理完了之后，一般会有两种出口，一是将数据持久化到HBase/Cassandra/Redis这样的NoSql Database中，二是通知前端在可视化界面上实时变动，该框架实现的是Storm将处理完的数据再次发送到Kafka中，前端通过Node.js和socket.io去订阅这个数据就可以(这部分暂未实现)</li>
 </ul>
-
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/16/storm-kafka-dev/'>http://findhy.com/blog/2014/06/16/storm-kafka-dev/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
 
 ]]></content>
   </entry>
@@ -584,14 +528,6 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
 <p>将原来在Bolt构造函数里面初始化Producer，改为在prepare(&hellip;)中去初始化，最后再次执行就没有问题了。</p>
 
 <p>总结：在bolt中做一些初始化的代码，要放到prepare(&hellip;)方法中，而不要放到构造函数中，因为prepare(&hellip;)方法是在Storm worker JVM中被调用，而构造函数是在Nimbus JVM中被调用而造成不会被serialized。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/'>http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -736,14 +672,6 @@ received: {"action": "edit", "change_size": 38, "flags": null, "geo_ip": {"areac
 <h3>4.总结</h3>
 
 <p>Websocket协议是为了解决服务器推送数据到客户端而出现的由于HTTP协议的解决方案，基于Websocket协议又有很多实现，实现包括客户端和服务器端，客户端体现在主流的浏览器现在基本上都支持Websocket协议，服务器端体现在各个web服务器都对Websocket提供支持，各个编程语言也提供相应的实现包，让我们针对Websocket的开发更容易。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/12/java-websocket/'>http://findhy.com/blog/2014/06/12/java-websocket/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1013,14 +941,6 @@ public interface ISpout extends Serializable {
 <a href="http://storm.incubator.apache.org/apidocs">storm-javadocs</a><br/>
 <a href="http://xumingming.sinaapp.com/117/twitter-storm%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5/">storm的一些关键概念</a><br/>
 <a href="http://xumingming.sinaapp.com/138/twitter-storm%E5%85%A5%E9%97%A8/">storm入门</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/10/storm-spouts-lifecycle/'>http://findhy.com/blog/2014/06/10/storm-spouts-lifecycle/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1058,14 +978,6 @@ public interface ISpout extends Serializable {
 <a href="http://www.quora.com/RabbitMQ/RabbitMQ-vs-Kafka-which-one-for-durable-messaging-with-good-query-features">http://www.quora.com/RabbitMQ/RabbitMQ-vs-Kafka-which-one-for-durable-messaging-with-good-query-features</a></p>
 
 <p>Kafka拥有更高的吞吐量和更好的分布式支持。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/10/kafka-vs-mq-vs-jms/'>http://findhy.com/blog/2014/06/10/kafka-vs-mq-vs-jms/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1156,14 +1068,6 @@ public interface ISpout extends Serializable {
 
 <p>知乎讨论<br/>
 <a href="http://www.zhihu.com/question/20363959">http://www.zhihu.com/question/20363959</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/07/computational-advertising/'>http://findhy.com/blog/2014/06/07/computational-advertising/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1239,14 +1143,6 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
 <p><a href="http://www.datapanda.net/123/">http://www.datapanda.net/123/</a></p>
 
 <p><a href="http://www.zhihu.com/question/19969760">http://www.zhihu.com/question/19969760</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/05/big-data-open-source/'>http://findhy.com/blog/2014/06/05/big-data-open-source/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1373,14 +1269,6 @@ Save settings? [y/N] y
 排除包含文件规则：s3cmd sync --dry-run --exclude '*.txt' --include 'dir2/*' ./ 
 更多参考这里：http://s3tools.org/s3cmd-sync
 </code></pre>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/05/s3cmd-config/'>http://findhy.com/blog/2014/06/05/s3cmd-config/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1403,14 +1291,6 @@ Save settings? [y/N] y
 
 
 <p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/06/04/swift/'>http://findhy.com/blog/2014/06/04/swift/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1552,14 +1432,6 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
 <a href="http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  ">http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  </a>
 <a href="https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de">https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de</a>  <br/>
 <a href="http://www.alidata.org/archives/1307">http://www.alidata.org/archives/1307</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/18/protocol-buffers/'>http://findhy.com/blog/2014/05/18/protocol-buffers/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1604,14 +1476,6 @@ Storm流数据平台需要处理的数据多种多样，如果直接用Storm来�
 <p>Kafka作为消息中间件，为Storm提供数据来源。<br/>
 Zookeeper为Kafka、Storm、HBase提供分布式协调服务，所以单独部署，不用HBase自带的Zookeeper。<br/>
 HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/18/kafka/'>http://findhy.com/blog/2014/05/18/kafka/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -1704,14 +1568,6 @@ server {
 </code></pre>
 
 <p>输入域名测试，跳转成功</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/17/nginx-on-linux/'>http://findhy.com/blog/2014/05/17/nginx-on-linux/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -2007,14 +1863,6 @@ source /etc/profile
 <p><a href="https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/">https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/</a></p>
 
 <p><a href="http://yzprofile.me/2013/04/25/storm-tutorial.html">http://yzprofile.me/2013/04/25/storm-tutorial.html</a></p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/17/storm-on-yarn/'>http://findhy.com/blog/2014/05/17/storm-on-yarn/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
@@ -2225,14 +2073,7 @@ scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hado
 
 <h3>19.YARN管理地址</h3>
 
-<p><a href="http://master:8089/cluster/cluster">http://master:8089/cluster/cluster</a><p class='post-footer'></p>
-
-<pre><code>        original link:
-        &lt;a href='http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/'&gt;http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
-        &lt;/p&gt;
-</code></pre>
+<p><a href="http://master:8089/cluster/cluster">http://master:8089/cluster/cluster</a></p>
 ]]></content>
   </entry>
   
