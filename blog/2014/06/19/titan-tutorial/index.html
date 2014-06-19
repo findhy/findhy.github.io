@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Protocol Buffers vs Avro vs Thrift - Findhy's Blog</title>
+  <title>Titan Tutorial - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。 1.RPC模型 &hellip;">
-  
+  <meta name="description" content="Titan入门教程">
+  <meta name="keywords" content="Titan入门,Titan教程,Graph Database,入门教程">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/05/18/protocol-buffers">
+  <link rel="canonical" href="http://findhy.com/blog/2014/06/19/titan-tutorial">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -61,7 +61,7 @@
   
   <header>
     
-      <h1 class="entry-title">Protocol Buffers vs Avro vs Thrift</h1>
+      <h1 class="entry-title">Titan Tutorial</h1>
     
     
       <p class="meta">
@@ -77,7 +77,7 @@
   
 
 
-<time datetime="2014-05-18T15:53:37+08:00" pubdate data-updated="true">May 18<span>th</span>, 2014</time>
+<time datetime="2014-06-19T13:43:40+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://findhy.com">Comments</a>
@@ -87,143 +87,181 @@
   </header>
 
 
-<div class="entry-content"><p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
+<div class="entry-content"><p>Titan的<a href="https://github.com/thinkaurelius/titan/wiki">官方手册</a>内容更加丰富，但是太多，初学者不知如何下手，本文摘取重点部分，希望能快速上手Titan。</p>
 
 <!--more-->
 
 
-<h3>1.RPC模型</h3>
+<h3>1.版本说明</h3>
 
-<p>一个简单的RPC调用模型如下图所示：<br/>
-<img src="/images/rpc_1.png"></p>
+<pre><code>Titan：titan-server-0.4.4
+HBase：hbase-0.94.6-cdh4.3.2
+Elasticsearch：elasticsearch-0.90.3
+</code></pre>
 
-<p>当我们在选型RPC框架的时候需要关注的几个核心问题是：</p>
+<h3>2.环境说明</h3>
+
+<p>服务器3台：</p>
+
+<pre><code>master 10.0.1.252
+slave1 10.0.1.253
+slave2 10.0.1.254
+</code></pre>
+
+<p>HBase搭建的是集群，一个master，两个slave；Elasticsearch在master上部署的单机版本；Titan在master上部署的单机版本。本文不包括HBase集群搭建过程。</p>
+
+<h3>3.Elasticsearch安装</h3>
+
+<p>由于Titan0.4.4版本只能支持Elasticsearch的版本是0.90.3，看这里<a href="https://github.com/thinkaurelius/titan/wiki/Version-Compatibility">Version-Compatibility</a>。所以这里注意版本，Elasticsearch 0.90.3的文档可以看这里<a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/index.html">Elasticsearch-doc</a>。下面开始安装。</p>
+
+<pre><code>wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.3.tar.gz
+tar –zxvf elasticsearch-0.90.3.tar.gz
+cd elasticsearch-0.90.3
+
+启动elasticsearch：
+./bin/elasticsearch
+执行jps，会看到多了一个ElasticSearch的进程，说明成功
+</code></pre>
+
+<h3>4.Titan安装</h3>
+
+<p>Titan有<a href="https://github.com/thinkaurelius/titan/wiki/Downloads">多种版本</a>提供下载，这里选择titan-server-0.4.4。</p>
+
+<pre><code>mkdir /home/hadoop/titan-cdh4.3.2
+进入
+cd titan-cdh4.3.2
+下载
+wget http://s3.thinkaurelius.com/downloads/titan/titan-server-0.4.4.zip
+解压
+unzip titan-server-0.4.4.zip
+进入目录
+cd titan-server-0.4.4
+</code></pre>
+
+<p>修改配置文件</p>
+
+<pre><code>vi ./conf/titan-hbase-es.properties
+
+storage.hostname=master,slave1,slave2
+storage.port=2181
+cache.db-cache = true
+cache.db-cache-clean-wait = 20
+cache.db-cache-time = 180000
+cache.db-cache-size = 0.5
+
+storage.index.search.backend=elasticsearch
+storage.index.search.hostname=master
+storage.index.search.client-only=true
+</code></pre>
+
+<p>初始化Titan与HBase</p>
+
+<pre><code>cd /home/hadoop/titan-cdh4.3.2/titan-server-0.4.4/
+./bin/gremlin.sh
+
+gremlin&gt;g = TitanFactory.open('conf/titan-hbase-es.properties')
+</code></pre>
+
+<p>这时候到hbase shell下面执行list命令，可以看到多了一张titan的表，执行describe &lsquo;titan&#8217;可以看到titan的表结构，加载数据：</p>
+
+<pre><code>gremlin&gt; GraphOfTheGodsFactory.load(g)
+</code></pre>
+
+<p>到hbase shell下面执行scan &lsquo;titan&#8217;可以看到初始化了一些数据，下面用gremlin命令行验证一下这些数据</p>
+
+<pre><code>gremlin&gt; saturn = g.V('name','saturn').next()
+==&gt;v[4]
+gremlin&gt; saturn.map()
+==&gt;name=saturn
+==&gt;age=10000
+==&gt;type=titan
+gremlin&gt; saturn.in('father').in('father').name
+==&gt;hercules
+</code></pre>
+
+<p>如果输出一致则验证成功</p>
+
+<h3>5.Rexster配置</h3>
+
+<p>这部分文档参考：<a href="https://github.com/thinkaurelius/titan/wiki/Rexster-Graph-Server">https://github.com/thinkaurelius/titan/wiki/Rexster-Graph-Server</a></p>
+
+<p>修改rexster配置文件</p>
+
+<pre><code>cd /home/hadoop/titan-cdh4.3.2/titan-server-0.4.4/conf
+cp rexster-cassandra-es.xml rexster-hbase-es.xml
+vi rexster-hbase-es.xml
+</code></pre>
+
+<p>有两个地方要改，一个是http这个标签，一个是graphs这个标签，黄色是需要修改的内容，第一个修改如下：</p>
+
+<pre><code>&lt;http&gt;
+  &lt;server-port&gt;8182&lt;/rexster-server-port&gt;
+  &lt;base-uri&gt;http://54.255.164.52&lt;/base-uri&gt;
+  &lt;web-root&gt;public&lt;/web-root&gt;
+  &lt;character-set&gt;UTF-8&lt;/character-set&gt;
+  ...
+&lt;/http&gt;
+</code></pre>
+
+<p>第二个修改如下：</p>
+
+<pre><code>&lt;graphs&gt;
+    &lt;graph&gt;
+        &lt;graph-name&gt;graph&lt;/graph-name&gt;
+       &lt;graph-type&gt;com.thinkaurelius.titan.tinkerpop.rexster.TitanGraphConfiguration&lt;/graph-type&gt;
+        &lt;!-- &lt;graph-location&gt;/tmp/titan&lt;/graph-location&gt; --&gt;
+        &lt;graph-read-only&gt;false&lt;/graph-read-only&gt;
+        &lt;properties&gt;
+            &lt;storage.backend&gt;hbase&lt;/storage.backend&gt;
+            &lt;storage.hostname&gt;master,slave1,slave2&lt;/storage.hostname&gt;
+            &lt;storage.index.search.backend&gt;elasticsearch&lt;/storage.index.search.backend&gt;
+            &lt;storage.index.search.hostname&gt;master&lt;/storage.index.search.hostname&gt;
+            &lt;!--&lt;storage.index.search.directory&gt;../db/es&lt;/storage.index.search.directory&gt;--&gt;
+            &lt;storage.index.search.client-only&gt;false&lt;/storage.index.search.client-only&gt;
+            &lt;storage.index.search.local-mode&gt;false&lt;/storage.index.search.local-mode&gt;
+        &lt;/properties&gt;
+        &lt;extensions&gt;
+          &lt;allows&gt;
+            &lt;allow&gt;tp:gremlin&lt;/allow&gt;
+          &lt;/allows&gt;
+        &lt;/extensions&gt;
+    &lt;/graph&gt;
+&lt;/graphs&gt;
+</code></pre>
+
+<p>启动Rexster</p>
+
+<pre><code>cd /home/hadoop/titan-cdh4.3.2/titan-server-0.4.4
+./bin/rexster.sh –s –c ../conf/rexster-hbase-es.xml
+</code></pre>
+
+<p>访问<a href="http://master-ip:8182/%EF%BC%8C%E5%87%BA%E7%8E%B0%E4%B8%8B%E9%9D%A2%E7%94%BB%E9%9D%A2%E5%88%99%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F">http://master-ip:8182/%EF%BC%8C%E5%87%BA%E7%8E%B0%E4%B8%8B%E9%9D%A2%E7%94%BB%E9%9D%A2%E5%88%99%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F</a></p>
+
+<p><img src="/images/titan-tul-1.png"></p>
+
+<p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是建立在任何实现了Blueprints的图数据库(Graph Database)之上的web server，它提供这三种功能：</p>
 
 <ul>
-<li>传输的协议和数据（JSON、XML等）是什么？</li>
-<li>如何高效的数据存储和传输？</li>
-<li>服务器端处理请求的方式？</li>
-</ul>
-
-
-<h3>2.不建议的方案</h3>
+<li>提供基于REST的接口方法：GET, POST, PUT, and DELETE，去操作Graph Database
 
 <ul>
-<li>SOAP：基于XML，传输的数据太多</li>
-<li>CORBA：多度设计而且重量级，<a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a></li>
-<li>DCOM, COM+ :主要用于windows客户端程序</li>
-<li>HTTP/JSON/XML/Plain Text：基于HTTP协议的，这种在简单的场景下是可以用的，像hessian，但缺点是缺乏更复杂的协议描述，只能传输简单的对象，而且JSON/XML都太重了</li>
+<li>基于上面的例子，在浏览器输入：<a href="http://master-ip:8182/graphs/graph/edges">http://master-ip:8182/graphs/graph/edges</a>  会返回graph的edge信息</li>
 </ul>
-
-
-<h3>3.建议方案</h3>
+</li>
+<li><a href="https://github.com/tinkerpop/rexster/wiki/The-Dog-House">The Dog House</a>提供基于浏览器去操作Graph，还有可视化Graph，界面如下：
 
 <ul>
-<li>Protocol Buffers</li>
-<li>Apache Thrift</li>
-<li>Apache Avro</li>
-<li>Message Pack</li>
-<li>kryo</li>
-<li>BSON</li>
+<li><img src="/images/titan-tul-2.png"></li>
+<li><img src="/images/titan-tul-3.png"></li>
+</ul>
+</li>
+<li>提供<a href="https://github.com/tinkerpop/rexster/wiki/RexPro-Java">RexsterClient</a>客户端去访问Rexster server，包括执行一些Graph的操作</li>
 </ul>
 
-
-<p>上面这些序列化框架共同的特点的是：有接口描述（IDL）、性能较高、版本控制和基于二进制的数据传输。下面重点介绍前三个。</p>
-
-<h3>4.Protocol Buffers</h3>
-
-<ul>
-<li>来源Google，于2001年开始设计，2008年开源</li>
-<li>非常稳定，大量运用在Google的生产环境中</li>
-<li>目前支持四种语言：C++, Java, Python, and JavaScript</li>
-<li><a href="https://code.google.com/p/protobuf/">https://code.google.com/p/protobuf/</a></li>
-</ul>
-
-
-<h3>5.Apache Thrift</h3>
-
-<ul>
-<li>由Google-X实验室的工程师于2007年设计，后来主要用于Facebook内部项目，现在为apache的开源项目</li>
-<li>旨在成为下一代的PB（更加全面的功能和支持更多的语言）</li>
-<li>支持更多语言，包括：C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#,
-Cocoa, JavaScript, Node.js, Smalltalk, OCaml and Delphi等</li>
-<li>IDL描述语言要比PB更简洁</li>
-<li>提供一个RPC调用栈</li>
-<li><a href="http://thrift.apache.org/">http://thrift.apache.org/</a></li>
-</ul>
-
-
-<h3>6.Apache Avro</h3>
-
-<ul>
-<li>Avro是Hadoop的作者Doug Cutting写的另外一个RPC框架</li>
-<li>支持序列化为JSON或者二进制</li>
-<li>支持从protobufs和thrift读写数据</li>
-<li>支持语言：Java, C, C++, C#, Python, Ruby</li>
-<li><a href="http://avro.apache.org/">http://avro.apache.org/</a></li>
-</ul>
-
-
-<h3>7.传输数据大小比较</h3>
-
-<p><img src="/images/rpc_2.png"></p>
-
-<p>Thrift-TBinaryProtocol &ndash; 没有经过压缩的二进制协议，比文本协议要快，但是很难调试<br/>
-Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
-
-<h3>8.哪些项目在使用Thrift？</h3>
-
-<ul>
-<li>Facebook</li>
-<li>Cassandra project</li>
-<li>Hadoop supports access to its HDFS API through Thrift bindings</li>
-<li>HBase leverages Thrift for a cross-language API</li>
-<li>Hypertable leverages Thrift for a cross-language API since v0.9.1.0a</li>
-<li>LastFM</li>
-<li>DoAT</li>
-<li>ThriftDB</li>
-<li>Scribe</li>
-<li>Evernote uses Thrift for its public API.</li>
-<li>Junkdepot</li>
-</ul>
-
-
-<h3>9.哪些项目在使用Protocol Buffers？</h3>
-
-<ul>
-<li>Google</li>
-<li>ActiveMQ uses the protobuf for Message store</li>
-<li>Netty (protobuf-rpc)</li>
-</ul>
-
-
-<h3>10.不同框架测试结果比较</h3>
-
-<p><a href="https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2">https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2</a></p>
-
-<h3>11.总结</h3>
-
-<ul>
-<li>其实大部分场景下，基于HTTP的Hessian或者阿里巴巴的Dubbo完全可以满足需求</li>
-<li>如果追求更高的性能，像高并发的游戏服务器端，可以选择Protocol Buffers、Avro或Thrift</li>
-<li>Protocol Buffers和Thrift的稳定性要更好，大量运用于Google和Facebook的生产环境中</li>
-<li>Thrift相比Protocol Buffers支持更多的语言，框架逻辑更加清晰，易于定制扩展，性能与Protocol Buffers不相上下，目前来说应该是最佳的选择</li>
-<li>Avro的优势在于Schema动态加载功能，而且Avro更适合于数据交换及存储的通用工具和平台</li>
-<li>Avro的性能不输Protocol Buffers和Thrift，但缺点是发展时间较短，没有经过太多项目的验证</li>
-</ul>
-
-
-<h3>12.参考</h3>
-
-<p><a href="http://www.slideshare.net/ChicagoHUG/avro-chug-20120416">http://www.slideshare.net/ChicagoHUG/avro-chug-20120416</a>
-<a href="http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro">http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro</a>
-<a href="http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  ">http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  </a>
-<a href="https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de">https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de</a>  <br/>
-<a href="http://www.alidata.org/archives/1307">http://www.alidata.org/archives/1307</a></p>
 
 <p class='post-footer'>
             original link:
-            <a href='http://findhy.com/blog/2014/05/18/protocol-buffers/'>http://findhy.com/blog/2014/05/18/protocol-buffers/</a><br/>
+            <a href='http://findhy.com/blog/2014/06/19/titan-tutorial/'>http://findhy.com/blog/2014/06/19/titan-tutorial/</a><br/>
             written by <a href='http://findhy.com'>Findhy</a>
             &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
             </p>
@@ -250,12 +288,12 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
   
 
 
-<time datetime="2014-05-18T15:53:37+08:00" pubdate data-updated="true">May 18<span>th</span>, 2014</time>
+<time datetime="2014-06-19T13:43:40+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rpc/'>RPC</a>
+    <a class='category' href='/blog/categories/titan/'>Titan</a>
   
 </span>
 
@@ -264,7 +302,7 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/05/18/protocol-buffers/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/05/18/protocol-buffers/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/06/19/titan-tutorial/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/06/19/titan-tutorial/" >Tweet</a>
   
   
   
@@ -273,10 +311,8 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/18/kafka/" title="Previous Post: Kafka Introduction">&laquo; Kafka Introduction</a>
+        <a class="basic-alignment left" href="/blog/2014/06/19/titan-classic-get-started/" title="Previous Post: Titan经典入门PPT">&laquo; Titan经典入门PPT</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/04/swift/" title="Next Post: Swift Introduction">Swift Introduction &raquo;</a>
       
     </p>
   </footer>
@@ -461,8 +497,8 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/05/18/protocol-buffers/';
-        var disqus_url = 'http://findhy.com/blog/2014/05/18/protocol-buffers/';
+        var disqus_identifier = 'http://findhy.com/blog/2014/06/19/titan-tutorial/';
+        var disqus_url = 'http://findhy.com/blog/2014/06/19/titan-tutorial/';
         var disqus_script = 'embed.js';
       
     (function () {

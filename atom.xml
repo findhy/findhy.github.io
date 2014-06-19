@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-19T11:47:43+08:00</updated>
+  <updated>2014-06-19T17:31:05+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -14,7 +14,194 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Titan经典入门]]></title>
+    <title type="html"><![CDATA[Titan Tutorial]]></title>
+    <link href="http://findhy.com/blog/2014/06/19/titan-tutorial/"/>
+    <updated>2014-06-19T13:43:40+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/19/titan-tutorial</id>
+    <content type="html"><![CDATA[<p>Titan的<a href="https://github.com/thinkaurelius/titan/wiki">官方手册</a>内容更加丰富，但是太多，初学者不知如何下手，本文摘取重点部分，希望能快速上手Titan。</p>
+
+<!--more-->
+
+
+<h3>1.版本说明</h3>
+
+<pre><code>Titan：titan-server-0.4.4
+HBase：hbase-0.94.6-cdh4.3.2
+Elasticsearch：elasticsearch-0.90.3
+</code></pre>
+
+<h3>2.环境说明</h3>
+
+<p>服务器3台：</p>
+
+<pre><code>master 10.0.1.252
+slave1 10.0.1.253
+slave2 10.0.1.254
+</code></pre>
+
+<p>HBase搭建的是集群，一个master，两个slave；Elasticsearch在master上部署的单机版本；Titan在master上部署的单机版本。本文不包括HBase集群搭建过程。</p>
+
+<h3>3.Elasticsearch安装</h3>
+
+<p>由于Titan0.4.4版本只能支持Elasticsearch的版本是0.90.3，看这里<a href="https://github.com/thinkaurelius/titan/wiki/Version-Compatibility">Version-Compatibility</a>。所以这里注意版本，Elasticsearch 0.90.3的文档可以看这里<a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/index.html">Elasticsearch-doc</a>。下面开始安装。</p>
+
+<pre><code>wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.3.tar.gz
+tar –zxvf elasticsearch-0.90.3.tar.gz
+cd elasticsearch-0.90.3
+
+启动elasticsearch：
+./bin/elasticsearch
+执行jps，会看到多了一个ElasticSearch的进程，说明成功
+</code></pre>
+
+<h3>4.Titan安装</h3>
+
+<p>Titan有<a href="https://github.com/thinkaurelius/titan/wiki/Downloads">多种版本</a>提供下载，这里选择titan-server-0.4.4。</p>
+
+<pre><code>mkdir /home/hadoop/titan-cdh4.3.2
+进入
+cd titan-cdh4.3.2
+下载
+wget http://s3.thinkaurelius.com/downloads/titan/titan-server-0.4.4.zip
+解压
+unzip titan-server-0.4.4.zip
+进入目录
+cd titan-server-0.4.4
+</code></pre>
+
+<p>修改配置文件</p>
+
+<pre><code>vi ./conf/titan-hbase-es.properties
+
+storage.hostname=master,slave1,slave2
+storage.port=2181
+cache.db-cache = true
+cache.db-cache-clean-wait = 20
+cache.db-cache-time = 180000
+cache.db-cache-size = 0.5
+
+storage.index.search.backend=elasticsearch
+storage.index.search.hostname=master
+storage.index.search.client-only=true
+</code></pre>
+
+<p>初始化Titan与HBase</p>
+
+<pre><code>cd /home/hadoop/titan-cdh4.3.2/titan-server-0.4.4/
+./bin/gremlin.sh
+
+gremlin&gt;g = TitanFactory.open('conf/titan-hbase-es.properties')
+</code></pre>
+
+<p>这时候到hbase shell下面执行list命令，可以看到多了一张titan的表，执行describe &lsquo;titan&#8217;可以看到titan的表结构，加载数据：</p>
+
+<pre><code>gremlin&gt; GraphOfTheGodsFactory.load(g)
+</code></pre>
+
+<p>到hbase shell下面执行scan &lsquo;titan&#8217;可以看到初始化了一些数据，下面用gremlin命令行验证一下这些数据</p>
+
+<pre><code>gremlin&gt; saturn = g.V('name','saturn').next()
+==&gt;v[4]
+gremlin&gt; saturn.map()
+==&gt;name=saturn
+==&gt;age=10000
+==&gt;type=titan
+gremlin&gt; saturn.in('father').in('father').name
+==&gt;hercules
+</code></pre>
+
+<p>如果输出一致则验证成功</p>
+
+<h3>5.Rexster配置</h3>
+
+<p>这部分文档参考：<a href="https://github.com/thinkaurelius/titan/wiki/Rexster-Graph-Server">https://github.com/thinkaurelius/titan/wiki/Rexster-Graph-Server</a></p>
+
+<p>修改rexster配置文件</p>
+
+<pre><code>cd /home/hadoop/titan-cdh4.3.2/titan-server-0.4.4/conf
+cp rexster-cassandra-es.xml rexster-hbase-es.xml
+vi rexster-hbase-es.xml
+</code></pre>
+
+<p>有两个地方要改，一个是http这个标签，一个是graphs这个标签，黄色是需要修改的内容，第一个修改如下：</p>
+
+<pre><code>&lt;http&gt;
+  &lt;server-port&gt;8182&lt;/rexster-server-port&gt;
+  &lt;base-uri&gt;http://54.255.164.52&lt;/base-uri&gt;
+  &lt;web-root&gt;public&lt;/web-root&gt;
+  &lt;character-set&gt;UTF-8&lt;/character-set&gt;
+  ...
+&lt;/http&gt;
+</code></pre>
+
+<p>第二个修改如下：</p>
+
+<pre><code>&lt;graphs&gt;
+    &lt;graph&gt;
+        &lt;graph-name&gt;graph&lt;/graph-name&gt;
+       &lt;graph-type&gt;com.thinkaurelius.titan.tinkerpop.rexster.TitanGraphConfiguration&lt;/graph-type&gt;
+        &lt;!-- &lt;graph-location&gt;/tmp/titan&lt;/graph-location&gt; --&gt;
+        &lt;graph-read-only&gt;false&lt;/graph-read-only&gt;
+        &lt;properties&gt;
+            &lt;storage.backend&gt;hbase&lt;/storage.backend&gt;
+            &lt;storage.hostname&gt;master,slave1,slave2&lt;/storage.hostname&gt;
+            &lt;storage.index.search.backend&gt;elasticsearch&lt;/storage.index.search.backend&gt;
+            &lt;storage.index.search.hostname&gt;master&lt;/storage.index.search.hostname&gt;
+            &lt;!--&lt;storage.index.search.directory&gt;../db/es&lt;/storage.index.search.directory&gt;--&gt;
+            &lt;storage.index.search.client-only&gt;false&lt;/storage.index.search.client-only&gt;
+            &lt;storage.index.search.local-mode&gt;false&lt;/storage.index.search.local-mode&gt;
+        &lt;/properties&gt;
+        &lt;extensions&gt;
+          &lt;allows&gt;
+            &lt;allow&gt;tp:gremlin&lt;/allow&gt;
+          &lt;/allows&gt;
+        &lt;/extensions&gt;
+    &lt;/graph&gt;
+&lt;/graphs&gt;
+</code></pre>
+
+<p>启动Rexster</p>
+
+<pre><code>cd /home/hadoop/titan-cdh4.3.2/titan-server-0.4.4
+./bin/rexster.sh –s –c ../conf/rexster-hbase-es.xml
+</code></pre>
+
+<p>访问<a href="http://master-ip:8182/%EF%BC%8C%E5%87%BA%E7%8E%B0%E4%B8%8B%E9%9D%A2%E7%94%BB%E9%9D%A2%E5%88%99%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F">http://master-ip:8182/%EF%BC%8C%E5%87%BA%E7%8E%B0%E4%B8%8B%E9%9D%A2%E7%94%BB%E9%9D%A2%E5%88%99%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F</a></p>
+
+<p><img src="http://findhy.com/images/titan-tul-1.png"></p>
+
+<p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是建立在任何实现了Blueprints的图数据库(Graph Database)之上的web server，它提供这三种功能：</p>
+
+<ul>
+<li>提供基于REST的接口方法：GET, POST, PUT, and DELETE，去操作Graph Database
+
+<ul>
+<li>基于上面的例子，在浏览器输入：<a href="http://master-ip:8182/graphs/graph/edges">http://master-ip:8182/graphs/graph/edges</a>  会返回graph的edge信息</li>
+</ul>
+</li>
+<li><a href="https://github.com/tinkerpop/rexster/wiki/The-Dog-House">The Dog House</a>提供基于浏览器去操作Graph，还有可视化Graph，界面如下：
+
+<ul>
+<li><img src="http://findhy.com/images/titan-tul-2.png"></li>
+<li><img src="http://findhy.com/images/titan-tul-3.png"></li>
+</ul>
+</li>
+<li>提供<a href="https://github.com/tinkerpop/rexster/wiki/RexPro-Java">RexsterClient</a>客户端去访问Rexster server，包括执行一些Graph的操作</li>
+</ul>
+
+
+<p class='post-footer'>
+            original link:
+            <a href='http://findhy.com/blog/2014/06/19/titan-tutorial/'>http://findhy.com/blog/2014/06/19/titan-tutorial/</a><br/>
+            written by <a href='http://findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
+            </p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Titan经典入门PPT]]></title>
     <link href="http://findhy.com/blog/2014/06/19/titan-classic-get-started/"/>
     <updated>2014-06-19T11:00:50+08:00</updated>
     <id>http://findhy.com/blog/2014/06/19/titan-classic-get-started</id>
@@ -2044,54 +2231,6 @@ scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hado
         &amp;nbsp;posted at &lt;a href='http://findhy.com'&gt;http://findhy.com&lt;/a&gt;
         &lt;/p&gt;
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Titan Introduction]]></title>
-    <link href="http://findhy.com/blog/2014/05/14/titan-graph-db/"/>
-    <updated>2014-05-14T22:35:18+08:00</updated>
-    <id>http://findhy.com/blog/2014/05/14/titan-graph-db</id>
-    <content type="html"><![CDATA[<p>Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：</p>
-
-<!--more-->
-
-
-<ul>
-<li>弹性和性能的线性扩展</li>
-<li>容错性</li>
-<li>多数据中心的高可用性和热备份</li>
-<li>支持事务的ACID和最终一致性</li>
-<li>支持多种不同的后端存储<br/>
-<em>Apache Cassandra（分布式）<br/>
-Apache HBase（分布式）<br/>
-Oracle BerkeleyDB（本地的）<br/>
-Persistit（本地）</em></li>
-<li>支持多种后端索引  <br/>
-<em>ElasticSearch<br/>
-Apache Lucene</em></li>
-<li>与图形处理栈TinkerPop原生集成   <br/>
-  <em>图查询语言Gremlin<br/>
-  对象到图的映射器Frames<br/>
-  图服务器Rexster<br/>
-  标准图API：Blueprints</em></li>
-<li>Apache2 license 开源协议</li>
-</ul>
-
-
-<p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
-
-<p>更多关于Titan的文档可以看<a href="https://github.com/thinkaurelius/titan/wiki">这里</a></p>
-
-<p>可以从<a href="https://github.com/thinkaurelius/titan/wiki/Getting-Started">这里</a>开始</p>
-
-<p class='post-footer'>
-            original link:
-            <a href='http://findhy.com/blog/2014/05/14/titan-graph-db/'>http://findhy.com/blog/2014/05/14/titan-graph-db/</a><br/>
-            written by <a href='http://findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://findhy.com'>http://findhy.com</a>
-            </p>
-
 ]]></content>
   </entry>
   
