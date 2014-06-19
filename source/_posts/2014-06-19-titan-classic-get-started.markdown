@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Titan经典入门"
+title: "Titan经典入门PPT"
 date: 2014-06-19 11:00:50 +0800
 comments: true
 categories: Titan
