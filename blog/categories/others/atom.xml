@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Others | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/others/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-18T17:32:20+08:00</updated>
+  <updated>2014-06-19T11:24:28+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[怎么在Octopress Blog中嵌入slideshare]]></title>
+    <link href="http://findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/"/>
+    <updated>2014-06-19T10:56:50+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog</id>
+    <content type="html"><![CDATA[<p>怎么在Octopress blog中嵌入slideshar，使用该插件<a href="https://github.com/petehamilton/Octopress-Slideshare-Plugin">Octopress-Slideshare-Plugin</a>，下面是操作过程。</p>
+
+<!--more-->
+
+
+<h3>1.下载插件</h3>
+
+<pre><code>git clone https://github.com/petehamilton/Octopress-Slideshare-Plugin.git
+</code></pre>
+
+<h3>2.安装插件</h3>
+
+<p>进入上面下载的插件目录，拷贝Octopress-Slideshare-Plugin/slideshare.rb到octopress/plugins目录下面</p>
+
+<h3>3.生成对应的Slideshare Embed ID</h3>
+
+<p>到<a href="http://www.slideshare.net/">slideshare</a>网站找到你需要嵌入的ppt。</p>
+
+<p><img src="/images/slideshare-1.png"></p>
+
+<p>点击Embed，生成类似下面的链接，最后的291600就是我们要的Slideshare Embed ID</p>
+
+<pre><code>http://www.slideshare.net/slideshow/embed_code/291600
+</code></pre>
+
+<h3>4.嵌入</h3>
+
+<p>在你的bolg MD文件中添加下面的代码：</p>
+
+<p><img src="/images/slideshare-2.png"></p>
+
+<p>执行</p>
+
+<pre><code>rake generate
+rake preview
+</code></pre>
+
+<p>看到</p>
+
+<p><iframe src="http://www.slideshare.net/slideshow/embed_code/291600 " width="595" height="446" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen></iframe> </p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Hackable Text Editor for the 21st Century]]></title>
