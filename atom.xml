@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-19T11:24:28+08:00</updated>
+  <updated>2014-06-19T11:40:26+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -18,17 +18,15 @@
     <link href="http://findhy.com/blog/2014/06/19/titan-classic-get-started/"/>
     <updated>2014-06-19T11:00:50+08:00</updated>
     <id>http://findhy.com/blog/2014/06/19/titan-classic-get-started</id>
-    <content type="html"><![CDATA[<p>下面是Marko Rodriguez分享的一个PPT，原文在这里<a href="http://www.slideshare.net/slidarko/titan-the-rise-of-big-graph-data">slideshare.</a>，该PPT深入浅出，从Graph基础知识到Graph Database到Titan的优势，还包括基本的入门操作，我觉得非常经典，在此分享，因为原文PPT表达很简单，所以即使英文不好的看也没有障碍。</p>
+    <content type="html"><![CDATA[<p>下面是Marko Rodriguez分享的一个PPT，原文在这里<a href="http://www.slideshare.net/slidarko/titan-the-rise-of-big-graph-data">slideshare.</a>，该PPT深入浅出，从Graph基础知识到Graph Database到Titan的优势，还包括基本的入门操作，我觉得非常经典，很适合初学者，在此分享，因为原文PPT表达很简单而且加上动画展示，所以即使英文不好的人看也没有障碍。</p>
+
+<!--more-->
+
 
 <iframe src="http://www.slideshare.net/slideshow/embed_code/13328271 " width="595" height="446" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen></iframe>
 
 
 <p></p>
-
-<!--more-->
-
-
-
 
 <p class='post-footer'>
             original link:
