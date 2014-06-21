@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-20T18:51:24+08:00</updated>
+  <updated>2014-06-21T12:06:51+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[图数据库(graph Database)可视化]]></title>
+    <link href="http://findhy.com/blog/2014/06/21/graph-database-visualization/"/>
+    <updated>2014-06-21T11:04:58+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/21/graph-database-visualization</id>
+    <content type="html"><![CDATA[<p>数据可视化是大数据的最后一环，重要性不可忽视，内行往往关心你的算法和架构，但是用户(客户或者领导)只会看最终展现在他们面前的东西，当然业务层面你需要先了解用户的核心需求，再去建模和设计指标，本文讨论关于数据可视化的技术方案，还有比较特别的图数据库的可视化。</p>
+
+<!--more-->
+
+
+<h3>1.可视化类型</h3>
+
+<p>从用户响应时间的角度，有：</p>
+
+<ul>
+<li>静态可视化：当天日志导入到数据平台，晚上跑一些MR任务，再将执行结果存入HBase或者关系型数据库MySql，第二天运营看到结果</li>
+<li>实时可视化：实时可视化前提是数据是实时变化的，通常用Storm或者Spark架构实时处理来自客户端或者Kafka的数据，再将处理完的数据导入到后台存储中，然后前端展现实时有两种方式，一种是被动的，就是你要再去刷新一次，这种比较好实现，一种是主动的，服务器端通知客户端，这种就用Websocket来做，如果服务器端用Node.js，更简单直接用socket.io</li>
+</ul>
+
+
+<p>从展现的图类型来看，可能列举不全：</p>
+
+<ul>
+<li>线性图：展现趋势</li>
+<li>饼图/柱图：展现占比/对比</li>
+<li>散点图：展现聚合关系</li>
+<li>地理位置可视化：把数据在地图上展现，DataMap、GoogleMap都有接口，一般要求数据里面有地理位置属性（IP地址、城市、国家）</li>
+<li>Graph：用Graph展现一个KnowledgeMap，像社交网站的关系图谱，通常用来做用户定位和推荐</li>
+</ul>
+
+
+<h3>2.前端可视化技术</h3>
+
+<p>基于浏览器的开源的：</p>
+
+<ul>
+<li>highchart</li>
+<li>d3.js</li>
+<li>ECharts</li>
+<li>google chart</li>
+</ul>
+
+
+<p>基于桌面的开源的：</p>
+
+<ul>
+<li><a href="https://gephi.org/">gephi</a></li>
+</ul>
+
+
+<p>上面这些比较常用，而且例子和社区都比较成熟，具体的可以直接去官方看，我们现在普通报表有用highchart和d3.js的，gephi也可以在浏览器端展现。</p>
+
+<h3>3.Graph Database可视化</h3>
+
+<p>关于Graph Database可视化单独拿出来，这块数据来源是像Titan、Neo4j和OrientDB这一类的图数据库，他们都提供基于REST的接口，以JSON数据返回Graph的信息，以Titan为例，在Titan上面可以搭建一个Rexster服务器，它提供很多针对Graph的REST接口，具体有哪些接口可以看这里<a href="https://github.com/tinkerpop/rexster/wiki/Basic-REST-API">Rexster-REST-API</a>，前端通过调用接口获取数据，在前端去构建Graph图，构建的方式可以是Canvas或SVG，关于这两的比较可以看这里<a href="http://msdn.microsoft.com/zh-cn/library/ie/gg193983(v=vs.85">SVG 与 Canvas：如何选择</a>.aspx)。通用的工具有：</p>
+
+<ul>
+<li><a href="http://sigmajs.org/">Sigma.js</a>：开源，通用</li>
+<li><a href="http://keylines.com/">Keylines</a>：商业方案，官网有针对Titan和Neo4j可视化的例子</li>
+<li><a href="https://github.com/anvaka/VivaGraphJS">VivaGraph</a>：开源，通用，社区没有Sigma.js丰富</li>
+<li><a href="https://github.com/anvaka/ngraph">ngraph</a>：VivaGraph的下一个版本，使用WebGL支持3d效果展现</li>
+<li><a href="http://d3js.org/">D3.js</a>：开源，通用，上面提到了，它也提供Graph可视化的功能</li>
+<li><a href="https://gephi.org/">Gephi</a>：开源，通用，很强大的基于桌面可视化解决方案，通过插件也可以在浏览器端展现</li>
+<li><a href="http://linkurio.us/">Linkurious</a>：Neo4j专业的</li>
+<li>Neo4J web-admin：Neo4j专业的</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Titan Tutorial]]></title>
@@ -1863,217 +1933,6 @@ source /etc/profile
 <p><a href="https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/">https://xumingming.sinaapp.com/179/twitter-storm-%E6%90%AD%E5%BB%BAstorm%E9%9B%86%E7%BE%A4/</a></p>
 
 <p><a href="http://yzprofile.me/2013/04/25/storm-tutorial.html">http://yzprofile.me/2013/04/25/storm-tutorial.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos]]></title>
-    <link href="http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/"/>
-    <updated>2014-05-14T23:08:37+08:00</updated>
-    <id>http://findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install</id>
-    <content type="html"><![CDATA[<p>环境说明</p>
-
-<pre><code>master 10.0.1.252  
-slave1 10.0.1.252  
-slave2 10.0.1.252  
-</code></pre>
-
-<p>软件版本</p>
-
-<pre><code>Hadoop 2.2.0-cdh5.0.0-beta-2  
-JDK 1.7.0_45
-</code></pre>
-
-<!--more-->
-
-
-<h2>开始安装</h2>
-
-<hr />
-
-<h3>1.创建用户</h3>
-
-<pre><code>useradd hadoop
-</code></pre>
-
-<h3>2.修改密码</h3>
-
-<pre><code>passwd hadoop
-</code></pre>
-
-<h3>3.修改HOSTS文件</h3>
-
-<pre><code>10.0.1.252 master  
-10.0.1.253 slave1  
-10.0.1.254 slave2  
-</code></pre>
-
-<h3>4.节点互信配置</h3>
-
-<p>在每个节点执行</p>
-
-<pre><code>ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-cat ~/.ssh/id_dsa.pub &gt;~/.ssh/authorized_keys
-</code></pre>
-
-<p>更改权限</p>
-
-<pre><code>[hadoop@master .ssh]$ chmod 600 authorized_keys
-[hadoop@master ~]$ chmod 700 .ssh/
-</code></pre>
-
-<p>在master节点操作<br/>
-拷贝其它节点的公钥到authorized_keys文件中</p>
-
-<pre><code>[hadoop@master .ssh]$ ssh hadoop@slave1 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
-[hadoop@master .ssh]$ ssh hadoop@slave2 cat ~/.ssh/authorized_keys &gt;&gt; authorized_keys
-</code></pre>
-
-<p>然后将公钥拷贝到其它节点</p>
-
-<pre><code>[hadoop@master .ssh]$ scp authorized_keys hadoop@slave1:~/.ssh/
-[hadoop@master .ssh]$ scp authorized_keys hadoop@slave2:~/.ssh/
-</code></pre>
-
-<p>测试一下，不需要密码就可以访问</p>
-
-<pre><code>ssh master  
-Ssh slave1  
-Ssh slave2  
-</code></pre>
-
-<p>首次会让输入yes，后面就可以直接登录了</p>
-
-<h3>5.JDK安装</h3>
-
-<p>用java –version检查是否安装了JDK，如果没有安装，则参照下面的连接安装：
-<a href="https://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_oracle_jdk_installation.html#topic_29_1">https://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_oracle_jdk_installation.html#topic_29_1</a></p>
-
-<h3>6.载CDH安装包</h3>
-
-<p>下载解压：<a href="http://archive-primary.cloudera.com/cdh5/cdh/5/hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz">http://archive-primary.cloudera.com/cdh5/cdh/5/hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz</a></p>
-
-<pre><code>tar –zxvf hadoop-2.2.0-cdh5.0.0-beta-2.tar.gz
-</code></pre>
-
-<h3>7.修改hadoop-env.sh</h3>
-
-<p>修改${HADOOP_HOME}/etc/hadoop/hadoop-env.sh</p>
-
-<pre><code>export JAVA_HOME=/usr/java/jdk1.7.0_45
-</code></pre>
-
-<h3>8.修改mapred-site.xml</h3>
-
-<p>在${HADOOP_HOME}/etc/hadoop/目录中，将mapred-site.xml.templat重命名成mapred-site.xml：</p>
-
-<pre><code>mv mapred-site.xml.template mapred-site.xml
-</code></pre>
-
-<p>并添加以下内容：</p>
-
-<pre><code>&lt;property&gt;
-&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-&lt;value&gt;yarn&lt;/value&gt;
-&lt;/property&gt; 
-</code></pre>
-
-<h3>9.修改core-site.xml</h3>
-
-<p>修改${HADOOP_HOME}/etc/hadoop/core-site.xml</p>
-
-<pre><code>&lt;property&gt;
-&lt;name&gt;fs.default.name&lt;/name&gt;
-&lt;value&gt;hdfs://master:8020&lt;/value&gt;
-&lt;final&gt;true&lt;/final&gt;
-&lt;/property&gt;
-</code></pre>
-
-<h3>10.修改yarn-site.xml</h3>
-
-<p>修改${HADOOP_HOME}/etc/hadoop/yarn-site.xml：</p>
-
-<pre><code>&lt;property&gt;
-&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
-&lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-
-<h3>11.修改hdfs-site.xml</h3>
-
-<p>修改${HADOOP_HOME}/etc/hadoop/hdfs-site.xml</p>
-
-<pre><code>&lt;property&gt;
-&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
-&lt;value&gt;/home/hadoop/dfs/yarn/name&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
-&lt;value&gt;/home/hadoop/dfs/yarn/data&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;dfs.replication&lt;/name&gt;
-&lt;value&gt;1&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;dfs.permissions&lt;/name&gt;
-&lt;value&gt;false&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-
-<h3>12.修改slaves文件</h3>
-
-<p>在slaves文件中添加你的slave节点：</p>
-
-<pre><code>slave1
-slave2
-</code></pre>
-
-<h3>13.修改masters文件</h3>
-
-<p>在masters文件中添加你的master节点：</p>
-
-<pre><code>master
-</code></pre>
-
-<h3>14.将安装包复制到其它节点</h3>
-
-<pre><code>scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave1:/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
-scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2
-</code></pre>
-
-<p><em>上面配置文件对应的目录在每个节点都需要提前创建好</em></p>
-
-<h3>15.初始化HDFS</h3>
-
-<pre><code>./bin/hadoop namenode –format
-</code></pre>
-
-<h3>16.启动HDFS</h3>
-
-<pre><code>./sbin/start-dfs.sh
-</code></pre>
-
-<h3>17.启动YARN</h3>
-
-<pre><code>./sbin/start-yarn.sh
-</code></pre>
-
-<h3>18.测试集群</h3>
-
-<p>自己创建一个文件put到HDFS的/test/in目录下面
-执行：</p>
-
-<pre><code>./bin/hadoop jar share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.2.0-cdh5.0.0-beta-2.jar wordcount /test/in/ /test/out/wordcountr
-</code></pre>
-
-<h3>19.YARN管理地址</h3>
-
-<p><a href="http://master:8089/cluster/cluster">http://master:8089/cluster/cluster</a></p>
 ]]></content>
   </entry>
   

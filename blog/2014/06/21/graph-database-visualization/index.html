@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Oracle DBA如何转型到Hadoop平台 - Findhy's Blog</title>
+  <title>图数据库(graph Database)可视化 - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在这里。对于国内的一些DBA想转型Hadoop的可以参考一下。 Q：如果转型或者学习Hadoop平台的技术，Oracle &hellip;">
-  
+  <meta name="description" content="graph database visualization,图数据库(graph database)可视化">
+  <meta name="keywords" content="graph,database,visualization,图数据库(graph database)可视化">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas">
+  <link rel="canonical" href="http://findhy.com/blog/2014/06/21/graph-database-visualization">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -94,7 +94,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
   <header>
     
-      <h1 class="entry-title">Oracle DBA如何转型到Hadoop平台</h1>
+      <h1 class="entry-title">图数据库(graph Database)可视化</h1>
     
     
       <p class="meta">
@@ -110,7 +110,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-03-20T15:02:44+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2014</time>
+<time datetime="2014-06-21T11:04:58+08:00" pubdate data-updated="true">Jun 21<span>st</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://findhy.com">Comments</a>
@@ -120,52 +120,68 @@ $(document).bind('DOMNodeInserted', function(event) {
   </header>
 
 
-<div class="entry-content"><p>Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在<a href="http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/">这里</a>。对于国内的一些DBA想转型Hadoop的可以参考一下。</p>
+<div class="entry-content"><p>数据可视化是大数据的最后一环，重要性不可忽视，内行往往关心你的算法和架构，但是用户(客户或者领导)只会看最终展现在他们面前的东西，当然业务层面你需要先了解用户的核心需求，再去建模和设计指标，本文讨论关于数据可视化的技术方案，还有比较特别的图数据库的可视化。</p>
 
 <!--more-->
 
 
-<p></p>
+<h3>1.可视化类型</h3>
 
-<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
-
-<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
-我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
-
-<blockquote><p>Q：<strong>公司会录用一个没有Hadoop工作经验的DBA吗，如果会，看重的是什么呢？</strong></p></blockquote>
-
-<p>A：我坚信DBAs完全有能力成为优秀的Hadoop专家 &ndash; 但这不代表所有的DBAs。下面是一些我觉得必备的技能：</p>
+<p>从用户响应时间的角度，有：</p>
 
 <ul>
-<li><strong>适应命令行操作</strong>：只会鼠标操作点击的DBAs和ETL工程师不合适</li>
-<li><strong>Linux经验</strong>：Hadoop是运行在Linux上的，所以你需要非常适应Linux的文件系统、工具还有命令行，你还要理解CPU调度和IO等相关概念。</li>
-<li><strong>网络方面的知识</strong>：<a href="http://www.technology-training.co.uk/understandingtheiso7layermodel_10.php">ISO7层网络架构</a>，ssh原理，主机名称解析（/etc/hosts）,还有交换机。</li>
-<li><strong>良好SQL能力</strong>：你需要熟练使用SQL语句，有数据仓库分区和并行处理经验、ETL经验和性能优化经验的优先。</li>
-<li><strong>编程能力</strong>：不一定是Java，但是你要会写批处理脚本，不管是用Perl、Python还是其他语言，要会用伪代码来解决一些简单的问题，如果你不会编程，那就有问题了。</li>
-<li><strong>解决问题能力</strong>：Hadoop没有Oracle那么成熟，所以你必须要学会用Google或者其他方式来搜索和解决问题，这个很重要。</li>
-<li><strong>更高级的职位，我还关注系统和架构方面的能力</strong>：比如你做过飞行调度系统或者其他相似的东西。</li>
-<li><strong>因为我们需要面对客户，所以沟通能力也很重要</strong>：如何倾听？如何向客户解释一个负责的技术问题？当我质疑你的时候该如何反应？</li>
+<li>静态可视化：当天日志导入到数据平台，晚上跑一些MR任务，再将执行结果存入HBase或者关系型数据库MySql，第二天运营看到结果</li>
+<li>实时可视化：实时可视化前提是数据是实时变化的，通常用Storm或者Spark架构实时处理来自客户端或者Kafka的数据，再将处理完的数据导入到后台存储中，然后前端展现实时有两种方式，一种是被动的，就是你要再去刷新一次，这种比较好实现，一种是主动的，服务器端通知客户端，这种就用Websocket来做，如果服务器端用Node.js，更简单直接用socket.io</li>
 </ul>
 
 
-<p>或许这些太多了，但是我觉得这些你转型Hadoop平台必备的技能。</p>
-
-<blockquote><p>Q：<strong>怎么开始学习Hadoop？</strong></p></blockquote>
-
-<p>A：首先你需要在自己的电脑上搭建一个Hadoop集群环境，这个网上的资料很多。然后你可以导入一些数据到Hadoop中来分析，这里有一个例子是用Flume导入Twitter数据然后用Hive来分析：</p>
+<p>从展现的图类型来看，可能列举不全：</p>
 
 <ul>
-<li><a href="http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/">http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/</a></li>
-<li><a href="http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/">http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/</a></li>
+<li>线性图：展现趋势</li>
+<li>饼图/柱图：展现占比/对比</li>
+<li>散点图：展现聚合关系</li>
+<li>地理位置可视化：把数据在地图上展现，DataMap、GoogleMap都有接口，一般要求数据里面有地理位置属性（IP地址、城市、国家）</li>
+<li>Graph：用Graph展现一个KnowledgeMap，像社交网站的关系图谱，通常用来做用户定位和推荐</li>
 </ul>
 
 
-<p>还有就是买一些Hadoop方面的书籍，比如「Hadoop权威指南」、「Hadoop实战」等等。
-推荐看下<a href="http://dongxicheng.org/mapreduce-nextgen/hadoope-every-day/">这里</a>，是一些Hadoop方面的学习资源。</p>
+<h3>2.前端可视化技术</h3>
 
-<blockquote><p>Q：<strong>我需要学习Java吗？</strong></p></blockquote>
+<p>基于浏览器的开源的：</p>
 
-<p>A：你不需要成为一个特别专业的Java开发人员，但是你需要能够看懂Java源代码，因为Hadoop就是Java写的，还有Hive UDFS也需要Java来编写，相信我，不是很难，比SQL简单多了。</p>
+<ul>
+<li>highchart</li>
+<li>d3.js</li>
+<li>ECharts</li>
+<li>google chart</li>
+</ul>
+
+
+<p>基于桌面的开源的：</p>
+
+<ul>
+<li><a href="https://gephi.org/">gephi</a></li>
+</ul>
+
+
+<p>上面这些比较常用，而且例子和社区都比较成熟，具体的可以直接去官方看，我们现在普通报表有用highchart和d3.js的，gephi也可以在浏览器端展现。</p>
+
+<h3>3.Graph Database可视化</h3>
+
+<p>关于Graph Database可视化单独拿出来，这块数据来源是像Titan、Neo4j和OrientDB这一类的图数据库，他们都提供基于REST的接口，以JSON数据返回Graph的信息，以Titan为例，在Titan上面可以搭建一个Rexster服务器，它提供很多针对Graph的REST接口，具体有哪些接口可以看这里<a href="https://github.com/tinkerpop/rexster/wiki/Basic-REST-API">Rexster-REST-API</a>，前端通过调用接口获取数据，在前端去构建Graph图，构建的方式可以是Canvas或SVG，关于这两的比较可以看这里<a href="http://msdn.microsoft.com/zh-cn/library/ie/gg193983(v=vs.85">SVG 与 Canvas：如何选择</a>.aspx)。通用的工具有：</p>
+
+<ul>
+<li><a href="http://sigmajs.org/">Sigma.js</a>：开源，通用</li>
+<li><a href="http://keylines.com/">Keylines</a>：商业方案，官网有针对Titan和Neo4j可视化的例子</li>
+<li><a href="https://github.com/anvaka/VivaGraphJS">VivaGraph</a>：开源，通用，社区没有Sigma.js丰富</li>
+<li><a href="https://github.com/anvaka/ngraph">ngraph</a>：VivaGraph的下一个版本，使用WebGL支持3d效果展现</li>
+<li><a href="http://d3js.org/">D3.js</a>：开源，通用，上面提到了，它也提供Graph可视化的功能</li>
+<li><a href="https://gephi.org/">Gephi</a>：开源，通用，很强大的基于桌面可视化解决方案，通过插件也可以在浏览器端展现</li>
+<li><a href="http://linkurio.us/">Linkurious</a>：Neo4j专业的</li>
+<li>Neo4J web-admin：Neo4j专业的</li>
+</ul>
+
 </div>
 
 
@@ -188,12 +204,12 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-03-20T15:02:44+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2014</time>
+<time datetime="2014-06-21T11:04:58+08:00" pubdate data-updated="true">Jun 21<span>st</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>
+    <a class='category' href='/blog/categories/titan/'>Titan</a>
   
 </span>
 
@@ -202,7 +218,7 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/06/21/graph-database-visualization/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/06/21/graph-database-visualization/" >Tweet</a>
   
   
   
@@ -211,10 +227,8 @@ $(document).bind('DOMNodeInserted', function(event) {
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/03/20/yarn/" title="Previous Post: YARN，Hadoop平台的操作系统">&laquo; YARN，Hadoop平台的操作系统</a>
+        <a class="basic-alignment left" href="/blog/2014/06/19/titan-tutorial/" title="Previous Post: Titan tutorial">&laquo; Titan tutorial</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/03/23/how-do-design/" title="Next Post: 「写给大家的设计书」">「写给大家的设计书」 &raquo;</a>
       
     </p>
   </footer>
@@ -399,8 +413,8 @@ $(document).bind('DOMNodeInserted', function(event) {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/';
-        var disqus_url = 'http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/';
+        var disqus_identifier = 'http://findhy.com/blog/2014/06/21/graph-database-visualization/';
+        var disqus_url = 'http://findhy.com/blog/2014/06/21/graph-database-visualization/';
         var disqus_script = 'embed.js';
       
     (function () {
