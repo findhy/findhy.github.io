@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Titan | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/titan/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-23T11:02:55+08:00</updated>
+  <updated>2014-06-23T16:14:21+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Titan Visualization With VivaGraphJS]]></title>
+    <link href="http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/"/>
+    <updated>2014-06-23T16:09:23+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs</id>
+    <content type="html"><![CDATA[<p><a href="http://findhy.com/blog/2014/06/21/graph-database-visualization/">上一篇文章</a>介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是<a href="https://github.com/anvaka/VivaGraphJS">VivaGraphJS</a>，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：<a href="https://github.com/titan-cn/titan-vivagraph">titan-vivagraph</a>。</p>
+
+<!--more-->
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[图数据库(graph Database)可视化]]></title>
@@ -377,66 +391,6 @@ graph.shutdown();
 <p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是一个Graph Server</p>
 
 <p>TinkerPop的维护人员来自不同的Graph Database产品厂商，像Neo4j、Titan、OrientDB、Bitsy，它在Graph Database领域的地位我理解就像JavaEE里面的Apache。在最新的<a href="https://github.com/tinkerpop/tinkerpop3">TinkerPop3.0</a>版本的时候，TinkerPop将原本分散的各个工具包合并成了一个项目，并且增加了很多特性，Titan0.5版本还不支持TP3，将会在Titan1.0版本时支持，更多的可以看<a href="http://www.tinkerpop.com/docs/current/">TinkerPop3 Story/doc</a>。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Graph Database]]></title>
-    <link href="http://findhy.com/blog/2014/06/17/graph-database-data-structure/"/>
-    <updated>2014-06-17T14:50:02+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/17/graph-database-data-structure</id>
-    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Graph_database">Graph database</a>是近年兴起的NoSQL存储模型(graph, key-value, column, and document)中的一种实现数据库，代表产品是Neo4j、Titan，它的理论基础是<a href="http://zh.wikipedia.org/wiki/%E5%9B%BE%E8%AE%BA">图论/Graph theory</a>,一个数学分支，主要研究顶点和边组成的图形的数学理论和方法，它的起源也比较有意思，这部分本文不谈，感兴趣的同学可以去Google研究一下。</p>
-
-<!--more-->
-
-
-<p>想了解Graph Database，我们还是要把图论(Graph theory)简单说一下，略过中间复杂的数学问题，我们以结果为导向，图论可以解决哪些问题？这里有一个<a href="http://www.global-sci.org/mc/issues/3/no2/freepdf/67s.pdf">图论经典问题简介</a>,诸如<a href="http://zh.wikipedia.org/wiki/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98">最短路径问题</a>、<a href="http://zh.wikipedia.org/wiki/%E6%97%85%E8%A1%8C%E6%8E%A8%E9%94%80%E5%91%98%E9%97%AE%E9%A2%98">旅行售货商问题</a>、<a href="http://zh.wikipedia.org/wiki/%E9%82%AE%E9%80%92%E5%91%98%E9%97%AE%E9%A2%98">中国邮递员问题</a>，这些是图论中研究的经典问题，具体实现会涉及到不同的算法问题。</p>
-
-<p>举个例子，在社交网络中，你搜索了一个人，怎么最快结识他，这其实就是一个最短路径问题，LinkedIn已经有相关的推荐产品，可以去试一下。而且未来随着智能设备的普及个人数据会呈现爆炸性增长，就是人的属性和关联会更多更复杂，其实这个问题在阿里现在已经存在了，他收购了那么多产品，重要一点就是为了获取数据，现在阿里拥有一个人的网购数据(淘宝、天猫)、社交数据(陌陌、新浪微博)、浏览搜索数据(UC、优酷)等等，这么庞大的一个数据结构该怎么来描述，更关键的是怎么快速的去做定位和推荐，这也是Graph Database兴起的一个原因，未来Graph这块必然会大放异彩。</p>
-
-<h3>数据结构</h3>
-
-<p>Graph Database的存储单元是：节点(nodes)、关系/边(edges)、属性(properties)<br/>
-<img src="/images/GraphDatabase_1.png"></p>
-
-<ul>
-<li>节点(nodes)：通常是一个实体，类似于社交网络中的人或者电商网络中的商品，节点不一定都是同一个类型的，比如我们构建一个Graph，节点是人和商品，之间的连接是谁买了哪个商品，这样我们可以很容易找到买相同的产品的人，去做关联推荐</li>
-<li>属性(properties)：是与节点(nodes)相关的信息，通常是节点的描述，比如人的性别、年龄、地点、电话等信息</li>
-<li>关系/边(edges)：用来连接节点(nodes)的，代表节点(nodes)与节点(nodes)之间具有某种关系，比如用户A和用户B是好友，用户A和用户C来自同一个地方，关系可以是有方向和无方向的，而且节点(nodes)之间可以有多条关系</li>
-</ul>
-
-
-<p>Graph Database的数据结构使得它在处理数据关联问题更具优势，因为它的节点(nodes)原生的就是通过某种关系连接在一起，这样就减少了join这样耗费资源的操作。</p>
-
-<h3>算法</h3>
-
-<p>Graph Database中很多问题都涉及到一些重要算法，下面列举一些，数据来源<a href="http://zh.wikipedia.org/wiki/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98">Wikipedia-Graph-Algorithms</a>：</p>
-
-<ul>
-<li>基本遍历：深度优先搜索、广度优先搜索、A*、Flood fill</li>
-<li>最短路径：Dijkstra、Bellman-Ford、Floyd-Warshall 、Kneser图</li>
-<li>最小生成树：Prim、Kruskal</li>
-<li>强连通分量：Kosaraju算法、Gabow算法、Tarjan算法</li>
-<li>图匹配：匈牙利算法、Hopcroft–Karp、Edmonds&rsquo;s matching</li>
-<li>网络流：Ford-Fulkerson、Edmonds-Karp、Dinic 、Push-relabel maximum flow</li>
-</ul>
-
-
-<h3>常规操作</h3>
-
-<p>类似于关系型数据库提供的CRUD操作，Graph Database也提供一系列指令来操作Graph，下面G代表一个Graph data structure，你可以把它想象为关系型数据库中的一张表。</p>
-
-<ul>
-<li>adjacent(G, x, y)：检查节点x和节点y之间是否有一个边(edge)</li>
-<li>neighbors(G, x)：列出所有与节点x有连接/边(edge)的节点</li>
-<li>add(G, x, y)：插入一个边(edge)，从x指向y</li>
-<li>delete(G, x, y)：删除一个从x指向y的边(edge)</li>
-<li>get_node_value(G, x)：返回节点x的相关属性</li>
-<li>set_node_value(G, x, a)：设置节点x的属性为a</li>
-<li>get_edge_value(G, x, y)：返回节点x和y之间的边(edge)的属性，边(edge)也是有属性的</li>
-<li>set_edge_value(G, x, y, v)：设置节点x和y之间的边(edge)的属性为v</li>
-</ul>
-
 ]]></content>
   </entry>
   

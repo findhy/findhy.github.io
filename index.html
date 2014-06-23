@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="一个系统的性能瓶颈可能发生在很多地方，常见包括：CPU、内存、存储IO、网络、技术，其中存储IO的性能瓶颈最容易发生，往往我们刚开始搭建系统的时候都放在单台服务器上，当业务扩大后，单台已经无法支撑，常见的做法就是，前端加一个F5或者Nginx做负载均衡，后端应用做集群，数据库做集群或者读写分离、 &hellip;">
+  <meta name="description" content="上一篇文章介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是VivaGraphJS，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：titan-vivagraph。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,50 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Titan Visualization With VivaGraphJS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-23T16:09:23+08:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://findhy.com/blog/2014/06/21/graph-database-visualization/">上一篇文章</a>介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是<a href="https://github.com/anvaka/VivaGraphJS">VivaGraphJS</a>，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：<a href="https://github.com/titan-cn/titan-vivagraph">titan-vivagraph</a>。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -490,50 +534,6 @@ $(document).bind('DOMNodeInserted', function(event) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/14/kafka-storm-notserializableexception/">Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-14T20:24:15+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/06/14/kafka-storm-notserializableexception/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/06/14/kafka-storm-notserializableexception/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/14/kafka-storm-notserializableexception/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -568,7 +568,7 @@ $(document).bind('DOMNodeInserted', function(event) {
 <li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
 <li class='category'><a href='/blog/categories/storm/'>Storm (4)</a></li>
-<li class='category'><a href='/blog/categories/titan/'>Titan (7)</a></li>
+<li class='category'><a href='/blog/categories/titan/'>Titan (8)</a></li>
 <li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
 <li class='category'><a href='/blog/categories/yarn/'>YARN (1)</a></li>
 
@@ -576,6 +576,10 @@ $(document).bind('DOMNodeInserted', function(event) {
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Titan Visualization With VivaGraphJS</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/23/storage-performance-locate/">存储性能瓶颈的成因、定位与排查</a>
@@ -651,10 +655,6 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <li class="post">
         <a href="/blog/2014/05/18/kafka/">Kafka Introduction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/17/nginx-on-linux/">Nginx Install on Centos</a>
       </li>
     
   </ul>

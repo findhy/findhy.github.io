@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-23T11:02:55+08:00</updated>
+  <updated>2014-06-23T16:14:21+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Titan Visualization With VivaGraphJS]]></title>
+    <link href="http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/"/>
+    <updated>2014-06-23T16:09:23+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs</id>
+    <content type="html"><![CDATA[<p><a href="http://findhy.com/blog/2014/06/21/graph-database-visualization/">上一篇文章</a>介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是<a href="https://github.com/anvaka/VivaGraphJS">VivaGraphJS</a>，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：<a href="https://github.com/titan-cn/titan-vivagraph">titan-vivagraph</a>。</p>
+
+<!--more-->
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[存储性能瓶颈的成因、定位与排查]]></title>
@@ -1667,98 +1681,6 @@ Storm流数据平台需要处理的数据多种多样，如果直接用Storm来�
 <p>Kafka作为消息中间件，为Storm提供数据来源。<br/>
 Zookeeper为Kafka、Storm、HBase提供分布式协调服务，所以单独部署，不用HBase自带的Zookeeper。<br/>
 HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Nginx Install on Centos]]></title>
-    <link href="http://findhy.com/blog/2014/05/17/nginx-on-linux/"/>
-    <updated>2014-05-17T07:12:34+08:00</updated>
-    <id>http://findhy.com/blog/2014/05/17/nginx-on-linux</id>
-    <content type="html"><![CDATA[<p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
-
-<!--more-->
-
-
-<h3>1.配置nginx的yum源</h3>
-
-<pre><code>sudo vi /etc/yum.repos.d/nginx.repo
-</code></pre>
-
-<p>添加下面的内容：</p>
-
-<pre><code>[nginx]
-name=nginx repo 
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/ 
-gpgcheck=0 
-enabled=1
-</code></pre>
-
-<p>保存退出</p>
-
-<h3>2.安装</h3>
-
-<pre><code>sudo yum install nginx
-</code></pre>
-
-<h3>3.启动Nginx</h3>
-
-<pre><code>sudo /etc/init.d/nginx start
-</code></pre>
-
-<p>访问：<a href="http://localhost">http://localhost</a></p>
-
-<h3>4.其它命令</h3>
-
-<pre><code>停止nginx服务：# /etc/init.d/nginx stop 
-启动nginx服务：# /etc/init.d/nginx start 
-编辑nginx配置文件：# vi /etc/nginx/nginx.conf
-</code></pre>
-
-<h3>5.反向代理配置</h3>
-
-<pre><code>sudo vi /etc/nginx/nginx.conf
-</code></pre>
-
-<p>配置：</p>
-
-<pre><code>upstream rexster {
-    server 127.0.0.1:8182 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-upstream yarn {
-    server 127.0.0.1:8089 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-upstream storm {
-    server 127.0.0.1:7070 weight=1 max_fails=1 fail_timeout=10s;
-}
-
-server {
-    listen 80;
-    server_name yarn.xxx.com;
-    location / {
-        proxy_pass http://yarn;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    # redirect server error pages to the static page /50x.html
-}
-server {
-    listen 80;
-    server_name storm.xxx.com;
-    location / {
-        proxy_pass http://storm;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-    # redirect server error pages to the static page /50x.html
-}
-</code></pre>
-
-<p>输入域名测试，跳转成功</p>
 ]]></content>
   </entry>
   
