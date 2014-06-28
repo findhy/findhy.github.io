@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-27T11:25:35+08:00</updated>
+  <updated>2014-06-28T16:18:29+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Spark1.0在YARN上部署过程]]></title>
+    <link href="http://findhy.com/blog/2014/06/28/spark-on-yarn/"/>
+    <updated>2014-06-28T14:13:34+08:00</updated>
+    <id>http://findhy.com/blog/2014/06/28/spark-on-yarn</id>
+    <content type="html"><![CDATA[<p>Spark支持独立部署和在YARN上部署，选择在YARN上就是作为一个APP跑在YARN平台上，这样的好处是可以和原来的数据平台无缝结合。</p>
+
+<!--more-->
+
+
+<h3>安装过程</h3>
+
+<p>1、下载</p>
+
+<pre><code>wget https://github.com/apache/spark/archive/v1.0.0.zip
+</code></pre>
+
+<p>2、解压</p>
+
+<pre><code>unzip v1.0.0.zip
+</code></pre>
+
+<p>3、进入目录</p>
+
+<pre><code>cd spark-1.0.0
+</code></pre>
+
+<p>4、设置maven内存参数：</p>
+
+<pre><code>export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
+</code></pre>
+
+<p>5、打包</p>
+
+<pre><code>mvn -Pyarn-alpha -Dhadoop.version=2.0.0-cdh4.3.2 -DskipTests clean package
+</code></pre>
+
+<p>最后编译报错：</p>
+
+<pre><code>Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin:1.7:run (default) on project spark-core_2.10: An Ant BuildException has occured: Please set the SCALA_HOME (or SCALA_LIBRARY_PATH if scala is on the path) environment variables and retry.
+[ERROR] around Ant part ...&lt;fail message="Please set the SCALA_HOME (or SCALA_LIBRARY_PATH if scala is on the path) environment variables and retry."&gt;... @ 6:126 in /home/hadoop/spark-cdh4.3.2/spark-1.0.0/core/target/antrun/build-main.xml
+</code></pre>
+
+<p>缺失scala的依赖</p>
+
+<p>查看pom.xml</p>
+
+<pre><code>&lt;scala.version&gt;2.10.4&lt;/scala.version&gt;
+</code></pre>
+
+<p>6、安装scala2.10.4</p>
+
+<pre><code>wget http://www.scala-lang.org/files/archive/scala-2.10.4.tgz
+
+tar -zxvf scala-2.10.4.tgz
+
+export SCALA_HOME=/opt/scala/scala-2.10.4
+</code></pre>
+
+<p>7、再次打包</p>
+
+<pre><code>mvn -Pyarn-alpha -Dhadoop.version=2.0.0-cdh4.3.2 -DskipTests clean package
+</code></pre>
+
+<p>这个打包过程需要很久，看到BUILD SUCCESS就成功了</p>
+
+<p>8、打spark内核包</p>
+
+<pre><code>SPARK_HADOOP_VERSION=2.0.0-cdh4.3.2 SPARK_YARN=true sbt/sbt assembly
+</code></pre>
+
+<p>9、执行完成之后，在YARN上发布APP</p>
+
+<pre><code>./bin/spark-submit --class org.apache.spark.examples.SparkTC --master yarn-cluster --num-executors 3 --executor-memory 2g --driver-memory 4g --executor-cores 1 --jars /home/hadoop/spark-cdh4.3.2/spark-1.0.0/examples/target/spark-examples*.jar
+</code></pre>
+
+<p>看到命令行显示<br/>
+<img src="http://findhy.com/images/spark-1.png"></p>
+
+<p>YARN管理台显示<br/>
+<img src="http://findhy.com/images/spark-2.png"></p>
+
+<p>点击yarn app的tracking UI到达Spark的管理界面<br/>
+<img src="http://findhy.com/images/spark-3.png"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Titan Visualization With VivaGraphJS]]></title>
@@ -1637,50 +1724,6 @@ Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
 <a href="http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  ">http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  </a>
 <a href="https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de">https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de</a>  <br/>
 <a href="http://www.alidata.org/archives/1307">http://www.alidata.org/archives/1307</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Kafka Introduction]]></title>
-    <link href="http://findhy.com/blog/2014/05/18/kafka/"/>
-    <updated>2014-05-18T10:25:44+08:00</updated>
-    <id>http://findhy.com/blog/2014/05/18/kafka</id>
-    <content type="html"><![CDATA[<p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
-Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
-
-<!--more-->
-
-
-<ul>
-<li>高性能：单个Kafka broker节点就可以处理来自数千个客户端数百MB的消息读取和写入。</li>
-<li>可扩展：集群设计可以保证弹性扩展而不停机</li>
-<li>持久化：消息被持久化到磁盘上，并且在集群内会有复制备份，所以不会有数据丢失。并且每一个broker可以处理TB级的消息而不影响性能</li>
-<li>分布式：分布式集群设计保证了系统的健壮性和容错性</li>
-</ul>
-
-
-<h4>Kafka的部署结构图</h4>
-
-<p><img src="http://findhy.com/images/kafka.png"></p>
-
-<h4>为什么要用Kafka</h4>
-
-<ul>
-<li>统一消息入口<br/>
-Storm流数据平台需要处理的数据多种多样，如果直接用Storm来接入，会需要写很多的接口，这样必然不是最佳的解决方案，加了一层Kafka之后，Storm只需要处理来自Kafka的数据，由Kafka对接数据源。</li>
-<li>消息持久化<br/>
-直接用Storm或者其它MQ会发生数据丢失的可能，而Kafka是把数据持久化到磁盘上面而且会有复制备份，所以不会发生数据丢失。</li>
-<li>支持分布式<br/>
-支持分布式保证了架构的健壮性、弹性扩展和容错。</li>
-</ul>
-
-
-<p>Kafka在数据平台中的位置如图：<br/>
-<img src="http://findhy.com/images/kafka_hadoop.png"></p>
-
-<p>Kafka作为消息中间件，为Storm提供数据来源。<br/>
-Zookeeper为Kafka、Storm、HBase提供分布式协调服务，所以单独部署，不用HBase自带的Zookeeper。<br/>
-HBase作为Storm的持久化层，也作为Titan的数据存储层。</p>
 ]]></content>
   </entry>
   

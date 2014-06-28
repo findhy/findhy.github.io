@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Oracle DBA如何转型到Hadoop平台 - Findhy's Blog</title>
+  <title>Category: Spark - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在这里。对于国内的一些DBA想转型Hadoop的可以参考一下。 Q：如果转型或者学习Hadoop平台的技术，Oracle &hellip;">
+  <meta name="description" content="Category: Spark">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas">
+  <link rel="canonical" href="http://findhy.comblog/categories/spark">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -90,141 +90,36 @@ $(document).bind('DOMNodeInserted', function(event) {
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Oracle DBA如何转型到Hadoop平台</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-20T15:02:44+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2014</time>
-        
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://findhy.com">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Category: Spark</h1>
     
   </header>
-
-
-<div class="entry-content"><p>Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在<a href="http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/">这里</a>。对于国内的一些DBA想转型Hadoop的可以参考一下。</p>
-
-<!--more-->
-
-
-<p></p>
-
-<blockquote><p>Q：<strong>如果转型或者学习Hadoop平台的技术，Oracle DBA的经验还有用吗？</strong></p></blockquote>
-
-<p>A：在我合作的很多客户当中，我们和DBA团队一起合作将他们的数据仓库从Teradata或者Netezza迁移到Hadoop平台中，他们和我一起写Sqoop脚本、Oozie流程、Hive ETL脚本和Impala报表，几个月之后，我走了，原来的DBA团队已经掌握了Hadoop的技能了。<br/>
-我现在在Cloudera的解决方案架构师团队也会录用前DBA人员来作为解决方案顾问或系统工程师，我们认为他们的DBA经验非常有价值。</p>
-
-<blockquote><p>Q：<strong>公司会录用一个没有Hadoop工作经验的DBA吗，如果会，看重的是什么呢？</strong></p></blockquote>
-
-<p>A：我坚信DBAs完全有能力成为优秀的Hadoop专家 &ndash; 但这不代表所有的DBAs。下面是一些我觉得必备的技能：</p>
-
-<ul>
-<li><strong>适应命令行操作</strong>：只会鼠标操作点击的DBAs和ETL工程师不合适</li>
-<li><strong>Linux经验</strong>：Hadoop是运行在Linux上的，所以你需要非常适应Linux的文件系统、工具还有命令行，你还要理解CPU调度和IO等相关概念。</li>
-<li><strong>网络方面的知识</strong>：<a href="http://www.technology-training.co.uk/understandingtheiso7layermodel_10.php">ISO7层网络架构</a>，ssh原理，主机名称解析（/etc/hosts）,还有交换机。</li>
-<li><strong>良好SQL能力</strong>：你需要熟练使用SQL语句，有数据仓库分区和并行处理经验、ETL经验和性能优化经验的优先。</li>
-<li><strong>编程能力</strong>：不一定是Java，但是你要会写批处理脚本，不管是用Perl、Python还是其他语言，要会用伪代码来解决一些简单的问题，如果你不会编程，那就有问题了。</li>
-<li><strong>解决问题能力</strong>：Hadoop没有Oracle那么成熟，所以你必须要学会用Google或者其他方式来搜索和解决问题，这个很重要。</li>
-<li><strong>更高级的职位，我还关注系统和架构方面的能力</strong>：比如你做过飞行调度系统或者其他相似的东西。</li>
-<li><strong>因为我们需要面对客户，所以沟通能力也很重要</strong>：如何倾听？如何向客户解释一个负责的技术问题？当我质疑你的时候该如何反应？</li>
-</ul>
-
-
-<p>或许这些太多了，但是我觉得这些你转型Hadoop平台必备的技能。</p>
-
-<blockquote><p>Q：<strong>怎么开始学习Hadoop？</strong></p></blockquote>
-
-<p>A：首先你需要在自己的电脑上搭建一个Hadoop集群环境，这个网上的资料很多。然后你可以导入一些数据到Hadoop中来分析，这里有一个例子是用Flume导入Twitter数据然后用Hive来分析：</p>
-
-<ul>
-<li><a href="http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/">http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/</a></li>
-<li><a href="http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/">http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/</a></li>
-</ul>
-
-
-<p>还有就是买一些Hadoop方面的书籍，比如「Hadoop权威指南」、「Hadoop实战」等等。
-推荐看下<a href="http://dongxicheng.org/mapreduce-nextgen/hadoope-every-day/">这里</a>，是一些Hadoop方面的学习资源。</p>
-
-<blockquote><p>Q：<strong>我需要学习Java吗？</strong></p></blockquote>
-
-<p>A：你不需要成为一个特别专业的Java开发人员，但是你需要能够看懂Java源代码，因为Hadoop就是Java写的，还有Hive UDFS也需要Java来编写，相信我，不是很难，比SQL简单多了。</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Findhy</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2014</h2>
+
+<article>
+  
+<h1><a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a></h1>
+<time datetime="2014-06-28T14:13:34+08:00" pubdate><span class='month'>Jun</span> <span class='day'>28</span> <span class='year'>2014</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/spark/'>Spark</a></span>
+</footer>
 
 
-<time datetime="2014-03-20T15:02:44+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2014</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/03/20/yarn/" title="Previous Post: YARN，Hadoop平台的操作系统">&laquo; YARN，Hadoop平台的操作系统</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/03/23/how-do-design/" title="Next Post: 「写给大家的设计书」">「写给大家的设计书」 &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -399,10 +294,7 @@ $(document).bind('DOMNodeInserted', function(event) {
       var disqus_shortname = 'findhy';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/';
-        var disqus_url = 'http://findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

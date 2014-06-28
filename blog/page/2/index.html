@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology： ">
+  <meta name="description" content="项目源码在这里storm-kafka，里面包括了简单说明和测试过程，照着做就可以了，下面简单介绍一下。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,52 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/storm-kafka-dev/">Storm与Kafka集成开发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T16:44:35+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/16/storm-kafka-dev/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/06/16/storm-kafka-dev/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>项目源码在这里<a href="https://github.com/findhy/storm-kafka">storm-kafka</a>，里面包括了简单说明和测试过程，照着做就可以了，下面简单介绍一下。</p>
+
+<p><img src="/images/storm-kafka-dev1.png"></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/16/storm-kafka-dev/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -491,51 +537,6 @@ $(document).bind('DOMNodeInserted', function(event) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/18/kafka/">Kafka Introduction</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-18T10:25:44+08:00" pubdate data-updated="true">May 18<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/05/18/kafka/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/05/18/kafka/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
-Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/18/kafka/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -571,6 +572,7 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 <li class='category'><a href='/blog/categories/others/'>Others (3)</a></li>
 <li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
+<li class='category'><a href='/blog/categories/spark/'>Spark (1)</a></li>
 <li class='category'><a href='/blog/categories/storm/'>Storm (4)</a></li>
 <li class='category'><a href='/blog/categories/titan/'>Titan (8)</a></li>
 <li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
@@ -580,6 +582,10 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Titan Visualization With VivaGraphJS</a>
@@ -655,10 +661,6 @@ Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它�
     
       <li class="post">
         <a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/18/kafka/">Kafka Introduction</a>
       </li>
     
   </ul>

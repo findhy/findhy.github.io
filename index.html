@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="上一篇文章介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是VivaGraphJS，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：titan-vivagraph。 ">
+  <meta name="description" content="Spark支持独立部署和在YARN上部署，选择在YARN上就是作为一个APP跑在YARN平台上，这样的好处是可以和原来的数据平台无缝结合。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,50 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-28T14:13:34+08:00" pubdate data-updated="true">Jun 28<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/28/spark-on-yarn/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/06/28/spark-on-yarn/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Spark支持独立部署和在YARN上部署，选择在YARN上就是作为一个APP跑在YARN平台上，这样的好处是可以和原来的数据平台无缝结合。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/28/spark-on-yarn/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -488,52 +532,6 @@ $(document).bind('DOMNodeInserted', function(event) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/16/storm-kafka-dev/">Storm与Kafka集成开发</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T16:44:35+08:00" pubdate data-updated="true">Jun 16<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/06/16/storm-kafka-dev/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/06/16/storm-kafka-dev/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>项目源码在这里<a href="https://github.com/findhy/storm-kafka">storm-kafka</a>，里面包括了简单说明和测试过程，照着做就可以了，下面简单介绍一下。</p>
-
-<p><img src="/images/storm-kafka-dev1.png"></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/16/storm-kafka-dev/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -567,6 +565,7 @@ $(document).bind('DOMNodeInserted', function(event) {
 <li class='category'><a href='/blog/categories/others/'>Others (3)</a></li>
 <li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
+<li class='category'><a href='/blog/categories/spark/'>Spark (1)</a></li>
 <li class='category'><a href='/blog/categories/storm/'>Storm (4)</a></li>
 <li class='category'><a href='/blog/categories/titan/'>Titan (8)</a></li>
 <li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
@@ -576,6 +575,10 @@ $(document).bind('DOMNodeInserted', function(event) {
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Titan Visualization With VivaGraphJS</a>
@@ -651,10 +654,6 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <li class="post">
         <a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/18/kafka/">Kafka Introduction</a>
       </li>
     
   </ul>
