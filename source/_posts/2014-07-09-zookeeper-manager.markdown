@@ -1,0 +1,26 @@
+---
+layout: post
+title: "Zookeeper运维管理工具介绍"
+date: 2014-07-09 13:39:26 +0800
+comments: true
+categories: Zookeeper
+keywords: Zookeeper运维管理工具介绍
+description: Zookeeper运维管理工具介绍
+---
+[Zookeeper](http://zookeeper.apache.org/)是一个提供维护配置信息、命名空间、分布式同步和组服务的集中式管理工具，广泛应用与分布式系统中，像Storm、HBase、Dubbo都依赖Zookeeper，所以怎么运维和管理Zookeeper就非常重要了，下面介绍几个Zookeeper的管理工具，有些我用过有些我没有用过，仅供参考。
+<!--more-->
+### 1.Taokeeper ###
+阿里开源的Zookeeper监控工具，可以用来监控Zookeeper集群的工作状态、连接数、注册的Watcher数和磁盘/内存/CPU状态，还可以设置预警，当系统性能达到某个阀值的时候通知管理员，这块提供自定义开发接口。
+
+项目地址：https://github.com/alibaba/taokeeper  
+
+安装说明：http://jm-blog.aliapp.com/?p=1450  
+
+注意如果启动完看不到机器的磁盘和CPU等状态，可能是服务器没有安装nc，执行 yum install -y nc
+
+### 2.ZooInspector ###
+[ZooInspector](http://www.taobaotesting.com/blogs/qa?bid=15305)可以用来查询Zookeeper里面的具体信息，还可以与Eclipse集成可视化，这样我们在开发过程中就能够实时看到Zookeeper中的数据。
+
+### 3.node-zk-browser ###
+[node-zk-browser](https://github.com/killme2008/node-zk-browser)和ZooInspector功能相似，但是基于浏览器访问的，底层是用Node.js实现。
+
