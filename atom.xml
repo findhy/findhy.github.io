@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-06-28T16:18:29+08:00</updated>
+  <updated>2014-07-09T14:03:54+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Zookeeper运维管理工具介绍]]></title>
+    <link href="http://findhy.com/blog/2014/07/09/zookeeper-manager/"/>
+    <updated>2014-07-09T13:39:26+08:00</updated>
+    <id>http://findhy.com/blog/2014/07/09/zookeeper-manager</id>
+    <content type="html"><![CDATA[<p><a href="http://zookeeper.apache.org/">Zookeeper</a>是一个提供维护配置信息、命名空间、分布式同步和组服务的集中式管理工具，广泛应用与分布式系统中，像Storm、HBase、Dubbo都依赖Zookeeper，所以怎么运维和管理Zookeeper就非常重要了，下面介绍几个Zookeeper的管理工具，有些我用过有些我没有用过，仅供参考。</p>
+
+<!--more-->
+
+
+<h3>1.Taokeeper</h3>
+
+<p>阿里开源的Zookeeper监控工具，可以用来监控Zookeeper集群的工作状态、连接数、注册的Watcher数和磁盘/内存/CPU状态，还可以设置预警，当系统性能达到某个阀值的时候通知管理员，这块提供自定义开发接口。</p>
+
+<p>项目地址：<a href="https://github.com/alibaba/taokeeper">https://github.com/alibaba/taokeeper</a></p>
+
+<p>安装说明：<a href="http://jm-blog.aliapp.com/?p=1450">http://jm-blog.aliapp.com/?p=1450</a></p>
+
+<p>注意如果启动完看不到机器的磁盘和CPU等状态，可能是服务器没有安装nc，执行 yum install -y nc</p>
+
+<h3>2.ZooInspector</h3>
+
+<p><a href="http://www.taobaotesting.com/blogs/qa?bid=15305">ZooInspector</a>可以用来查询Zookeeper里面的具体信息，还可以与Eclipse集成可视化，这样我们在开发过程中就能够实时看到Zookeeper中的数据。</p>
+
+<h3>3.node-zk-browser</h3>
+
+<p><a href="https://github.com/killme2008/node-zk-browser">node-zk-browser</a>和ZooInspector功能相似，但是基于浏览器访问的，底层是用Node.js实现。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Spark1.0在YARN上部署过程]]></title>
@@ -1583,147 +1613,6 @@ Save settings? [y/N] y
 
 
 <p>官网：<a href="http://swift-lang.org/">http://swift-lang.org/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Protocol Buffers vs Avro vs Thrift]]></title>
-    <link href="http://findhy.com/blog/2014/05/18/protocol-buffers/"/>
-    <updated>2014-05-18T15:53:37+08:00</updated>
-    <id>http://findhy.com/blog/2014/05/18/protocol-buffers</id>
-    <content type="html"><![CDATA[<p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
-
-<!--more-->
-
-
-<h3>1.RPC模型</h3>
-
-<p>一个简单的RPC调用模型如下图所示：<br/>
-<img src="http://findhy.com/images/rpc_1.png"></p>
-
-<p>当我们在选型RPC框架的时候需要关注的几个核心问题是：</p>
-
-<ul>
-<li>传输的协议和数据（JSON、XML等）是什么？</li>
-<li>如何高效的数据存储和传输？</li>
-<li>服务器端处理请求的方式？</li>
-</ul>
-
-
-<h3>2.不建议的方案</h3>
-
-<ul>
-<li>SOAP：基于XML，传输的数据太多</li>
-<li>CORBA：多度设计而且重量级，<a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a></li>
-<li>DCOM, COM+ :主要用于windows客户端程序</li>
-<li>HTTP/JSON/XML/Plain Text：基于HTTP协议的，这种在简单的场景下是可以用的，像hessian，但缺点是缺乏更复杂的协议描述，只能传输简单的对象，而且JSON/XML都太重了</li>
-</ul>
-
-
-<h3>3.建议方案</h3>
-
-<ul>
-<li>Protocol Buffers</li>
-<li>Apache Thrift</li>
-<li>Apache Avro</li>
-<li>Message Pack</li>
-<li>kryo</li>
-<li>BSON</li>
-</ul>
-
-
-<p>上面这些序列化框架共同的特点的是：有接口描述（IDL）、性能较高、版本控制和基于二进制的数据传输。下面重点介绍前三个。</p>
-
-<h3>4.Protocol Buffers</h3>
-
-<ul>
-<li>来源Google，于2001年开始设计，2008年开源</li>
-<li>非常稳定，大量运用在Google的生产环境中</li>
-<li>目前支持四种语言：C++, Java, Python, and JavaScript</li>
-<li><a href="https://code.google.com/p/protobuf/">https://code.google.com/p/protobuf/</a></li>
-</ul>
-
-
-<h3>5.Apache Thrift</h3>
-
-<ul>
-<li>由Google-X实验室的工程师于2007年设计，后来主要用于Facebook内部项目，现在为apache的开源项目</li>
-<li>旨在成为下一代的PB（更加全面的功能和支持更多的语言）</li>
-<li>支持更多语言，包括：C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#,
-Cocoa, JavaScript, Node.js, Smalltalk, OCaml and Delphi等</li>
-<li>IDL描述语言要比PB更简洁</li>
-<li>提供一个RPC调用栈</li>
-<li><a href="http://thrift.apache.org/">http://thrift.apache.org/</a></li>
-</ul>
-
-
-<h3>6.Apache Avro</h3>
-
-<ul>
-<li>Avro是Hadoop的作者Doug Cutting写的另外一个RPC框架</li>
-<li>支持序列化为JSON或者二进制</li>
-<li>支持从protobufs和thrift读写数据</li>
-<li>支持语言：Java, C, C++, C#, Python, Ruby</li>
-<li><a href="http://avro.apache.org/">http://avro.apache.org/</a></li>
-</ul>
-
-
-<h3>7.传输数据大小比较</h3>
-
-<p><img src="http://findhy.com/images/rpc_2.png"></p>
-
-<p>Thrift-TBinaryProtocol &ndash; 没有经过压缩的二进制协议，比文本协议要快，但是很难调试<br/>
-Thrift-TCompactProtocol &ndash; 经过压缩处理的，更加高效</p>
-
-<h3>8.哪些项目在使用Thrift？</h3>
-
-<ul>
-<li>Facebook</li>
-<li>Cassandra project</li>
-<li>Hadoop supports access to its HDFS API through Thrift bindings</li>
-<li>HBase leverages Thrift for a cross-language API</li>
-<li>Hypertable leverages Thrift for a cross-language API since v0.9.1.0a</li>
-<li>LastFM</li>
-<li>DoAT</li>
-<li>ThriftDB</li>
-<li>Scribe</li>
-<li>Evernote uses Thrift for its public API.</li>
-<li>Junkdepot</li>
-</ul>
-
-
-<h3>9.哪些项目在使用Protocol Buffers？</h3>
-
-<ul>
-<li>Google</li>
-<li>ActiveMQ uses the protobuf for Message store</li>
-<li>Netty (protobuf-rpc)</li>
-</ul>
-
-
-<h3>10.不同框架测试结果比较</h3>
-
-<p><a href="https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2">https://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2</a></p>
-
-<h3>11.总结</h3>
-
-<ul>
-<li>其实大部分场景下，基于HTTP的Hessian或者阿里巴巴的Dubbo完全可以满足需求</li>
-<li>如果追求更高的性能，像高并发的游戏服务器端，可以选择Protocol Buffers、Avro或Thrift</li>
-<li>Protocol Buffers和Thrift的稳定性要更好，大量运用于Google和Facebook的生产环境中</li>
-<li>Thrift相比Protocol Buffers支持更多的语言，框架逻辑更加清晰，易于定制扩展，性能与Protocol Buffers不相上下，目前来说应该是最佳的选择</li>
-<li>Avro的优势在于Schema动态加载功能，而且Avro更适合于数据交换及存储的通用工具和平台</li>
-<li>Avro的性能不输Protocol Buffers和Thrift，但缺点是发展时间较短，没有经过太多项目的验证</li>
-</ul>
-
-
-<h3>12.参考</h3>
-
-<p><a href="http://www.slideshare.net/ChicagoHUG/avro-chug-20120416">http://www.slideshare.net/ChicagoHUG/avro-chug-20120416</a>
-<a href="http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro">http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro</a>
-<a href="http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  ">http://ganges.usc.edu/pgroupW/images/a/a9/Serializarion_Framework.pdf  </a>
-<a href="https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de">https://www.igvita.com/2011/08/01/protocol-buffers-avro-thrift-messagepack/http://www-old.itm.uni-luebeck.de/teaching/ws1112/vs/Uebung/GrossUebungNetty/VS-WS1112-xx-Zero-Copy_Event-Driven_Servers_with_Netty.pdf?lang=de</a>  <br/>
-<a href="http://www.alidata.org/archives/1307">http://www.alidata.org/archives/1307</a></p>
 ]]></content>
   </entry>
   

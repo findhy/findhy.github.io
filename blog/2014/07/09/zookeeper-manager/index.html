@@ -5,16 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>About - Findhy's Blog</title>
+  <title>Zookeeper运维管理工具介绍 - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="About Jun 19th, 2014 坐标北京
-互联网行业
-大数据方向
-目前研究Graph Database-Titan，感兴趣可加群：239713922
-联系:findhyg(at)gmail(dot)com Jun 19th, 2014 Tweet Comments Please &hellip;">
-  
+  <meta name="description" content="Zookeeper运维管理工具介绍">
+  <meta name="keywords" content="Zookeeper运维管理工具介绍">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -22,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/about">
+  <link rel="canonical" href="http://findhy.com/blog/2014/07/09/zookeeper-manager">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -94,39 +90,15 @@ $(document).bind('DOMNodeInserted', function(event) {
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">About</h1>
-    <p class="meta">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-19T18:36:00+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2014</time></p>
-  </header>
-  
-  <ul>
-<li>坐标北京</li>
-<li>互联网行业</li>
-<li>大数据方向</li>
-<li>目前研究Graph Database-Titan，感兴趣可加群：239713922</li>
-<li>联系:findhyg(at)gmail(dot)com</li>
-</ul>
-
-
-  
-    <footer>
+    
+      <h1 class="entry-title">Zookeeper运维管理工具介绍</h1>
+    
+    
       <p class="meta">
         
-        
 
 
 
@@ -138,21 +110,88 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-06-19T18:36:00+08:00" pubdate data-updated="true">Jun 19<span>th</span>, 2014</time>
+<time datetime="2014-07-09T13:39:26+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2014</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://findhy.com">Comments</a>
         
       </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://zookeeper.apache.org/">Zookeeper</a>是一个提供维护配置信息、命名空间、分布式同步和组服务的集中式管理工具，广泛应用与分布式系统中，像Storm、HBase、Dubbo都依赖Zookeeper，所以怎么运维和管理Zookeeper就非常重要了，下面介绍几个Zookeeper的管理工具，有些我用过有些我没有用过，仅供参考。</p>
+
+<!--more-->
+
+
+<h3>1.Taokeeper</h3>
+
+<p>阿里开源的Zookeeper监控工具，可以用来监控Zookeeper集群的工作状态、连接数、注册的Watcher数和磁盘/内存/CPU状态，还可以设置预警，当系统性能达到某个阀值的时候通知管理员，这块提供自定义开发接口。</p>
+
+<p>项目地址：<a href="https://github.com/alibaba/taokeeper">https://github.com/alibaba/taokeeper</a></p>
+
+<p>安装说明：<a href="http://jm-blog.aliapp.com/?p=1450">http://jm-blog.aliapp.com/?p=1450</a></p>
+
+<p>注意如果启动完看不到机器的磁盘和CPU等状态，可能是服务器没有安装nc，执行 yum install -y nc</p>
+
+<h3>2.ZooInspector</h3>
+
+<p><a href="http://www.taobaotesting.com/blogs/qa?bid=15305">ZooInspector</a>可以用来查询Zookeeper里面的具体信息，还可以与Eclipse集成可视化，这样我们在开发过程中就能够实时看到Zookeeper中的数据。</p>
+
+<h3>3.node-zk-browser</h3>
+
+<p><a href="https://github.com/killme2008/node-zk-browser">node-zk-browser</a>和ZooInspector功能相似，但是基于浏览器访问的，底层是用Node.js实现。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
-        <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/about/index.html" data-via="sunwei553722769" data-counturl="http://findhy.com/about/index.html" >Tweet</a>
+
+<span class="byline author vcard">Posted by <span class="fn">Findhy</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-09T13:39:26+08:00" pubdate data-updated="true">Jul 9<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/zookeeper/'>Zookeeper</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/07/09/zookeeper-manager/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/07/09/zookeeper-manager/" >Tweet</a>
   
   
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2014/06/28/spark-on-yarn/" title="Previous Post: Spark1.0在YARN上部署过程">&laquo; Spark1.0在YARN上部署过程</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
   <section>
@@ -336,8 +375,8 @@ $(document).bind('DOMNodeInserted', function(event) {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/about/index.html';
-        var disqus_url = 'http://findhy.com/about/index.html';
+        var disqus_identifier = 'http://findhy.com/blog/2014/07/09/zookeeper-manager/';
+        var disqus_url = 'http://findhy.com/blog/2014/07/09/zookeeper-manager/';
         var disqus_script = 'embed.js';
       
     (function () {

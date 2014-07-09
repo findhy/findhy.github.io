@@ -9,8 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：http://kafka.apache.org/%E3%80%82
-Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点： ">
+  <meta name="description" content="分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +91,50 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-18T15:53:37+08:00" pubdate data-updated="true">May 18<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/05/18/protocol-buffers/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/05/18/protocol-buffers/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/18/protocol-buffers/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -505,50 +548,6 @@ JDK 1.7.0_45
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/20/yarn/">YARN，Hadoop平台的操作系统</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-20T10:55:35+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/03/20/yarn/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/03/20/yarn/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>YARN是Hadoop2.0版本推出的全新数据处理平台。通过YARN，用户可以在Hadoop平台中根据不同的应用场景选择不同的计算框架（MR、TEZ等），而且可以同时处理同一批数据。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/03/20/yarn/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -589,11 +588,16 @@ JDK 1.7.0_45
 <li class='category'><a href='/blog/categories/titan/'>Titan (8)</a></li>
 <li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
 <li class='category'><a href='/blog/categories/yarn/'>YARN (1)</a></li>
+<li class='category'><a href='/blog/categories/zookeeper/'>Zookeeper (1)</a></li>
 
   </ul>
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/09/zookeeper-manager/">Zookeeper运维管理工具介绍</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a>
@@ -669,10 +673,6 @@ JDK 1.7.0_45
     
       <li class="post">
         <a href="/blog/2014/06/04/swift/">Swift Introduction</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/18/protocol-buffers/">Protocol Buffers vs Avro vs Thrift</a>
       </li>
     
   </ul>
