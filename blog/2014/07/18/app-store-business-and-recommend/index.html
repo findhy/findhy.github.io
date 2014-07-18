@@ -5,18 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Titan Introduction - Findhy's Blog</title>
+  <title>手机应用商店的商业形态以及个性化推荐 - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性： 弹性和性能的线性扩展
-容错性
-多数据中心的高可用性和热备份
-支持事务的ACID和最终一致性
-支持多种不同的后端存储
-Apache Cassandra（分布式）
-Apache HBase（分布式） &hellip;">
-  
+  <meta name="description" content="手机应用商店的商业形态以及个性化推荐">
+  <meta name="keywords" content="手机应用商店的商业形态以,个性化推荐">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -24,7 +18,7 @@ Apache HBase（分布式） &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/05/14/titan-graph-db">
+  <link rel="canonical" href="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -100,7 +94,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
   <header>
     
-      <h1 class="entry-title">Titan Introduction</h1>
+      <h1 class="entry-title">手机应用商店的商业形态以及个性化推荐</h1>
     
     
       <p class="meta">
@@ -116,7 +110,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-05-14T22:35:18+08:00" pubdate data-updated="true">May 14<span>th</span>, 2014</time>
+<time datetime="2014-07-18T11:53:49+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://findhy.com">Comments</a>
@@ -126,38 +120,73 @@ $(document).bind('DOMNodeInserted', function(event) {
   </header>
 
 
-<div class="entry-content"><p>Titan是一个高可用的分布式的图数据库，并且可以支撑上千个用户的并发事务，它有下面这些特性：</p>
+<div class="entry-content"><p>最近同时在参与两件事：手机应用商店的商业化之路以及应用的个性化推荐，一点想法记录下来，手机应用商店市场已经泛滥，既有官方出品（Google Play），又有巨头入场（应用宝、360、91），还有少年得志生机勃勃的豌豆荚，作为应用商店怎么在竞争如此激烈的市场中抢占一席之地呢？</p>
 
-<!--more-->
+<h4>生态环境</h4>
 
+<p>在手机应用商店的生态环境中，有三个主要参与者：</p>
 
 <ul>
-<li>弹性和性能的线性扩展</li>
-<li>容错性</li>
-<li>多数据中心的高可用性和热备份</li>
-<li>支持事务的ACID和最终一致性</li>
-<li>支持多种不同的后端存储<br/>
-<em>Apache Cassandra（分布式）<br/>
-Apache HBase（分布式）<br/>
-Oracle BerkeleyDB（本地的）<br/>
-Persistit（本地）</em></li>
-<li>支持多种后端索引  <br/>
-<em>ElasticSearch<br/>
-Apache Lucene</em></li>
-<li>与图形处理栈TinkerPop原生集成   <br/>
-  <em>图查询语言Gremlin<br/>
-  对象到图的映射器Frames<br/>
-  图服务器Rexster<br/>
-  标准图API：Blueprints</em></li>
-<li>Apache2 license 开源协议</li>
+<li>开发者或者叫商家</li>
+<li>应用商店</li>
+<li>用户</li>
 </ul>
 
 
-<p>Titan最大的优势在于其分布式和线性扩展，性能要高于Neo4j。还有支持HBase数据存储，这样可以和整个Hadoop平台完美结合起来，与YARN平台上面其它应用共享数据，但就这一点，以后Tian可能会代替Neo4j成为图数据库的主流。但是Titan目前应用还不是特别广泛，我们也是在尝试，最高版本是0.4，而且有很多需要改进的地方，包括与HBase的配置挺麻烦的，还无法放到YARN上来管理等等。</p>
+<h4>盈利方式</h4>
 
-<p>更多关于Titan的文档可以看<a href="https://github.com/thinkaurelius/titan/wiki">这里</a></p>
+<p>我们可以从结果为导向来先看下，应用商店想盈利，必须从用户和开发者身上想办法，从用户：</p>
 
-<p>可以从<a href="https://github.com/thinkaurelius/titan/wiki/Getting-Started">这里</a>开始</p>
+<ul>
+<li>广告：用户点击收费</li>
+<li>付费内容：应用或者其它资源</li>
+</ul>
+
+
+<p>从开发者：</p>
+
+<ul>
+<li>广告：为开发者推广应用收费</li>
+<li>联运：合作运营，收入分成</li>
+<li>支付：为开发者提供支付，通过账期和手续费来盈利</li>
+</ul>
+
+
+<p>后两个都需要其它资源辅助才能做，暂且不谈，所以还是又回到了互联网最基础的盈利方式：广告。</p>
+
+<p>但是应用商店的广告会有一个平衡问题：</p>
+
+<ul>
+<li>应用商店最核心的内容就是要提供用户想要的应用，所以需要把用户最需要的应用放在最好的位置</li>
+<li>应用商店想盈利，就必须把最好的位置留给广告主</li>
+</ul>
+
+
+<p>怎么将广告与用户的强需求完美的结合？这个是应用商店需要思考的问题，如果做得不好，用户找不到自己想要的应用，可能以后就不会再来了，但如果只是纯粹推热门的、用户感兴趣的，又无法盈利。这又回到本文的标题：个性化推荐。</p>
+
+<h4>个性化推荐</h4>
+
+<p>如果应用商店做到：推荐的广告就是用户想要的应用呢？首先我们需要非常了解我们的用户，积累用户行为数据非常重要：</p>
+
+<ul>
+<li>评论体系</li>
+<li>评分体系</li>
+<li>下载</li>
+<li>搜索</li>
+</ul>
+
+
+<p>通过这些来分析用户的兴趣模型，再加上推荐算法(CF)达到给用户看的广告就是他感兴趣的，而且这个阀值也很重要，如果没有找到用户感兴趣的广告，宁愿不推荐也不要放一些不相关的广告来导致用户流失，所以整体算法需要同时考虑广告收益和用户体验，广告推荐要和应用推荐结合使用。</p>
+
+<h4>总结</h4>
+
+<ul>
+<li>应用商店想盈利留住用户是关键，没有用户其它都是扯</li>
+<li>所以在广告和用户体验上，广告必须要为用户体验让步</li>
+<li>在应用商店产品层面，要做更多的附加内容来吸引用户(社交、线下活动、论坛、O2O)，形成一个圈子，单纯一个应用商店，产品形态还是太小了</li>
+<li>有了用户，有了用户交互，积累了数据，盈利也会比较容易，也会衍生出其它产品形态(卖数据服务来指导游戏厂商哪些游戏受用户喜爱)</li>
+</ul>
+
 </div>
 
 
@@ -180,12 +209,12 @@ Apache Lucene</em></li>
   
 
 
-<time datetime="2014-05-14T22:35:18+08:00" pubdate data-updated="true">May 14<span>th</span>, 2014</time>
+<time datetime="2014-07-18T11:53:49+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/titan/'>Titan</a>
+    <a class='category' href='/blog/categories/others/'>Others</a>
   
 </span>
 
@@ -194,7 +223,7 @@ Apache Lucene</em></li>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/05/14/titan-graph-db/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/05/14/titan-graph-db/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/" >Tweet</a>
   
   
   
@@ -203,10 +232,8 @@ Apache Lucene</em></li>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/04/21/big-data-business/" title="Previous Post: 大数据时代下的商机">&laquo; 大数据时代下的商机</a>
+        <a class="basic-alignment left" href="/blog/2014/07/09/zookeeper-manager/" title="Previous Post: Zookeeper运维管理工具介绍">&laquo; Zookeeper运维管理工具介绍</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/14/cdh5-hadoop-2-2-0-install/" title="Next Post: Hadoop 2.2.0-cdh5.0.0-beta-2 Install On Centos">Hadoop 2.2.0-cdh5.0.0-beta-2 Install On Centos &raquo;</a>
       
     </p>
   </footer>
@@ -393,8 +420,8 @@ Apache Lucene</em></li>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/05/14/titan-graph-db/';
-        var disqus_url = 'http://findhy.com/blog/2014/05/14/titan-graph-db/';
+        var disqus_identifier = 'http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/';
+        var disqus_url = 'http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Zookeeper是一个提供维护配置信息、命名空间、分布式同步和组服务的集中式管理工具，广泛应用与分布式系统中，像Storm、HBase、Dubbo都依赖Zookeeper，所以怎么运维和管理Zookeeper就非常重要了，下面介绍几个Zookeeper的管理工具，有些我用过有些我没有用过， &hellip;">
+  <meta name="description" content="最近同时在参与两件事：手机应用商店的商业化之路以及应用的个性化推荐，一点想法记录下来，手机应用商店市场已经泛滥，既有官方出品（Google Play），又有巨头入场（应用宝、360、91），还有少年得志生机勃勃的豌豆荚，作为应用商店怎么在竞争如此激烈的市场中抢占一席之地呢？ 生态环境 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,111 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/app-store-business-and-recommend/">手机应用商店的商业形态以及个性化推荐</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T11:53:49+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/07/18/app-store-business-and-recommend/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近同时在参与两件事：手机应用商店的商业化之路以及应用的个性化推荐，一点想法记录下来，手机应用商店市场已经泛滥，既有官方出品（Google Play），又有巨头入场（应用宝、360、91），还有少年得志生机勃勃的豌豆荚，作为应用商店怎么在竞争如此激烈的市场中抢占一席之地呢？</p>
+
+<h4>生态环境</h4>
+
+<p>在手机应用商店的生态环境中，有三个主要参与者：</p>
+
+<ul>
+<li>开发者或者叫商家</li>
+<li>应用商店</li>
+<li>用户</li>
+</ul>
+
+
+<h4>盈利方式</h4>
+
+<p>我们可以从结果为导向来先看下，应用商店想盈利，必须从用户和开发者身上想办法，从用户：</p>
+
+<ul>
+<li>广告：用户点击收费</li>
+<li>付费内容：应用或者其它资源</li>
+</ul>
+
+
+<p>从开发者：</p>
+
+<ul>
+<li>广告：为开发者推广应用收费</li>
+<li>联运：合作运营，收入分成</li>
+<li>支付：为开发者提供支付，通过账期和手续费来盈利</li>
+</ul>
+
+
+<p>后两个都需要其它资源辅助才能做，暂且不谈，所以还是又回到了互联网最基础的盈利方式：广告。</p>
+
+<p>但是应用商店的广告会有一个平衡问题：</p>
+
+<ul>
+<li>应用商店最核心的内容就是要提供用户想要的应用，所以需要把用户最需要的应用放在最好的位置</li>
+<li>应用商店想盈利，就必须把最好的位置留给广告主</li>
+</ul>
+
+
+<p>怎么将广告与用户的强需求完美的结合？这个是应用商店需要思考的问题，如果做得不好，用户找不到自己想要的应用，可能以后就不会再来了，但如果只是纯粹推热门的、用户感兴趣的，又无法盈利。这又回到本文的标题：个性化推荐。</p>
+
+<h4>个性化推荐</h4>
+
+<p>如果应用商店做到：推荐的广告就是用户想要的应用呢？首先我们需要非常了解我们的用户，积累用户行为数据非常重要：</p>
+
+<ul>
+<li>评论体系</li>
+<li>评分体系</li>
+<li>下载</li>
+<li>搜索</li>
+</ul>
+
+
+<p>通过这些来分析用户的兴趣模型，再加上推荐算法(CF)达到给用户看的广告就是他感兴趣的，而且这个阀值也很重要，如果没有找到用户感兴趣的广告，宁愿不推荐也不要放一些不相关的广告来导致用户流失，所以整体算法需要同时考虑广告收益和用户体验，广告推荐要和应用推荐结合使用。</p>
+
+<h4>总结</h4>
+
+<ul>
+<li>应用商店想盈利留住用户是关键，没有用户其它都是扯</li>
+<li>所以在广告和用户体验上，广告必须要为用户体验让步</li>
+<li>在应用商店产品层面，要做更多的附加内容来吸引用户(社交、线下活动、论坛、O2O)，形成一个圈子，单纯一个应用商店，产品形态还是太小了</li>
+<li>有了用户，有了用户交互，积累了数据，盈利也会比较容易，也会衍生出其它产品形态(卖数据服务来指导游戏厂商哪些游戏受用户喜爱)</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -488,50 +593,6 @@ $(document).bind('DOMNodeInserted', function(event) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-17T14:50:02+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/06/17/graph-database-data-structure/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/06/17/graph-database-data-structure/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://en.wikipedia.org/wiki/Graph_database">Graph database</a>是近年兴起的NoSQL存储模型(graph, key-value, column, and document)中的一种实现数据库，代表产品是Neo4j、Titan，它的理论基础是<a href="http://zh.wikipedia.org/wiki/%E5%9B%BE%E8%AE%BA">图论/Graph theory</a>,一个数学分支，主要研究顶点和边组成的图形的数学理论和方法，它的起源也比较有意思，这部分本文不谈，感兴趣的同学可以去Google研究一下。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/17/graph-database-data-structure/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -562,7 +623,7 @@ $(document).bind('DOMNodeInserted', function(event) {
 <li class='category'><a href='/blog/categories/kafka/'>Kafka (3)</a></li>
 <li class='category'><a href='/blog/categories/nginx/'>Nginx (1)</a></li>
 <li class='category'><a href='/blog/categories/opendata/'>Opendata (1)</a></li>
-<li class='category'><a href='/blog/categories/others/'>Others (3)</a></li>
+<li class='category'><a href='/blog/categories/others/'>Others (4)</a></li>
 <li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
 <li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
 <li class='category'><a href='/blog/categories/spark/'>Spark (1)</a></li>
@@ -576,6 +637,10 @@ $(document).bind('DOMNodeInserted', function(event) {
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/18/app-store-business-and-recommend/">手机应用商店的商业形态以及个性化推荐</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/09/zookeeper-manager/">Zookeeper运维管理工具介绍</a>
@@ -651,10 +716,6 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <li class="post">
         <a href="/blog/2014/06/05/s3cmd-config/">S3cmd Configure</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/04/swift/">Swift Introduction</a>
       </li>
     
   </ul>
