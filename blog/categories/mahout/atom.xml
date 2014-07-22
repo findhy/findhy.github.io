@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mahout | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/mahout/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-21T21:48:30+08:00</updated>
+  <updated>2014-07-22T15:33:40+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Introduction to Item-Based Recommendations With Hadoop]]></title>
+    <link href="http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/"/>
+    <updated>2014-07-22T14:30:07+08:00</updated>
+    <id>http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop</id>
+    <content type="html"><![CDATA[<p>本文是Mahout官网上的Item-Based CF on Hadoop的例子，原文在这里<a href="https://mahout.apache.org/users/recommender/intro-itembased-hadoop.html">Introduction to Item-Based Recommendations with Hadoop</a>。</p>
+
+<!--more-->
+
+
+<h3>前言</h3>
+
+<p>Item-Based CF是协调过滤推荐算法的一个分支，是基于物品相似推荐，基于物品的 CF 的原理和基于用户的 CF 类似，只是在计算邻居时采用物品本身，而不是从用户的角度，即基于用户对物品的偏好找到相似的物品，然后根据用户的历史偏好，推荐相似的物品给他。从计算的角度看，就是将所有用户对某个物品的偏好作为一个向量来计算物品之间的相似度，得到物品的相似物品后，根据用户历史的偏好预测当前用户还没有表示偏好的 物品，计算得到一个排序的物品列表作为推荐。下图给出了一个例子，对于物品 A，根据所有用户的历史偏好，喜欢物品 A 的用户都喜欢物品 C，得出物品 A 和物品 C 比较相似，而用户 C 喜欢物品 A，那么可以推断出用户 C 可能也喜欢物品 C。  <br/>
+<img src="/images/mahout3.png"></p>
+
+<h3>示例</h3>
+
+<h4>1、准备数据</h4>
+
+<p>数据要求有三个字段：<em>userID, itemID and preference</em>，<em>userID</em>是用户ID，<em>itemID</em>是商品ID或者其它可推荐的物品ID，<em>preference</em>是用户对物品的偏好，可以是购买记录也可以是用户对物品的评分，如果<em>preference</em>没有值，Mahout会默认填1.0，比如我们用户购买商品的数据来进行推荐，这个偏好大家都是一样的，下面是准备的数据，没有填偏好字段：</p>
+
+<pre><code>1,101
+1,102
+1,103
+2,101
+2,102
+2,103
+2,104
+3,101
+3,104
+3,105
+3,107
+4,101
+4,103
+4,104
+4,106
+5,101
+5,102
+5,103
+5,104
+5,105
+5,106
+</code></pre>
+
+<p>生成<em>input.txt</em>，将文件上传到HDFS中</p>
+
+<pre><code>hadoop fs -put input.txt /user/hadoop/mahout/
+</code></pre>
+
+<h4>2、执行</h4>
+
+<pre><code>mahout recommenditembased -s SIMILARITY_LOGLIKELIHOOD -i /user/hadoop/mahout/input.txt -o /user/hadoop/mahout/output --numRecommendations 25
+</code></pre>
+
+<h4>3、查看结果</h4>
+
+<p><img src="/images/mahout2.png"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mahout Tutorial]]></title>

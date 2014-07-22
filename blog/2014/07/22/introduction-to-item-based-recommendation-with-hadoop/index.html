@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Bigdata - Findhy's Blog</title>
+  <title>Introduction to Item-Based Recommendations With Hadoop - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Category: Bigdata">
-  
+  <meta name="description" content="Introduction to Item-Based Recommendations with Hadoop">
+  <meta name="keywords" content="Introduction to Item-Based Recommendations with Hadoop">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.comblog/categories/bigdata">
+  <link rel="canonical" href="http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -90,36 +90,145 @@ $(document).bind('DOMNodeInserted', function(event) {
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Bigdata</h1>
+    
+      <h1 class="entry-title">Introduction to Item-Based Recommendations With Hadoop</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-22T14:30:07+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2014</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://findhy.com">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>本文是Mahout官网上的Item-Based CF on Hadoop的例子，原文在这里<a href="https://mahout.apache.org/users/recommender/intro-itembased-hadoop.html">Introduction to Item-Based Recommendations with Hadoop</a>。</p>
 
-  
-  <h2>2014</h2>
-
-<article>
-  
-<h1><a href="/blog/2014/04/21/big-data-business/">大数据时代下的商机</a></h1>
-<time datetime="2014-04-21T22:57:30+08:00" pubdate><span class='month'>Apr</span> <span class='day'>21</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/bigdata/'>Bigdata</a></span>
-</footer>
+<!--more-->
 
 
-</article>
+<h3>前言</h3>
 
+<p>Item-Based CF是协调过滤推荐算法的一个分支，是基于物品相似推荐，基于物品的 CF 的原理和基于用户的 CF 类似，只是在计算邻居时采用物品本身，而不是从用户的角度，即基于用户对物品的偏好找到相似的物品，然后根据用户的历史偏好，推荐相似的物品给他。从计算的角度看，就是将所有用户对某个物品的偏好作为一个向量来计算物品之间的相似度，得到物品的相似物品后，根据用户历史的偏好预测当前用户还没有表示偏好的 物品，计算得到一个排序的物品列表作为推荐。下图给出了一个例子，对于物品 A，根据所有用户的历史偏好，喜欢物品 A 的用户都喜欢物品 C，得出物品 A 和物品 C 比较相似，而用户 C 喜欢物品 A，那么可以推断出用户 C 可能也喜欢物品 C。  <br/>
+<img src="/images/mahout3.png"></p>
+
+<h3>示例</h3>
+
+<h4>1、准备数据</h4>
+
+<p>数据要求有三个字段：<em>userID, itemID and preference</em>，<em>userID</em>是用户ID，<em>itemID</em>是商品ID或者其它可推荐的物品ID，<em>preference</em>是用户对物品的偏好，可以是购买记录也可以是用户对物品的评分，如果<em>preference</em>没有值，Mahout会默认填1.0，比如我们用户购买商品的数据来进行推荐，这个偏好大家都是一样的，下面是准备的数据，没有填偏好字段：</p>
+
+<pre><code>1,101
+1,102
+1,103
+2,101
+2,102
+2,103
+2,104
+3,101
+3,104
+3,105
+3,107
+4,101
+4,103
+4,104
+4,106
+5,101
+5,102
+5,103
+5,104
+5,105
+5,106
+</code></pre>
+
+<p>生成<em>input.txt</em>，将文件上传到HDFS中</p>
+
+<pre><code>hadoop fs -put input.txt /user/hadoop/mahout/
+</code></pre>
+
+<h4>2、执行</h4>
+
+<pre><code>mahout recommenditembased -s SIMILARITY_LOGLIKELIHOOD -i /user/hadoop/mahout/input.txt -o /user/hadoop/mahout/output --numRecommendations 25
+</code></pre>
+
+<h4>3、查看结果</h4>
+
+<p><img src="/images/mahout2.png"></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Findhy</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-22T14:30:07+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mahout/'>Mahout</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/21/mahout-tutorial/" title="Previous Post: Mahout Tutorial">&laquo; Mahout Tutorial</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -296,7 +405,10 @@ $(document).bind('DOMNodeInserted', function(event) {
       var disqus_shortname = 'findhy';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/';
+        var disqus_url = 'http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

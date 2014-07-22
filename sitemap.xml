@@ -145,6 +145,12 @@
         <lastmod>2014-07-21T21:47:54+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/
+        </loc>
+        <lastmod>2014-07-22T15:33:10+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://findhy.com/404.html</loc>
         <lastmod>2014-06-19T17:48:55+08:00</lastmod>
     </url>
@@ -154,11 +160,11 @@
     </url>
     <url>
         <loc>http://findhy.com/blog/archives/</loc>
-        <lastmod>2014-07-21T21:47:54+08:00</lastmod>
+        <lastmod>2014-07-22T15:33:10+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/</loc>
-        <lastmod>2014-07-21T21:47:54+08:00</lastmod>
+        <lastmod>2014-07-22T15:33:10+08:00</lastmod>
     </url>
     <url>
         <loc>http://findhy.com/robots.txt</loc>
