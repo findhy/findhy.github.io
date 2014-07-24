@@ -152,11 +152,14 @@ $(document).bind('DOMNodeInserted', function(event) {
 <pre><code>vi ~/.bashrc  
 添加
 alias s3ad='s3cmd -c ~/.s3ad'  
+
+执行下面命令，让配置文件生效
 source .bashrc  
+
 测试
 s3ad ls s3://log-ad/adserver/
 
-OK!
+OK!这样就不用每次指定配置文件了
 </code></pre>
 
 <h4>参考</h4>
