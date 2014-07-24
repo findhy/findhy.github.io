@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-22T15:33:40+08:00</updated>
+  <updated>2014-07-24T16:02:11+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[S3cmd 多账户配置]]></title>
+    <link href="http://findhy.com/blog/2014/07/24/s3cmd-multiple-accounts/"/>
+    <updated>2014-07-24T15:16:17+08:00</updated>
+    <id>http://findhy.com/blog/2014/07/24/s3cmd-multiple-accounts</id>
+    <content type="html"><![CDATA[<p>关于s3cmd的安装配置参考这篇文章：<a href="http://findhy.com/blog/2014/06/05/s3cmd-config/">s3cmd Configure</a>，本文介绍s3cmd多账户配置。</p>
+
+<!--more-->
+
+
+<h4>复制配置文件</h4>
+
+<p>s3cmd安装完成之后，在home/user/目录下会生成一个 .s3cfg 配置文件，在复制一个出来</p>
+
+<pre><code>cp .s3cfg .s3ad
+</code></pre>
+
+<h4>修改配置文件</h4>
+
+<pre><code>vi .s3ad
+将access_key和secret_key修改成对应账户的值
+</code></pre>
+
+<h4>测试</h4>
+
+<p>使用 -c 指令指定配置文件</p>
+
+<pre><code>s3cmd -c ~/.s3ad ls s3://log-ad/adserver/ 
+</code></pre>
+
+<h4>改进</h4>
+
+<p>会不会觉得每次用 -c 指定配置文件太麻烦了，用 Bash 别名，我们用一个别名来替代 <em>s3cmd -c ~/.s3ad</em></p>
+
+<pre><code>vi ~/.bashrc  
+添加
+alias s3ad='s3cmd -c ~/.s3ad'  
+source .bashrc  
+测试
+s3ad ls s3://log-ad/adserver/
+
+OK!
+</code></pre>
+
+<h4>参考</h4>
+
+<p><a href="https://blog.techopsguru.com/2011/12/s3-bucket-copying-with-multiple-accounts.html  ">https://blog.techopsguru.com/2011/12/s3-bucket-copying-with-multiple-accounts.html  </a>
+<a href="http://mikesisk.tumblr.com/post/8703449578/s3cmd-and-multiple-accounts  ">http://mikesisk.tumblr.com/post/8703449578/s3cmd-and-multiple-accounts  </a>
+<a href="http://mikesisk.com/2011/08/09/s3cmd-with-multiple-aws-accounts/">http://mikesisk.com/2011/08/09/s3cmd-with-multiple-aws-accounts/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Introduction to Item-Based Recommendations With Hadoop]]></title>
@@ -1612,96 +1664,6 @@ public interface ISpout extends Serializable {
 <a href="http://www.quora.com/RabbitMQ/RabbitMQ-vs-Kafka-which-one-for-durable-messaging-with-good-query-features">http://www.quora.com/RabbitMQ/RabbitMQ-vs-Kafka-which-one-for-durable-messaging-with-good-query-features</a></p>
 
 <p>Kafka拥有更高的吞吐量和更好的分布式支持。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Computational Advertising]]></title>
-    <link href="http://findhy.com/blog/2014/06/07/computational-advertising/"/>
-    <updated>2014-06-07T12:50:40+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/07/computational-advertising</id>
-    <content type="html"><![CDATA[<p>最近在学习计算广告学，一个互联网广告行业催生出来的新兴学科，斯坦福大学已经推出了计算广告学的课程，本文下面有公开课的链接。</p>
-
-<!--more-->
-
-
-<h3>一、综述</h3>
-
-<h4>1.由来</h4>
-
-<p>互联网行业的发展，广告由线下搬到了线上，而线上广告与用户的交互与线下有很大的不同，怎么样让互联网广告更加有效，就是计算广告学这门学科研究的内容。</p>
-
-<h4>2.参与方</h4>
-
-<p>在互联网广告整个生命周期中，一般会有四个参与方，这里引用微软一篇文章里面的图：<br/>
-<img src="http://findhy.com/images/ad1.png"></p>
-
-<ul>
-<li>需求方(Demand): 图中的广告主，可以是广告主(advertiser),也可以是代表广告主利益的代理商(agency)</li>
-<li>供给方(Supply): 图中的网页出版商，一般指互联网媒体，有流量的且可以提供广告位的媒体方。</li>
-<li>受众(Audience)：图中的网络用户，就是广告面向的用户</li>
-<li>广告平台：这个在下一节详细讲</li>
-</ul>
-
-
-<h4>3.广告分类</h4>
-
-<p>引用刘鹏计算广告学：</p>
-
-<blockquote><p>品牌广告(Brand Awareness): 希望借助媒体的力量来快速接触大量用户,以达到宣传品牌形象,提升中长期购买率与利润空间的目的。<br/>
-效果广告(Direct Response): 希望能利用广告手段马上带来大量的购买行为。</p></blockquote>
-
-<h3>二、广告平台</h3>
-
-<p>在互联网广告这个生态系统中，需求方、供给方、受众是比较容易理解，需求方和线下广告的没有区别，就是广告主或者代理商，它是广告的买方也是广告效果的最终受益者，供给方就是有流量且可以提供广告位的媒体，受众就是最终用户。</p>
-
-<p>广告平台主要有三类，需求方平台(Demand Side Platform, DSP)、供应方平台（Sell-Side Platform，SSP）和广告交易平台(Ad Exchange)。</p>
-
-<h4>1.广告交易平台(Ad Exchange)</h4>
-
-<p>引用刘鹏计算广告学：</p>
-
-<blockquote><p>提供广告主自行选择流量和在每次展示上独立定价的功能。这样的功能，必然要求竞价这一过程在每次展示时实时进行，也就是实时竞价(Real Time Bidding, RTB)。RTB的产生，使得广告市场向着透明的比价平台的方向发展，这样的平台就是广告交易平台(Ad Exchange)，其主要特征即是用RTB的方式实时得到广告候选，并按照其出价简单完成投放决策。</p></blockquote>
-
-<p>广告交易平台通常应该是一个中立的平台，它汇集了大量媒体（供给方）的流量，让需求方以实时竞价的方式来购买广告位。</p>
-
-<h4>2.需求方平台（DSP）</h4>
-
-<p>引用刘鹏计算广告学：</p>
-
-<blockquote><p>DSP的系统广告投放的决策流程为：DSP服务器通过RTBS接口拿到广告请求，然后经过与广告网络类似的决策步骤，包括检索和eCPM排序，找到价值最高的广告，并将报价返回给Ad Exchange。与广告网络相比，DSP的广告决策过程有一些难点：一是在eCPM估计时，除了估计CTR，还要估计点击价值，并且由于出价的要求，这一估计要尽可能准确；二是由于DSP是完全面向广告主的产品，广告主量的需求也需要满足，因此还要考虑在线分配的策略。DSP与其它广告产品的相比，多了定制化用户划分功能，即图中的Customized Audience Segmentation部分。这部分通常的方式是在广告主网站上布DSP域名的代码，收集到用户行为并进行离线加工分析，再将加工出的标签用于广告投放。</p></blockquote>
-
-<p>DSP代表需求方的利益，它的核心是广告与用户的准确匹配以及预估点击价值。</p>
-
-<h4>3.供应方平台（SSP）</h4>
-
-<p>SSP代表供给方（媒体）的利益，它有流量、广告位和广告库，通过人工和算法调节达到利益最大化，举个例子，我有一个媒体A，有广告位1、2，接入了广告主甲、乙、丙，按CPC结算，甲和乙的受众是男性，丙的受众是女性，那如果我发现流量用户的属性是男性，那么广告位肯定要展现甲和乙的广告，而不展现丙，这是一个最简单的受众定向来达到用户点击率最大化。</p>
-
-<h4>4.DSP与SSP关系</h4>
-
-<p><img src="http://findhy.com/images/ad2.png"></p>
-
-<h3>三、广告系统技术架构</h3>
-
-<p>TODO</p>
-
-<h3>四、本文参考</h3>
-
-<p>刘鹏的计算广告学<br/>
-<a href="http://dirlt.com/computational-advertising.html  ">http://dirlt.com/computational-advertising.html  </a>
-<a href="http://study.163.com/course/courseMain.htm?courseId=321007#/courseMain">http://study.163.com/course/courseMain.htm?courseId=321007#/courseMain</a></p>
-
-<p>方兴未艾的计算广告学<br/>
-<a href="http://www.vision-computing.org/userfiles/file/2013-4//20134221848115974.pdf">http://www.vision-computing.org/userfiles/file/2013-4//20134221848115974.pdf</a></p>
-
-<p>斯坦福大学的计算广告学公开课<br/>
-<a href="http://www.stanford.edu/class/msande239/">http://www.stanford.edu/class/msande239/</a></p>
-
-<p>雅虎的相关研究论文<br/>
-<a href="http://research.yahoo.com/Computational_Advertising">http://research.yahoo.com/Computational_Advertising</a></p>
-
-<p>知乎讨论<br/>
-<a href="http://www.zhihu.com/question/20363959">http://www.zhihu.com/question/20363959</a></p>
 ]]></content>
   </entry>
   

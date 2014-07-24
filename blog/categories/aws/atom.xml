@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AWS | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/aws/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-22T15:33:40+08:00</updated>
+  <updated>2014-07-24T16:02:11+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[S3cmd 多账户配置]]></title>
+    <link href="http://findhy.com/blog/2014/07/24/s3cmd-multiple-accounts/"/>
+    <updated>2014-07-24T15:16:17+08:00</updated>
+    <id>http://findhy.com/blog/2014/07/24/s3cmd-multiple-accounts</id>
+    <content type="html"><![CDATA[<p>关于s3cmd的安装配置参考这篇文章：<a href="http://findhy.com/blog/2014/06/05/s3cmd-config/">s3cmd Configure</a>，本文介绍s3cmd多账户配置。</p>
+
+<!--more-->
+
+
+<h4>复制配置文件</h4>
+
+<p>s3cmd安装完成之后，在home/user/目录下会生成一个 .s3cfg 配置文件，在复制一个出来</p>
+
+<pre><code>cp .s3cfg .s3ad
+</code></pre>
+
+<h4>修改配置文件</h4>
+
+<pre><code>vi .s3ad
+将access_key和secret_key修改成对应账户的值
+</code></pre>
+
+<h4>测试</h4>
+
+<p>使用 -c 指令指定配置文件</p>
+
+<pre><code>s3cmd -c ~/.s3ad ls s3://log-ad/adserver/ 
+</code></pre>
+
+<h4>改进</h4>
+
+<p>会不会觉得每次用 -c 指定配置文件太麻烦了，用 Bash 别名，我们用一个别名来替代 <em>s3cmd -c ~/.s3ad</em></p>
+
+<pre><code>vi ~/.bashrc  
+添加
+alias s3ad='s3cmd -c ~/.s3ad'  
+source .bashrc  
+测试
+s3ad ls s3://log-ad/adserver/
+
+OK!
+</code></pre>
+
+<h4>参考</h4>
+
+<p><a href="https://blog.techopsguru.com/2011/12/s3-bucket-copying-with-multiple-accounts.html  ">https://blog.techopsguru.com/2011/12/s3-bucket-copying-with-multiple-accounts.html  </a>
+<a href="http://mikesisk.tumblr.com/post/8703449578/s3cmd-and-multiple-accounts  ">http://mikesisk.tumblr.com/post/8703449578/s3cmd-and-multiple-accounts  </a>
+<a href="http://mikesisk.com/2011/08/09/s3cmd-with-multiple-aws-accounts/">http://mikesisk.com/2011/08/09/s3cmd-with-multiple-aws-accounts/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[S3cmd Configure]]></title>
