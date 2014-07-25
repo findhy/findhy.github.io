@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AWS | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/aws/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-25T14:23:18+08:00</updated>
+  <updated>2014-07-25T14:25:59+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -18,7 +18,7 @@
     <link href="http://findhy.com/blog/2014/07/25/hadoop-cloud/"/>
     <updated>2014-07-25T12:18:55+08:00</updated>
     <id>http://findhy.com/blog/2014/07/25/hadoop-cloud</id>
-    <content type="html"><![CDATA[<p>今天看了Netflix分享的基于AWS的大数据平台Hadoop架构，感觉这是未来大数据平台的发展模式，将整个数据仓库部署在云端，开发者不需要考虑集群的资源扩展，也不需要接触复杂的底层命令，通过一个简单RESTFul接口就可以提交我们的MapReduce任务，还可以实时看到任务和运行状态。在此记录一下有时间可以实践一下。</p>
+    <content type="html"><![CDATA[<p>今天看了Netflix分享的基于AWS的大数据平台Hadoop架构，感觉这是未来大数据平台的发展模式，将整个数据仓库部署在云端，开发者不需要考虑集群的资源扩展，也不需要接触复杂的底层命令，通过一个简单RESTFul接口就可以提交我们的MapReduce任务，还可以实时看到任务和运行状态。</p>
 
 <!--more-->
 
