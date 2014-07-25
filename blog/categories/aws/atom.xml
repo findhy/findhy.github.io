@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AWS | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/aws/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-24T16:07:22+08:00</updated>
+  <updated>2014-07-25T14:23:18+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[基于云的Hadoop架构]]></title>
+    <link href="http://findhy.com/blog/2014/07/25/hadoop-cloud/"/>
+    <updated>2014-07-25T12:18:55+08:00</updated>
+    <id>http://findhy.com/blog/2014/07/25/hadoop-cloud</id>
+    <content type="html"><![CDATA[<p>今天看了Netflix分享的基于AWS的大数据平台Hadoop架构，感觉这是未来大数据平台的发展模式，将整个数据仓库部署在云端，开发者不需要考虑集群的资源扩展，也不需要接触复杂的底层命令，通过一个简单RESTFul接口就可以提交我们的MapReduce任务，还可以实时看到任务和运行状态。在此记录一下有时间可以实践一下。</p>
+
+<!--more-->
+
+
+<h3>Netflix基于AWS的Hadoop架构介绍</h3>
+
+<p><img src="/images/hadoopcloud1.png"></p>
+
+<p>Netflix的Hadoop云架构是完全基于AWS来搭建，底层存储采用S3，Hadoop组件采用AWS上原生的EMR，PAAS层是自己开发的Genie(目前已经开源)，开发者或者数据分析师通过Genie提供的RESTFul接口来提交和管理任务，由于AWS云带来的弹性扩展的好处，整个集群可以任意横向和纵向扩展，而开发者只需要专注在算法和业务上即可。</p>
+
+<p>Netflix官方博客介绍：<br/>
+<a href="http://techblog.netflix.com/2013/01/hadoop-platform-as-service-in-cloud.html">http://techblog.netflix.com/2013/01/hadoop-platform-as-service-in-cloud.html</a></p>
+
+<p>Infoq中文介绍：<br/>
+<a href="http://www.infoq.com/cn/news/2013/02/netflix-hadoop-PaaS">http://www.infoq.com/cn/news/2013/02/netflix-hadoop-PaaS</a></p>
+
+<p>Genie介绍PPT：<br/>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24063535 " width="595" height="446" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen></iframe> </p>
+
+<p>Genie已经开源：<br/>
+<a href="https://github.com/Netflix/genie">https://github.com/Netflix/genie</a></p>
+
+<p>Hadoop on OpenStack介绍PPT： <br/>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/18948566 " width="595" height="446" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen></iframe> </p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[S3cmd 多账户配置]]></title>
