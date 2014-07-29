@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="今天看了Netflix分享的基于AWS的大数据平台Hadoop架构，感觉这是未来大数据平台的发展模式，将整个数据仓库部署在云端，开发者不需要考虑集群的资源扩展，也不需要接触复杂的底层命令，通过一个简单RESTFul接口就可以提交我们的MapReduce任务，还可以实时看到任务和运行状态。 ">
+  <meta name="description" content="Hadoop Streaming是Hadoop提供的一个工具，可以允许开发者以非Java的编程语言开发Mapper和Reducer，而且在开发过程中，我们只需要专注于数据的输入和输出处理，其它的事情都交给这个工具来做。本例是用Python实现一个简单的Wordcount例子，环境为： Hadoop &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,58 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/29/hadoop-streaming-python/">Hadoop Streaming编程(Python)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-29T17:17:59+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/07/29/hadoop-streaming-python/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/07/29/hadoop-streaming-python/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Hadoop Streaming是Hadoop提供的一个工具，可以允许开发者以非Java的编程语言开发Mapper和Reducer，而且在开发过程中，我们只需要专注于数据的输入和输出处理，其它的事情都交给这个工具来做。本例是用Python实现一个简单的Wordcount例子，环境为：</p>
+
+<ul>
+<li>Hadoop:CDH4.3.2</li>
+<li>Python:2.6.6</li>
+<li>OS:Centos 6.5</li>
+<li>Hadoop Streaming:hadoop-2.0.0-cdh4.3.2/share/hadoop/tools/lib/hadoop-streaming-2.0.0-cdh4.3.2.jar</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/07/29/hadoop-streaming-python/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -488,50 +540,6 @@ $(document).bind('DOMNodeInserted', function(event) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/21/graph-database-visualization/">图数据库(graph Database)可视化</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-21T11:04:58+08:00" pubdate data-updated="true">Jun 21<span>st</span>, 2014</time>
-        
-           | <a href="/blog/2014/06/21/graph-database-visualization/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/06/21/graph-database-visualization/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>数据可视化是大数据的最后一环，重要性不可忽视，内行往往关心你的算法和架构，但是用户(客户或者领导)只会看最终展现在他们面前的东西，当然业务层面你需要先了解用户的核心需求，再去建模和设计指标，本文讨论关于数据可视化的技术方案，还有比较特别的图数据库的可视化。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/21/graph-database-visualization/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -556,7 +564,7 @@ $(document).bind('DOMNodeInserted', function(event) {
     <li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
 <li class='category'><a href='/blog/categories/aws/'>AWS (3)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>Bigdata (1)</a></li>
-<li class='category'><a href='/blog/categories/hadoop/'>Hadoop (2)</a></li>
+<li class='category'><a href='/blog/categories/hadoop/'>Hadoop (3)</a></li>
 <li class='category'><a href='/blog/categories/io/'>IO (2)</a></li>
 <li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
 <li class='category'><a href='/blog/categories/kafka/'>Kafka (3)</a></li>
@@ -577,6 +585,10 @@ $(document).bind('DOMNodeInserted', function(event) {
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/29/hadoop-streaming-python/">Hadoop Streaming编程(Python)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/25/hadoop-cloud/">基于云的Hadoop架构</a>
@@ -652,10 +664,6 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <li class="post">
         <a href="/blog/2014/06/12/java-websocket/">Java-WebSocket</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/10/storm-spouts-lifecycle/">Storm Spouts Lifecycle</a>
       </li>
     
   </ul>

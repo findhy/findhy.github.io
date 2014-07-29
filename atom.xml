@@ -4,7 +4,7 @@
   <title><![CDATA[Findhy's Blog]]></title>
   <link href="http://findhy.com/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-25T14:27:14+08:00</updated>
+  <updated>2014-07-29T17:40:06+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop Streaming编程(Python)]]></title>
+    <link href="http://findhy.com/blog/2014/07/29/hadoop-streaming-python/"/>
+    <updated>2014-07-29T17:17:59+08:00</updated>
+    <id>http://findhy.com/blog/2014/07/29/hadoop-streaming-python</id>
+    <content type="html"><![CDATA[<p>Hadoop Streaming是Hadoop提供的一个工具，可以允许开发者以非Java的编程语言开发Mapper和Reducer，而且在开发过程中，我们只需要专注于数据的输入和输出处理，其它的事情都交给这个工具来做。本例是用Python实现一个简单的Wordcount例子，环境为：</p>
+
+<ul>
+<li>Hadoop:CDH4.3.2</li>
+<li>Python:2.6.6</li>
+<li>OS:Centos 6.5</li>
+<li>Hadoop Streaming:hadoop-2.0.0-cdh4.3.2/share/hadoop/tools/lib/hadoop-streaming-2.0.0-cdh4.3.2.jar</li>
+</ul>
+
+
+<!--more-->
+
+
+<h3>代码实现</h3>
+
+<p>Python实现wordcount的Mapper和Reducer，比较简单直接看代码，<em>mapper.py</em>：</p>
+
+<pre><code>#!/usr/bin/python
+
+import sys
+for line in sys.stdin:
+    line = line.strip()
+    words = line.split()
+    for word in words:
+        print '%s\t%s' % (word,1)
+</code></pre>
+
+<p><em>reducer.py</em>:</p>
+
+<pre><code>#!/usr/bin/python
+
+from operator import itemgetter
+import sys
+
+current_word = None
+current_count = 0
+word = None
+
+# input comes from STDIN
+for line in sys.stdin:
+    # remove leading and trailing whitespace
+    line = line.strip()
+
+    # parse the input we got from mapper.py
+    word, count = line.split('\t', 1)
+
+    # convert count (currently a string) to int
+    try:
+        count = int(count)
+    except ValueError:
+        # count was not a number, so silently
+        # ignore/discard this line
+        continue
+
+    # this IF-switch only works because Hadoop sorts map output
+    # by key (here: word) before it is passed to the reducer
+    if current_word == word:
+        current_count += count
+    else:
+        if current_word:
+            # write result to STDOUT
+            print '%s\t%s' % (current_word, current_count)
+        current_count = count
+        current_word = word
+
+# do not forget to output the last word if needed!
+if current_word == word:
+    print '%s\t%s' % (current_word, current_count)
+</code></pre>
+
+<p>这里需要注意第一行是：<em>#!/usr/bin/python</em>，而不是其它例子中的<em>#!/usr/bin/env python</em></p>
+
+<h3>数据准备</h3>
+
+<p>下载下面链接的数据，拷贝到HDFS中</p>
+
+<ul>
+<li><a href="http://www.gutenberg.org/ebooks/20417">The Outline of Science, Vol. 1 (of 4) by J. Arthur Thomson</a></li>
+<li><a href="http://www.gutenberg.org/ebooks/5000">The Notebooks of Leonardo Da Vinci</a></li>
+<li><a href="http://www.gutenberg.org/ebooks/4300">Ulysses by James Joyce</a></li>
+</ul>
+
+
+<h3>任务提交</h3>
+
+<p>这块试了很多次，很多命令参数MR1和MR2不同的，比如必须这么写才可以：<em>-mapper &ldquo;python mapper.py&rdquo;</em>，下面是完整的执行脚本，经过测试没有问题：</p>
+
+<pre><code>hadoop jar /home/hadoop/hadoop-2.0.0-cdh4.3.2/share/hadoop/tools/lib/hadoop-streaming-2.0.0-cdh4.3.2.jar -input /test/data/* -output /test/output  -file ./*.py -mapper "python mapper.py" -reducer  "python reducer.py" -numReduceTasks 2
+</code></pre>
+
+<p>完整代码参考这里项目：<a href="https://github.com/findhy/python-example/tree/master/hadoop/wordcount">https://github.com/findhy/python-example/tree/master/hadoop/wordcount</a></p>
+
+<h3>参考</h3>
+
+<p><a href="http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/">http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[基于云的Hadoop架构]]></title>
@@ -1402,275 +1505,6 @@ received: {"action": "edit", "change_size": 38, "flags": null, "geo_ip": {"areac
 <h3>4.总结</h3>
 
 <p>Websocket协议是为了解决服务器推送数据到客户端而出现的由于HTTP协议的解决方案，基于Websocket协议又有很多实现，实现包括客户端和服务器端，客户端体现在主流的浏览器现在基本上都支持Websocket协议，服务器端体现在各个web服务器都对Websocket提供支持，各个编程语言也提供相应的实现包，让我们针对Websocket的开发更容易。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Storm Spouts Lifecycle]]></title>
-    <link href="http://findhy.com/blog/2014/06/10/storm-spouts-lifecycle/"/>
-    <updated>2014-06-10T15:16:53+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/10/storm-spouts-lifecycle</id>
-    <content type="html"><![CDATA[<p>Spouts是Storm中的Topology对应的消息生产者，消息将从Spouts发出，消息的单位是tuple，本文讲解Spouts核心方法以及Spouts方法的生命周期。相关接口方法看这里：<a href="http://storm.incubator.apache.org/apidocs/backtype/storm/spout/ISpout.html">ISpout</a>。Spouts在Storm中的位置可以参考下图：<br/>
-<img src="http://findhy.com/images/storm-concepts.png"></p>
-
-<!--more-->
-
-
-<h3>1.初始化</h3>
-
-<p>当我们自定义一个Spouts的时候，继承BaseRichSpout类，代码是这样的：</p>
-
-<pre><code>public class TestWordSpout extends BaseRichSpout{
-
-    public static Logger LOG = LoggerFactory.getLogger(TestWordSpout.class);
-    SpoutOutputCollector _collector;
-
-    @Override
-    public void open(Map conf, TopologyContext context,SpoutOutputCollector collector) {
-        _collector = collector;
-    }
-
-    @Override
-    public void nextTuple() {
-
-    }
-
-    @Override
-    public void declareOutputFields(OutputFieldsDeclarer declarer) {
-
-    }
-
-}
-</code></pre>
-
-<p>BaseRichSpout是Storm提供的一个抽象类，代码如下：</p>
-
-<pre><code>/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package backtype.storm.topology.base;
-
-import backtype.storm.topology.IRichSpout;
-
-/**
- *
- * @author nathan
- */
-public abstract class BaseRichSpout extends BaseComponent implements IRichSpout {
-    @Override
-    public void close() {
-    }
-
-    @Override
-    public void activate() {
-    }
-
-    @Override
-    public void deactivate() {
-    }
-
-    @Override
-    public void ack(Object msgId) {
-    }
-
-    @Override
-    public void fail(Object msgId) {
-    }
-}
-</code></pre>
-
-<p>可以看到BaseRichSpout没有做任何事情就是实现了接口的方法，没有任何具体实现，这样子类不用显式实现方法了，它继承了BaseComponent，实现了接口IRichSpout，而IRichSpout接口是继承自ISpout, IComponent这两个接口，BaseComponent类如下：</p>
-
-<pre><code>package backtype.storm.topology.base;
-
-import backtype.storm.topology.IComponent;
-import java.util.Map;
-
-public abstract class BaseComponent implements IComponent {
-    @Override
-    public Map&lt;String, Object&gt; getComponentConfiguration() {
-        return null;
-    }
-}
-</code></pre>
-
-<p>可以看到BaseComponent只是实现了接口的方法getComponentConfiguration()返回null。   <br/>
-下面来看下ISpout, IComponent这两个接口</p>
-
-<pre><code>package backtype.storm.topology;
-
-import java.io.Serializable;
-import java.util.Map;
-
-public interface IComponent extends Serializable {
-
-    void declareOutputFields(OutputFieldsDeclarer declarer);
-
-    Map&lt;String, Object&gt; getComponentConfiguration();
-
-}
-
-package backtype.storm.spout;
-
-import backtype.storm.task.TopologyContext;
-import java.util.Map;
-import java.io.Serializable;
-
-public interface ISpout extends Serializable {
-
-    void open(Map conf, TopologyContext context, SpoutOutputCollector collector);
-
-    void close();
-
-    void activate();
-
-    void deactivate();
-
-    void nextTuple();
-
-    void ack(Object msgId);
-
-    void fail(Object msgId);
-}
-</code></pre>
-
-<p>上面把javadoc都去掉，如果要看的话直接看源码，或者到这里看：<a href="http://storm.incubator.apache.org/apidocs  ">http://storm.incubator.apache.org/apidocs  </a>
-到这里基本可以看到核心的接口方法主要在IComponent和ISpou这两个接口中定义，下面详细讲解。</p>
-
-<h3>2.IComponent接口方法详解</h3>
-
-<p>IComponent接口是topology中所有组件的顶层接口，包括Spouts、Bolts，它定义了两个核心的公共方法：</p>
-
-<pre><code>    /**
-     * 该方法是用来定义topology中的spout或者bolt的ID，而且该ID在同是spouts或者bolts内部不能重复，但是spouts和bolts之间的ID可以重复
-     * 如果没有显示指定该值，则默认使用Utils.DEFAULT_STREAM_ID这个值
-     * 这里可以参考Storm源码TopologyBuilder类里面的validateUnusedId这个方法
-     * 
-     * 该方法在客户端调用createTopology()方法时被执行，同样参见TopologyBuilder类
-     * 
-     * 源码：https://github.com/nathanmarz/storm/blob/moved-to-apache/storm-core/src/jvm/backtype/storm/topology/TopologyBuilder.java#L226
-     */
-    void declareOutputFields(OutputFieldsDeclarer declarer);
-
-    /**
-     * 该方法可以用来配置组件
-     * 
-     * Declare configuration specific to this component. Only a subset of the "topology.*" configs can
-     * be overridden. The component configuration can be further overridden when constructing the 
-     * topology using {@link TopologyBuilder}
-     *
-     */
-    Map&lt;String, Object&gt; getComponentConfiguration();
-</code></pre>
-
-<h3>3.ISpout接口方法详解</h3>
-
-<pre><code>    /**
-     * 该方法在task任务组件在worker里初始化的时候被调用，它提供了spout的执行环境
-     * Called when a task for this component is initialized within a worker on the cluster.
-     * It provides the spout with the environment in which the spout executes.
-     *
-     * &lt;p&gt;This includes the:&lt;/p&gt;
-     *
-     * @param conf The Storm configuration for this spout. This is the configuration 
-     * provided to the topology merged in with cluster configuration on this machine.
-     * @param context This object can be used to get information about this task's place 
-     * within the topology, including the task id and component id of this task, input 
-     * and output information, etc.
-     * 
-     * @param collector The collector is used to emit tuples from this spout. 
-     * Tuples can be emitted at any time, including the open and close methods. 
-     * The collector is thread-safe and should be saved as an instance variable of this spout object.
-     */
-    void open(Map conf, TopologyContext context, SpoutOutputCollector collector);
-
-    /**
-     * Spout停掉的时候会调用此方法
-     * 
-     * Called when an ISpout is going to be shutdown. There is no guarentee that close
-     * will be called, because the supervisor kill -9's worker processes on the cluster.
-     *
-     * &lt;p&gt;The one context where close is guaranteed to be called is a topology is
-     * killed when running Storm in local mode.&lt;/p&gt;
-     */
-    void close();
-
-    /**
-     * spout由deactivated模式转为activated模式时被调用
-     * 
-     * Called when a spout has been activated out of a deactivated mode.
-     * nextTuple will be called on this spout soon. A spout can become activated
-     * after having been deactivated when the topology is manipulated using the 
-     * `storm` client. 
-     */
-    void activate();
-
-    /**
-     * spout被deactivated的时候调用，并且当spout被deactivated时，nextTuple就不会被调用了
-     * 
-     * Called when a spout has been deactivated. nextTuple will not be called while
-     * a spout is deactivated. The spout may or may not be reactivated in the future.
-     */
-    void deactivate();
-
-    /**
-     * spout发射Tuple时被调用，该方法必须是非阻塞的（non-blocking），这样如果Spout没有tuples可以发射了，
-     * 这个方法也会返回，nextTuple, ack, and fail这几个方法在同一个spout task同一个线程里面是会被循环调用的，
-     * 当没有tuples可以发射了，应该让线程sleep一段时间
-     * 这样就不会占用太多的CPU资源了
-     * 
-     * When this method is called, Storm is requesting that the Spout emit tuples to the 
-     * output collector. This method should be non-blocking, so if the Spout has no tuples
-     * to emit, this method should return. nextTuple, ack, and fail are all called in a tight
-     * loop in a single thread in the spout task. When there are no tuples to emit, it is courteous
-     * to have nextTuple sleep for a short amount of time (like a single millisecond)
-     * so as not to waste too much CPU.
-     */
-    void nextTuple();
-
-    /**
-     * Storm可以保证spout发射出去的tuples必须被处理了，msgId就是就是发射的消息的ID
-     * 当tuples被处理完了之后，该方法会被调用，并且将它从队列中去掉防止被反复处理
-     * 
-     * Storm has determined that the tuple emitted by this spout with the msgId identifier
-     * has been fully processed. Typically, an implementation of this method will take that
-     * message off the queue and prevent it from being replayed.
-     */
-    void ack(Object msgId);
-
-    /**
-     * 如果msgId对应的tuples处理失败，该方法会被调用，通常的实现会将tuples重新放回队列，让它多一段时间可以被处理
-     * 上面两个方法ack和fail是Storm保证数据一定被处理和避免重复处理的机制，
-     * 参数msgId就是每次发射tuples的时候spout提供的一个
-     * message-id，后面可以通过这个message-id来追踪这个tuple
-     * 
-     * The tuple emitted by this spout with the msgId identifier has failed to be
-     * fully processed. Typically, an implementation of this method will put that
-     * message back on the queue to be replayed at a later time.
-     */
-    void fail(Object msgId);
-</code></pre>
-
-<h3>4.总结</h3>
-
-<ul>
-<li>客户端提交Topology的时候，首先调用declareOutputFields(&hellip;)方法，指定spout和bolt的ID，如果没有实现该方法则默认为Utils.DEFAULT_STREAM_ID</li>
-<li>然后Storm会在worker进程内初始化task的运行环境，再调用open(&hellip;)方法，传回SpoutOutputCollector对象，后面我们后可以SpoutOutputCollector来发射tuples</li>
-<li>然后Storm就会反复调用spout的nextTuple方法获取下一个tuple，如果任务处理成功了就调用ack方法，如果任务处理失败就调用fail方法</li>
-<li>并且Spout发射tuple会提供一个message-id，后面我们通过这个message-id来追踪这个tuple，ack和fail接受的参数就是该message-id</li>
-<li>一个tuple可能会产生多个tuple，最终形成一个tuple树，Storm会跟踪整个tuple树，如果其中一个叶子tuple失败，那么整个tuple树会重新被处理</li>
-<li>值得注意的一点是，storm调用ack或者fail的task始终是产生这个tuple的那个task。所以如果一个spout被分成很多个task来执行， 消息执行的成功失败与否始终会通知最开始发出tuple的那个task</li>
-<li>每个你处理的tuple， 必须被ack或者fail。因为storm追踪每个tuple要占用内存。所以如果你不ack/fail每一个tuple， 那么最终你会看到OutOfMemory错误。</li>
-</ul>
-
-
-<p>本文参考：<br/>
-<a href="http://xumingming.sinaapp.com/127/twitter-storm%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%B6%88%E6%81%AF%E4%B8%8D%E4%B8%A2%E5%A4%B1/">Storm如何保证消息不丢失</a><br/>
-<a href="http://stackoverflow.com/questions/21689059/with-storm-spouts-when-is-declareoutputfields-called">storm-spouts</a><br/>
-<a href="http://storm.incubator.apache.org/apidocs">storm-javadocs</a><br/>
-<a href="http://xumingming.sinaapp.com/117/twitter-storm%E7%9A%84%E4%B8%80%E4%BA%9B%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5/">storm的一些关键概念</a><br/>
-<a href="http://xumingming.sinaapp.com/138/twitter-storm%E5%85%A5%E9%97%A8/">storm入门</a></p>
 ]]></content>
   </entry>
   
