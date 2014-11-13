@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="数据可视化是大数据的最后一环，重要性不可忽视，内行往往关心你的算法和架构，但是用户(客户或者领导)只会看最终展现在他们面前的东西，当然业务层面你需要先了解用户的核心需求，再去建模和设计指标，本文讨论关于数据可视化的技术方案，还有比较特别的图数据库的可视化。 ">
+  <meta name="description" content="一个系统的性能瓶颈可能发生在很多地方，常见包括：CPU、内存、存储IO、网络、技术，其中存储IO的性能瓶颈最容易发生，往往我们刚开始搭建系统的时候都放在单台服务器上，当业务扩大后，单台已经无法支撑，常见的做法就是，前端加一个F5或者Nginx做负载均衡，后端应用做集群，数据库做集群或者读写分离、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,50 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/23/storage-performance-locate/">存储性能瓶颈的成因、定位与排查</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-23T10:41:46+08:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/23/storage-performance-locate/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/06/23/storage-performance-locate/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一个系统的性能瓶颈可能发生在很多地方，常见包括：CPU、内存、存储IO、网络、技术，其中存储IO的性能瓶颈最容易发生，往往我们刚开始搭建系统的时候都放在单台服务器上，当业务扩大后，单台已经无法支撑，常见的做法就是，前端加一个F5或者Nginx做负载均衡，后端应用做集群，数据库做集群或者读写分离、分表分库来缓解服务器的存储IO瓶颈，但是遇到存储瓶颈时我们如何定位问题和在架构设计的时候就去避免这样的问题呢，下面转载一篇EMC中文论坛的一篇文章，原文在这里<a href="https://community.emc.com/docs/DOC-34921">存储性能瓶颈的成因、定位与排查</a>。正文：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/23/storage-performance-locate/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -490,50 +534,6 @@ $(document).bind('DOMNodeInserted', function(event) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/12/java-websocket/">Java-WebSocket</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-12T22:51:51+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/06/12/java-websocket/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/06/12/java-websocket/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本文涉及到几个概念后面细说，Websocket协议、socket.io、Java-WebSocket，核心都是围绕Websocket，最后重点讲解在Java端实现Websocket的访问。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/12/java-websocket/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -560,7 +560,7 @@ $(document).bind('DOMNodeInserted', function(event) {
     <li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
 <li class='category'><a href='/blog/categories/aws/'>AWS (3)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>Bigdata (1)</a></li>
-<li class='category'><a href='/blog/categories/hadoop/'>Hadoop (3)</a></li>
+<li class='category'><a href='/blog/categories/hadoop/'>Hadoop (4)</a></li>
 <li class='category'><a href='/blog/categories/io/'>IO (2)</a></li>
 <li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
 <li class='category'><a href='/blog/categories/kafka/'>Kafka (3)</a></li>
@@ -581,6 +581,10 @@ $(document).bind('DOMNodeInserted', function(event) {
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/13/namenode-low-on-available-disk-space/">Hadoop集群NameNode运行中进入安全模式的问题：NameNode Low on Available Disk Space</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/29/hadoop-streaming-python/">Hadoop Streaming编程(Python)</a>
@@ -656,10 +660,6 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <li class="post">
         <a href="/blog/2014/06/14/kafka-storm-notserializableexception/">Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/12/java-websocket/">Java-WebSocket</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hadoop | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/hadoop/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2014-07-29T17:40:06+08:00</updated>
+  <updated>2014-11-13T15:52:43+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hadoop集群NameNode运行中进入安全模式的问题：NameNode Low on Available Disk Space]]></title>
+    <link href="http://findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space/"/>
+    <updated>2014-11-13T15:23:26+08:00</updated>
+    <id>http://findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space</id>
+    <content type="html"><![CDATA[<p>问题描述：Hadoop集群在运行过程，早上来的时候发现NameNode自动进入安全模式，导致系统运行的MR任务失败。</p>
+
+<p>最开始怀疑是HDFS的块复制没有达到最低的要求，通过hadoop fsck -blocks查看，Minimally replicated blocks为100%，说明blocks都达到了复制要求，最后查看了NameNode的日志发现几行警告信息：</p>
+
+<pre><code>2014-11-12 21:31:38,478 WARN org.apache.hadoop.hdfs.server.namenode.NameNodeResourceChecker (org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeResourceMonitor@1f1dd4b6): Space available o
+n volume 'null' is 13119488, which is below the configured reserved amount 104857600
+2014-11-12 21:31:38,478 WARN org.apache.hadoop.hdfs.server.namenode.FSNamesystem (org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeResourceMonitor@1f1dd4b6): NameNode low on available di
+sk space. Entering safe mode.
+2014-11-12 21:31:38,478 INFO org.apache.hadoop.hdfs.StateChange (org.apache.hadoop.hdfs.server.namenode.FSNamesystem$NameNodeResourceMonitor@1f1dd4b6): STATE* Safe mode is ON. 
+Resources are low on NN. Please add or free up more resources then turn off safe mode manually. NOTE:  If you turn off safe mode before adding resources, the NN will immediately return to safe mode
+. Use "hdfs dfsadmin -safemode leave" to turn safe mode off.
+</code></pre>
+
+<p>通过日志分析发现这样的错误：<code>NameNode low on available disk space. Entering safe mode</code></p>
+
+<p>在网上查到hadoop-jira上面有这样的记录：<a href="https://issues.apache.org/jira/browse/HDFS-4425">https://issues.apache.org/jira/browse/HDFS-4425</a></p>
+
+<p>另外这里还有详细的解释：<a href="https://support.pivotal.io/hc/en-us/articles/201455807-Namenode-logs-reports-Space-available-on-volume-null-is-below-threshold-and-enters-safe-mode">https://support.pivotal.io/hc/en-us/articles/201455807-Namenode-logs-reports-Space-available-on-volume-null-is-below-threshold-and-enters-safe-mode</a></p>
+
+<p>原因是Hadoop的源码里面有一个类 <code>NameNodeResourceChecker</code> 负责检查NameNode的磁盘空间，如果磁盘空间低于100M则进入到安全模式，导致系统不可用，<strong>那么问题来了</strong>，是什么原因导致磁盘空间暴涨了呢？最后发现是HBase的DEBUG日志没有关闭导致日志文件非常大，最终磁盘空间占满，NameNode不可用。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hadoop Streaming编程(Python)]]></title>
