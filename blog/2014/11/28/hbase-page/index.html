@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>手机应用商店的商业形态以及个性化推荐 - Findhy's Blog</title>
+  <title>HBase分页 - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="手机应用商店的商业形态以及个性化推荐">
-  <meta name="keywords" content="手机应用商店的商业形态以,个性化推荐">
+  <meta name="description" content="HBase分页">
+  <meta name="keywords" content="HBase分页">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend">
+  <link rel="canonical" href="http://findhy.com/blog/2014/11/28/hbase-page">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -94,7 +94,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
   <header>
     
-      <h1 class="entry-title">手机应用商店的商业形态以及个性化推荐</h1>
+      <h1 class="entry-title">HBase分页</h1>
     
     
       <p class="meta">
@@ -110,7 +110,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-07-18T11:53:49+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
+<time datetime="2014-11-28T09:45:23+08:00" pubdate data-updated="true">Nov 28<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://findhy.com">Comments</a>
@@ -120,76 +120,179 @@ $(document).bind('DOMNodeInserted', function(event) {
   </header>
 
 
-<div class="entry-content"><p>最近同时在参与两件事：手机应用商店的商业化之路以及应用的个性化推荐，一点想法记录下来，手机应用商店市场已经泛滥，既有官方出品（Google Play），又有巨头入场（应用宝、360、91），还有少年得志生机勃勃的豌豆荚，作为应用商店怎么在竞争如此激烈的市场中抢占一席之地呢？</p>
+<div class="entry-content"><p>HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条，那么每次就扫描11条，记住第11条的Rowkey，当点击下一页的时候，将startRowkey设置为第11条的Rowkey，就实现了分页的效果，下面是相关的核心代码，具体项目可以参考<a href="https://github.com/findhy/hbase-page">github-HBase-page</a></p>
 
-<!--more-->
+<pre><code>public class PageHBase {
 
+    private Integer currentPageNo=1;//当前页码
+    private Integer pageSize=5;//每页显示行数
+    private Integer totalCount;//总行数
+    private Integer totalPage;//总页数
+    private Integer direction;//下一页：1 上一页2
+    private Boolean hasNext=false;//是否有下一页
+    private String nextPageRowkey;//下一页起始rowkey
+    private List&lt;Map&lt;String, String&gt;&gt; resultList;//结果集List
+    private Map&lt;String,String&gt; paramMap=new HashMap&lt;String,String&gt;();//分页查询参数
+    private Map&lt;Integer,String&gt; pageStartRowMap=new HashMap&lt;Integer,String&gt;();//每页对应的startRow，key为currentPageNo，value为Rowkey
+    private Scan scan=new Scan();
 
-<h4>生态环境</h4>
-
-<p>在手机应用商店的生态环境中，有三个主要参与者：</p>
-
-<ul>
-<li>开发者或者叫商家</li>
-<li>应用商店</li>
-<li>用户</li>
-</ul>
-
-
-<h4>盈利方式</h4>
-
-<p>我们可以从结果为导向来先看下，应用商店想盈利，必须从用户和开发者身上想办法，从用户：</p>
-
-<ul>
-<li>广告：用户点击收费</li>
-<li>付费内容：应用或者其它资源</li>
-</ul>
-
-
-<p>从开发者：</p>
-
-<ul>
-<li>广告：为开发者推广应用收费</li>
-<li>联运：合作运营，收入分成</li>
-<li>支付：为开发者提供支付，通过账期和手续费来盈利</li>
-</ul>
-
-
-<p>后两个都需要其它资源辅助才能做，暂且不谈，所以还是又回到了互联网最基础的盈利方式：广告。</p>
-
-<p>但是应用商店的广告会有一个平衡问题：</p>
-
-<ul>
-<li>应用商店最核心的内容就是要提供用户想要的应用，所以需要把用户最需要的应用放在最好的位置</li>
-<li>应用商店想盈利，就必须把最好的位置留给广告主</li>
-</ul>
+    public Scan getScan(String startRowkey,String endRowkey){
+        scan.setCaching(100);
+        if(direction==1&amp;&amp;hasNext){
+            scan.setStartRow(Bytes.toBytes(startRowkey));
+            scan.setStopRow(Bytes.toBytes(endRowkey));
+        }else{
+            if(pageStartRowMap.get(currentPageNo)!=null){
+                scan.setStartRow(Bytes.toBytes(pageStartRowMap.get(currentPageNo)));
+                scan.setStopRow(Bytes.toBytes(endRowkey));
+            }else{
+                scan.setStartRow(Bytes.toBytes(startRowkey));
+                scan.setStopRow(Bytes.toBytes(endRowkey));
+            }
+        }
+        this.hasNext=false;
+        this.nextPageRowkey=null;
+        return scan;
+    }
+}
 
 
-<p>怎么将广告与用户的强需求完美的结合？这个是应用商店需要思考的问题，如果做得不好，用户找不到自己想要的应用，可能以后就不会再来了，但如果只是纯粹推热门的、用户感兴趣的，又无法盈利。这又回到本文的标题：个性化推荐。</p>
+public class AdunionHbaseService {
 
-<h4>个性化推荐</h4>
+    private static final Logger log = LoggerFactory
+            .getLogger(AdunionHbaseService.class);
+    public static final String CLICK_COLUMN_NAME="c";
+    public static final String CLICK_COLUMN_KEY="v";
+    public static final String POSTBACK_COLUMN_NAME="p";
+    public static final String POSTBACK_COLUMN_KEY="v";
+    public static final String ADUNION_TABLE_NAME="adunion_active";
+    private Configuration configuration;
+    private String clientPort;
+    private String retriesNumber;
+    private String zookeeperQuorum;
 
-<p>如果应用商店做到：推荐的广告就是用户想要的应用呢？首先我们需要非常了解我们的用户，积累用户行为数据非常重要：</p>
+    public AdunionHbaseService(String zookeeeper,String port,String retries){
+        try {
+            configuration = HBaseConfiguration.create();
+            this.setClientPort(port);
+            this.setRetriesNumber(retries);
+            this.setZookeeperQuorum(zookeeeper);
+            configuration.set("hbase.zookeeper.property.clientPort", this.getClientPort());
+            configuration.set("hbase.client.retries.number", this.getRetriesNumber());
+            configuration.set("hbase.zookeeper.quorum",this.getZookeeperQuorum());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 
-<ul>
-<li>评论体系</li>
-<li>评分体系</li>
-<li>下载</li>
-<li>搜索</li>
-</ul>
+    public PageHBase getPageHBaseData(String tableName, String columnName,String columnKey,String businessId,String publisherId,String offerId,
+            Date startDate,Date endDate, PageHBase pager) {
+        HConnection con = null;
+        HTable table = null;
+        ResultScanner rs=null;
+        List&lt;Map&lt;String,String&gt;&gt; resultList=new ArrayList&lt;Map&lt;String,String&gt;&gt;();
+        try {
+            if(startDate==null||endDate==null) return pager;
 
+            con = HConnectionManager.createConnection(configuration);
+            table=(HTable)con.getTable(tableName);
 
-<p>通过这些来分析用户的兴趣模型，再加上推荐算法(CF)达到给用户看的广告就是他感兴趣的，而且这个阀值也很重要，如果没有找到用户感兴趣的广告，宁愿不推荐也不要放一些不相关的广告来导致用户流失，所以整体算法需要同时考虑广告收益和用户体验，广告推荐要和应用推荐结合使用。</p>
+            StringBuffer startRow=new StringBuffer();
+            StringBuffer endRow=new StringBuffer();
+            startRow.append(startDate.getTime());
+            endRow.append(endDate.getTime());
+            if(pager.getNextPageRowkey()==null) pager.setNextPageRowkey(startRow.toString());
+            Scan scan=pager.getScan(pager.getNextPageRowkey(),endRow.toString());
 
-<h4>总结</h4>
+            List&lt;Filter&gt; filters=new ArrayList&lt;Filter&gt;();
 
-<ul>
-<li>应用商店想盈利留住用户是关键，没有用户其它都是扯</li>
-<li>所以在广告和用户体验上，广告必须要为用户体验让步</li>
-<li>在应用商店产品层面，要做更多的附加内容来吸引用户(社交、线下活动、论坛、O2O)，形成一个圈子，单纯一个应用商店，产品形态还是太小了</li>
-<li>有了用户，有了用户交互，积累了数据，盈利也会比较容易，也会衍生出其它产品形态(卖数据服务来指导游戏厂商哪些游戏受用户喜爱)</li>
-</ul>
-
+            if(StringUtils.isNotBlank(publisherId)){
+                SingleColumnValueFilter filter=new SingleColumnValueFilter(
+                        Bytes.toBytes(columnName),
+                        Bytes.toBytes("p"),
+                        CompareFilter.CompareOp.EQUAL,
+                        Bytes.toBytes(publisherId));
+                filters.add(filter);
+            }
+            if(StringUtils.isNotBlank(offerId)){
+                SingleColumnValueFilter filter=new SingleColumnValueFilter(
+                        Bytes.toBytes(columnName),
+                        Bytes.toBytes("o"),
+                        CompareFilter.CompareOp.EQUAL,
+                        Bytes.toBytes(offerId));
+                filters.add(filter);
+            }
+            if(StringUtils.isNotBlank(businessId)){
+                SingleColumnValueFilter filter=new SingleColumnValueFilter(
+                        Bytes.toBytes(columnName),
+                        Bytes.toBytes("b"),
+                        CompareFilter.CompareOp.EQUAL,
+                        Bytes.toBytes(businessId));
+                filters.add(filter);
+            }
+            Filter pageFilter=new PageFilter(pager.getPageSize()+1);
+            Filter familyFilter=new FamilyFilter(CompareFilter.CompareOp.EQUAL,
+                    new BinaryComparator(Bytes.toBytes(columnName)));
+            Filter qualifierFilter=new QualifierFilter(CompareFilter.CompareOp.EQUAL,
+                    new BinaryComparator(Bytes.toBytes(columnKey)));
+            filters.add(familyFilter);
+            filters.add(qualifierFilter);
+            filters.add(pageFilter);
+            FilterList filterList=new FilterList(filters);
+            scan.setFilter(filterList);
+            rs = table.getScanner(scan);
+            int totalRow=0;
+            if(rs!=null){
+                for(Result result : rs){
+                    totalRow++;
+                    if(totalRow==1){
+                        pager.getPageStartRowMap().put(pager.getCurrentPageNo(),Bytes.toString(result.getRow()));
+    pager.setTotalPage(pager.getPageStartRowMap().size());
+    }
+                    if(totalRow&gt;pager.getPageSize()){
+                        pager.setNextPageRowkey(new String(result.getRow()));
+                        pager.setHasNext(true);
+                    }else{
+                        Map&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();
+                        for(KeyValue keyValue:result.raw()){
+                            String family=new String(keyValue.getFamily());
+                            byte[] value=keyValue.getValue();
+                            //map.put("rowkey", new String(result.getRow()));
+                            Map&lt;Object,Object&gt; jsonMap=JsonUtil.getMapFromJsonObjStr(new String(value));
+                            for(Object obj:jsonMap.keySet()){
+                                map.put(obj.toString(), jsonMap.get(obj).toString());
+                            }
+                        }
+                        resultList.add(map);
+                    }
+                }
+            }
+            pager.setResultList(resultList);
+        }catch(IOException ioe){
+            log.error(ioe.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }finally{
+            try {
+                rs.close();
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            try {
+                table.close();
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            try {
+                con.close();
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
+        return pager;
+    }
+}
+</code></pre>
 </div>
 
 
@@ -212,12 +315,12 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-07-18T11:53:49+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
+<time datetime="2014-11-28T09:45:23+08:00" pubdate data-updated="true">Nov 28<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/others/'>Others</a>
+    <a class='category' href='/blog/categories/hbase/'>HBase</a>
   
 </span>
 
@@ -226,7 +329,7 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/11/28/hbase-page/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/11/28/hbase-page/" >Tweet</a>
   
   
   
@@ -235,10 +338,8 @@ $(document).bind('DOMNodeInserted', function(event) {
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/07/09/zookeeper-manager/" title="Previous Post: Zookeeper运维管理工具介绍">&laquo; Zookeeper运维管理工具介绍</a>
+        <a class="basic-alignment left" href="/blog/2014/11/13/namenode-low-on-available-disk-space/" title="Previous Post: Hadoop集群NameNode运行中进入安全模式的问题：NameNode low on available disk space">&laquo; Hadoop集群NameNode运行中进入安全模式的问题：NameNode low on available disk space</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/07/21/mahout-tutorial/" title="Next Post: Mahout Tutorial">Mahout Tutorial &raquo;</a>
       
     </p>
   </footer>
@@ -427,8 +528,8 @@ $(document).bind('DOMNodeInserted', function(event) {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/';
-        var disqus_url = 'http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/';
+        var disqus_identifier = 'http://findhy.com/blog/2014/11/28/hbase-page/';
+        var disqus_url = 'http://findhy.com/blog/2014/11/28/hbase-page/';
         var disqus_script = 'embed.js';
       
     (function () {
