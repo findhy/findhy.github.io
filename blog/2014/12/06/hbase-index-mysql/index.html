@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HBase通过Mysql建立二级索引 - Findhy's Blog</title>
+  <meta name="author" content="Findhy">
+
+  
+  <meta name="description" content="HBase通过Mysql建立二级索引">
+  <meta name="keywords" content="HBase通过Mysql建立二级索引">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://findhy.com/blog/2014/12/06/hbase-index-mysql">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript">
+
+function addBlankTargetForLinks () {
+
+  $('a[href^="http"]').each(function(){
+
+      $(this).attr('target', '_blank');
+
+  });
+
+}
+
+$(document).bind('DOMNodeInserted', function(event) {
+
+  addBlankTargetForLinks();
+
+});
+
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-52121968-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Findhy's Blog</a></h1>
+  
+    <h2>Art is long, Life is short.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HBase通过Mysql建立二级索引</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-06T16:28:39+08:00" pubdate data-updated="true">Dec 6<span>th</span>, 2014</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://findhy.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>HBase查询数据有三种模式：Rowkey查询、Rowkey范围scan和全表扫描，HBase的Rowkey查询效率很高，毫秒级的，所以我们应该尽量对HBase使用Rowkey查询，而避免范围和全表扫描，思路有很多种，一种是Rowkey的巧妙设计，例如Rowkey是userId#timestamp，这样就可以支持用户和时间戳的查询了，这种方式最简单但也比较局限，例如无法支持较复杂的查询条件，还有Rowkey设计与region数据分布的问题，我们总是希望数据在多个region上均匀分布，又希望经常被一起查的数据在同一个region上，所以全靠Rowkey设计来解决还是比较局限的，本文介绍通过Mysql来建立HBase二级索引的方式，来实现HBase高效率的分页查询、复杂条件组合查询。</p>
+
+<h2>思路</h2>
+
+<ul>
+<li>在Mysql中设计HBase的索引表，Rowkey作为主键，其它查询条件作为其它字段，由于数据量很大，Mysql索引表需要做分表</li>
+<li>通过Python编码实现定时将HBase的Rowkey扫描到Mysql中，这里注意一个点，每次扫描完将最后的Rowkey记录在redis中，下次扫描从这个Rowkey开始</li>
+<li>前端分页查询先查询索引表，这样就能够实现和Mysql一样的分页效果，总行数还有直接跳转到具体页，HBase是实现不了直接跳转到具体页的</li>
+<li>从Mysql中根据查询条件查询到具体的Rowkey，再用这些Rowkey到HBase中批量查询，每一个都是Rowkey直接定位，批量查询效率也是毫秒左右返回，整体查询效率是在秒级响应的</li>
+</ul>
+
+
+<!--more-->
+
+
+<h2>Mysql索引表设计</h2>
+
+<p>索引表设计尽量小，只存Rowkey、时间还有必要的查询字段，Rowkey为主键，并且索引表一定要分区，因为HBase的数据量很大，而Mysql只能撑住单表几百万的数据量，考虑到我们目前的数据量不是很大，做了按月分区：</p>
+
+<pre><code>DROP TABLE IF EXISTS INDEX_HBASE_CLICK_201412;
+CREATE TABLE INDEX_HBASE_CLICK_201412
+(
+   ROW_KEY VARCHAR(100) NOT NULL PRIMARY KEY,
+   CLICK_TIME DATETIME NOT NULL COMMENT 'CLICK_TIME',
+   PUBLISHER_ID INT(11) COMMENT '媒体ID',
+   OFF_ID INT(11) COMMENT '订单ID',
+   BUSINESS_ID INT(11) COMMENT '商务ID',
+   DATABASE_TIME DATETIME COMMENT '入mysql时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='HBASE_CLICK索引表 ';
+</code></pre>
+
+<h2>扫描Rowkey入Mysql</h2>
+
+<p>这部分是通过Python来实现的，无法提供完整代码，思路就是定时每隔30秒去扫描HBase，然后记住最后一个Rowkey，下次扫描的时候从这个Rowkey开始。其中HbaseDb是通过thrift2来访问HBase。</p>
+
+<pre><code>from adunion.db.mysql_db import Mysql
+from adunion.db.hbase_db2 import HbaseDb
+import time
+from adunion.redis.redis_count import redisCount
+from core.logger import logUtil
+from adunion.msg.msg_obj import msgObj
+
+class AdunionIndex(object):
+    hbaseDb=None
+    work_status=False
+    def __init__(self):
+        self.hbaseDb=HbaseDb()
+    def start_work(self):
+        if self.work_status:
+            msgObj.addRedisCount("work_status is True!!!")
+            return
+        self.work_status=True
+        start_time=time.time()
+        msgObj.addHbaseIndexLog("AdunionIndex.AdunionIndex.start_work:begin")
+        last_row_key=redisCount.getHbaseLastKey()
+        new_last_row_key=self.hbaseScan(last_row_key)
+        redisCount.setHbaseLastKey(new_last_row_key)
+        self.work_status=False
+        used=time.time()-int(start_time)
+        msgObj.addHbaseIndexLog("AdunionIndex.AdunionIndex.start_work:end,used:"+str(used))
+    def hbaseScan(self,last_row_key):
+        try:
+            self.hbaseDb.begin()
+            hbase_index_list_click={}
+            hbase_index_list_postback={}
+            row_family_qualifier_list=[]
+            row_family_qualifier_list.append(("c","b"))
+            row_family_qualifier_list.append(("c","o"))
+            row_family_qualifier_list.append(("c","p"))
+            row_family_qualifier_list.append(("p","b"))
+            row_family_qualifier_list.append(("p","o"))
+            row_family_qualifier_list.append(("p","p"))
+            scannerId=self.hbaseDb.openScanner("adunion_log",last_row_key,row_family_qualifier_list)
+            result = self.hbaseDb.getScannerRows(scannerId, 10)
+            new_last_row_key=None
+            if not result:
+                msgObj.addHbaseIndexLog("AdunionIndex.AdunionIndex.hbaseScan:result is null!!!")
+                return last_row_key
+            last_res=result.pop()
+            new_last_row_key=last_res.row
+            for res in result:
+                row_key=res.row
+                time_str=row_key[row_key.index('_')+1:row_key.index('_')+11]
+                mon_key=time.strftime('%Y%m', time.localtime(float(time_str)))
+                if not hbase_index_list_click.has_key(mon_key):
+                    hbase_index_list_click[mon_key]={}
+                if not hbase_index_list_postback.has_key(mon_key):
+                    hbase_index_list_postback[mon_key]={}
+                for col in res.columnValues:
+                    if col.family=="c":
+                        if not hbase_index_list_click[mon_key].has_key(row_key):
+                            hbase_index_list_click[mon_key][row_key]=[]
+                        hbase_index_list_click[mon_key][row_key].append(col.qualifier+"_"+col.value)
+                        hbase_index_list_click[mon_key][row_key].append("timestamp"+"_"+str(col.timestamp))
+                    elif col.family=="p":
+                        if not hbase_index_list_postback[mon_key].has_key(row_key):
+                            hbase_index_list_postback[mon_key][row_key]=[]
+                        hbase_index_list_postback[mon_key][row_key].append(col.qualifier+"_"+col.value)
+                        hbase_index_list_postback[mon_key][row_key].append("timestamp"+"_"+str(col.timestamp))
+            self.hbaseIndexToMysqlClick(hbase_index_list_click)
+            self.hbaseIndexToMysqlPostback(hbase_index_list_postback)
+            return new_last_row_key
+        except Exception,e:
+            logUtil.log("AdunionIndex.hbase_scan"+",error:"+str(e))
+            import traceback
+            msgObj.addErrorLog("AdunionIndex.hbase_scan error:"+str(traceback.format_exc()))
+            logUtil.log(str(traceback.format_exc()))
+        finally:
+            self.hbaseDb.end()
+    def hbaseIndexToMysqlReal(self,hbase_index_param_list,sql):
+        mysql=Mysql()
+        mysql.begin()
+        try:
+            row_size=len(hbase_index_param_list) 
+            prop_size=5
+            mysql.insertManyWithDup(sql,"@@".join(hbase_index_param_list),row_size,prop_size)       
+            msgObj.addHbaseIndexLog("success insert into mysql,len:"+str(row_size)) 
+        except Exception,e:
+            import traceback
+            logUtil.log(traceback.format_exc())
+            msgObj.addErrorLog("AdunionIndex.hbaseIndexToMysqlReal error:"+str(traceback.format_exc()))
+        finally:
+            mysql.end();
+    def hbaseIndexToMysqlPostback(self,hbase_index_list):
+        sql="INSERT INTO INDEX_HBASE_POSTBACK_#mon#(ROW_KEY,POSTBACK_TIME,PUBLISHER_ID,OFF_ID,BUSINESS_ID,DATABASE_TIME) VALUES ('%0%','%1%',%2%,%3%,%4%,NOW()) on duplicate key update PUBLISHER_ID=PUBLISHER_ID"
+        for mon_key in hbase_index_list.keys():
+            sql=sql.replace('#mon#', mon_key)
+            new_hbase_index_list=self.processParamList(hbase_index_list[mon_key])
+            self.hbaseIndexToMysqlReal(new_hbase_index_list,sql)
+    def hbaseIndexToMysqlClick(self,hbase_index_list):
+        sql="INSERT INTO INDEX_HBASE_CLICK_#mon#(ROW_KEY,CLICK_TIME,PUBLISHER_ID,OFF_ID,BUSINESS_ID,DATABASE_TIME) VALUES('%0%','%1%',%2%,%3%,%4%,NOW()) on duplicate key update PUBLISHER_ID=PUBLISHER_ID"
+        for mon_key in hbase_index_list.keys():
+            sql=sql.replace('#mon#', mon_key)
+            new_hbase_index_list=self.processParamList(hbase_index_list[mon_key])
+            self.hbaseIndexToMysqlReal(new_hbase_index_list,sql)
+    def processParamList(self,hbase_index_list):
+        new_hbase_index_list=[]
+        for row_key in hbase_index_list.keys():
+            col_list=hbase_index_list[row_key]
+            publisher_id=None
+            business_id=None
+            offer_id=None
+            data_time=None
+            for col in col_list:
+                qualifier=col.split('_')[0]
+                qualifier_value=col.split('_')[1]
+                if qualifier=='p':
+                    publisher_id=qualifier_value
+                elif qualifier=='b':
+                    business_id=qualifier_value
+                elif qualifier=='o':
+                    offer_id=qualifier_value
+                elif qualifier=='timestamp':
+                    data_time=qualifier_value
+            data_time_str=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(float(data_time)/1000))
+            new_hbase_index_list.append(",".join([str(row_key),str(data_time_str),str(publisher_id),str(offer_id),str(business_id)]))
+        return new_hbase_index_list
+adunionIndex=AdunionIndex()
+</code></pre>
+
+<h2>Java实现查询</h2>
+
+<p>对应业务层来说，他只需要查询Mysql的索引表就可以了，查出来Rowkey的list，再用这些Rowkey来批量查询HBase就可以了：</p>
+
+<pre><code>public List&lt;Map&lt;String,String&gt;&gt; getRowByRowKeyFromHBase(List&lt;String&gt; row_key_list,String dataType){
+        HConnection con = null;
+        HTable table = null;
+        List&lt;Map&lt;String,String&gt;&gt; resultList=new ArrayList&lt;Map&lt;String,String&gt;&gt;();
+        try {
+            con = HConnectionManager.createConnection(configuration);
+            table=(HTable)con.getTable(ADUNION_TABLE_NAME);
+            List&lt;Get&gt; gets=new ArrayList&lt;Get&gt;();
+            String family=null;
+            if(dataType!=null&amp;&amp;dataType.equals(DATA_TYPE_CLICK)){
+                family="c";
+            }else if(dataType!=null&amp;&amp;dataType.equals(DATA_TYPE_POSTBACK)){
+                family="p";
+            }
+            for(int i=0;i&lt;row_key_list.size();i++){
+                Get get=new Get(Bytes.toBytes(row_key_list.get(i)));
+                get.addColumn(Bytes.toBytes(family), Bytes.toBytes("v"));
+                gets.add(get);
+            }
+            Result[] result=table.get(gets);
+            for(Result res:result){
+                Map&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();
+                for(KeyValue keyValue:res.raw()){
+                    String familyCol=new String(keyValue.getFamily());
+                    byte[] value=keyValue.getValue();
+                    //map.put("rowkey", new String(result.getRow()));
+                    Map&lt;Object,Object&gt; jsonMap=JsonUtil.getMapFromJsonObjStr(new String(value));
+                    for(Object obj:jsonMap.keySet()){
+                        map.put(obj.toString(), jsonMap.get(obj).toString());
+                    }
+                }
+                resultList.add(map);
+            }
+        }catch(IOException ioe){
+            log.error(ioe.getMessage());
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try {
+                table.close();
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            try {
+                con.close();
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
+        return resultList;
+    }
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Findhy</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-06T16:28:39+08:00" pubdate data-updated="true">Dec 6<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/hbase/'>HBase</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/12/06/hbase-index-mysql/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/12/06/hbase-index-mysql/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/11/28/hbase-page/" title="Previous Post: HBase分页">&laquo; HBase分页</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:findhy.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    <li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
+<li class='category'><a href='/blog/categories/aws/'>AWS (3)</a></li>
+<li class='category'><a href='/blog/categories/bigdata/'>Bigdata (1)</a></li>
+<li class='category'><a href='/blog/categories/hbase/'>HBase (2)</a></li>
+<li class='category'><a href='/blog/categories/hadoop/'>Hadoop (4)</a></li>
+<li class='category'><a href='/blog/categories/io/'>IO (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
+<li class='category'><a href='/blog/categories/kafka/'>Kafka (3)</a></li>
+<li class='category'><a href='/blog/categories/mahout/'>Mahout (2)</a></li>
+<li class='category'><a href='/blog/categories/nginx/'>Nginx (1)</a></li>
+<li class='category'><a href='/blog/categories/opendata/'>Opendata (1)</a></li>
+<li class='category'><a href='/blog/categories/others/'>Others (4)</a></li>
+<li class='category'><a href='/blog/categories/rpc/'>RPC (1)</a></li>
+<li class='category'><a href='/blog/categories/reading/'>Reading (1)</a></li>
+<li class='category'><a href='/blog/categories/spark/'>Spark (1)</a></li>
+<li class='category'><a href='/blog/categories/storm/'>Storm (4)</a></li>
+<li class='category'><a href='/blog/categories/titan/'>Titan (8)</a></li>
+<li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
+<li class='category'><a href='/blog/categories/yarn/'>YARN (1)</a></li>
+<li class='category'><a href='/blog/categories/zookeeper/'>Zookeeper (1)</a></li>
+
+  </ul>
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/06/hbase-index-mysql/">HBase通过Mysql建立二级索引</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/28/hbase-page/">HBase分页</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/13/namenode-low-on-available-disk-space/">Hadoop集群NameNode运行中进入安全模式的问题：NameNode Low on Available Disk Space</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/29/hadoop-streaming-python/">Hadoop Streaming编程(Python)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/25/hadoop-cloud/">基于云的Hadoop架构</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/24/s3cmd-multiple-accounts/">S3cmd 多账户配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/">Introduction to Item-Based Recommendations With Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/21/mahout-tutorial/">Mahout Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/18/app-store-business-and-recommend/">手机应用商店的商业形态以及个性化推荐</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/09/zookeeper-manager/">Zookeeper运维管理工具介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Titan Visualization With VivaGraphJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/23/storage-performance-locate/">存储性能瓶颈的成因、定位与排查</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/21/graph-database-visualization/">图数据库(graph Database)可视化</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/19/titan-tutorial/">Titan Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/19/titan-classic-get-started/">Titan经典入门PPT</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/">怎么在Octopress Blog中嵌入slideshare</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/17/titan-next-generation-graph-database/">Titan:下一代分布式图数据库</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/findhy">@findhy</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'findhy',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Findhy -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'findhy';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://findhy.com/blog/2014/12/06/hbase-index-mysql/';
+        var disqus_url = 'http://findhy.com/blog/2014/12/06/hbase-index-mysql/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+
+</body>
+</html>

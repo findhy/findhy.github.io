@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条， &hellip;">
+  <meta name="description" content="HBase查询数据有三种模式：Rowkey查询、Rowkey范围scan和全表扫描，HBase的Rowkey查询效率很高，毫秒级的，所以我们应该尽量对HBase使用Rowkey查询，而避免范围和全表扫描，思路有很多种，一种是Rowkey的巧妙设计，例如Rowkey是userId#timestamp &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,6 +91,60 @@ $(document).bind('DOMNodeInserted', function(event) {
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/06/hbase-index-mysql/">HBase通过Mysql建立二级索引</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-06T16:28:39+08:00" pubdate data-updated="true">Dec 6<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/12/06/hbase-index-mysql/#disqus_thread"
+             data-disqus-identifier="http://findhy.com/blog/2014/12/06/hbase-index-mysql/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>HBase查询数据有三种模式：Rowkey查询、Rowkey范围scan和全表扫描，HBase的Rowkey查询效率很高，毫秒级的，所以我们应该尽量对HBase使用Rowkey查询，而避免范围和全表扫描，思路有很多种，一种是Rowkey的巧妙设计，例如Rowkey是userId#timestamp，这样就可以支持用户和时间戳的查询了，这种方式最简单但也比较局限，例如无法支持较复杂的查询条件，还有Rowkey设计与region数据分布的问题，我们总是希望数据在多个region上均匀分布，又希望经常被一起查的数据在同一个region上，所以全靠Rowkey设计来解决还是比较局限的，本文介绍通过Mysql来建立HBase二级索引的方式，来实现HBase高效率的分页查询、复杂条件组合查询。</p>
+
+<h2>思路</h2>
+
+<ul>
+<li>在Mysql中设计HBase的索引表，Rowkey作为主键，其它查询条件作为其它字段，由于数据量很大，Mysql索引表需要做分表</li>
+<li>通过Python编码实现定时将HBase的Rowkey扫描到Mysql中，这里注意一个点，每次扫描完将最后的Rowkey记录在redis中，下次扫描从这个Rowkey开始</li>
+<li>前端分页查询先查询索引表，这样就能够实现和Mysql一样的分页效果，总行数还有直接跳转到具体页，HBase是实现不了直接跳转到具体页的</li>
+<li>从Mysql中根据查询条件查询到具体的Rowkey，再用这些Rowkey到HBase中批量查询，每一个都是Rowkey直接定位，批量查询效率也是毫秒左右返回，整体查询效率是在秒级响应的</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/12/06/hbase-index-mysql/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -677,50 +731,6 @@ Resources are low on NN. Please add or free up more resources then turn off safe
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-28T14:13:34+08:00" pubdate data-updated="true">Jun 28<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/06/28/spark-on-yarn/#disqus_thread"
-             data-disqus-identifier="http://findhy.com/blog/2014/06/28/spark-on-yarn/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Spark支持独立部署和在YARN上部署，选择在YARN上就是作为一个APP跑在YARN平台上，这样的好处是可以和原来的数据平台无缝结合。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/28/spark-on-yarn/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -745,7 +755,7 @@ Resources are low on NN. Please add or free up more resources then turn off safe
     <li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
 <li class='category'><a href='/blog/categories/aws/'>AWS (3)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>Bigdata (1)</a></li>
-<li class='category'><a href='/blog/categories/hbase/'>HBase (1)</a></li>
+<li class='category'><a href='/blog/categories/hbase/'>HBase (2)</a></li>
 <li class='category'><a href='/blog/categories/hadoop/'>Hadoop (4)</a></li>
 <li class='category'><a href='/blog/categories/io/'>IO (2)</a></li>
 <li class='category'><a href='/blog/categories/ios/'>IOS (1)</a></li>
@@ -767,6 +777,10 @@ Resources are low on NN. Please add or free up more resources then turn off safe
 </section><section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/06/hbase-index-mysql/">HBase通过Mysql建立二级索引</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/28/hbase-page/">HBase分页</a>
@@ -842,10 +856,6 @@ Resources are low on NN. Please add or free up more resources then turn off safe
     
       <li class="post">
         <a href="/blog/2014/06/17/titan-next-generation-graph-database/">Titan:下一代分布式图数据库</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/16/storm-kafka-dev/">Storm与Kafka集成开发</a>
       </li>
     
   </ul>
