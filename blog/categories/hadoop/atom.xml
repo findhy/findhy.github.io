@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hadoop | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/hadoop/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2015-01-16T09:44:18+08:00</updated>
+  <updated>2015-01-16T09:45:23+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -26,7 +26,7 @@ Hadoop最根本的思想就是分而治之，数据倾斜会导致分布式的�
 
 <p>2.join操作过程产生过多空值或0</p>
 
-<p>未完待续</p>
+<p>未完周末待续</p>
 
 <p>参考：<a href="http://www.alidata.org/archives/2109">http://www.alidata.org/archives/2109</a></p>
 ]]></content>
