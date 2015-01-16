@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>「写给大家的设计书」 - Findhy's Blog</title>
+  <title>Hadoop数据倾斜问题总结 - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。 Q：我为什么要学设计，有啥用？ 很多行业都有专业的设计学科，如建筑设计、美术设计等。 &hellip;">
-  
+  <meta name="description" content="Hadoop数据倾斜问题">
+  <meta name="keywords" content="Hadoop数据倾斜问题">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://findhy.com/blog/2014/03/23/how-do-design">
+  <link rel="canonical" href="http://findhy.com/blog/2015/01/16/hadoop-data-tilt">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -94,7 +94,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
   <header>
     
-      <h1 class="entry-title">「写给大家的设计书」</h1>
+      <h1 class="entry-title">Hadoop数据倾斜问题总结</h1>
     
     
       <p class="meta">
@@ -110,7 +110,7 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-03-23T21:13:47+08:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2014</time>
+<time datetime="2015-01-16T09:41:26+08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2015</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://findhy.com">Comments</a>
@@ -120,76 +120,17 @@ $(document).bind('DOMNodeInserted', function(event) {
   </header>
 
 
-<div class="entry-content"><p>最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。</p>
+<div class="entry-content"><p>首先解释什么是数据倾斜问题，举一个例子，图书馆有A0、A1、A2&hellip;A9共10个书架，A0书架有1000本书，而A1到A9书架有100本书，现在要统计图书的总数量，这时我们会发现A1到A9很快就统计完了，而A0书架需要统计很长时间，显然A0成为整个统计过程的瓶颈。<br/>
+Hadoop最根本的思想就是分而治之，数据倾斜会导致分布式的计算效率依赖单个节点，这与它的初衷是背道而驰的，但是Hadoop又没有从根本层面解决这个问题，所以需要我们在业务设计和开发时来解决这个问题，最好的解决方法是设计时避免让这个问题出现。如果无法避免，那么解决数据倾斜问题和核心思想只有一个：让map输出的key均匀分布到各个reduce中去（mapjoin例外，直接在内存中解决，牺牲内存空间提高效率，只适用于较小的输入数据）</p>
 
-<!--more-->
+<p>产生数据倾斜的原因有哪些呢？<br/>
+1.数据本身的key分布不均匀</p>
 
+<p>2.join操作过程产生过多空值或0</p>
 
-<blockquote><p>Q：<strong>我为什么要学设计，有啥用？</strong></p></blockquote>
+<p>未完待续</p>
 
-<p>很多行业都有专业的设计学科，如建筑设计、美术设计等。那非设计专业的人为什么要学点设计呢？首先是对设计的理解，我觉得设计就是：<strong>建立与外界连接的桥梁</strong>。连接第一个层次就是沟通顺畅或者别人可以理解你，第二个层次是让人爽心悦目和产生共鸣。</p>
-
-<p><strong>如果这样来理解设计，那我们无时无刻不在设计或者参与设计，如何设计公司网站的首页、如何设计博客、如何设计简历、如何设计你的名片，如何写邮件、写文章等等，这些都需要设计，因为我们需要通过它们来与外界沟通</strong>。</p>
-
-<p>网页设计中，怎么样做到让访问者既能够很直观的了解网站的主题和用途，并且愿意停留呢？Google的首页是一个很好的例子，整个网页通过对比突出一个搜索框，你完全不需要思考就知道该怎么用了，不让用户思考是它设计的成功之处。苹果的产品不管在易用性和美观上都是好的设计，还有写邮件或者文章，怎么样让读者很快明白你所表达的意思也是需要设计的。</p>
-
-<blockquote><h2>如何做好设计？</h2></blockquote>
-
-<p>作者将设计原理浓缩为4个词：「<strong>亲密性、对齐、重复和对比</strong>」。你需要做的就是学习这4个原则并且运行它们就可以了，结果会让你大吃一惊。</p>
-
-<h3>1、亲密性</h3>
-
-<p>彼此相关的项组织在一起，形成一个视觉单元。亲密性的思想并不是说所有的一切都要更靠近，其真正的含义是：如果某些元素在理解上存在关联，或者互相之间存在某种关系，那么这些元素在视觉上也应该有关联。除此以外，其它孤立的元素或者元素组则不应存在亲密性。位置是否靠近可以提现出元素是否存在关系。</p>
-
-<p>这是一个网页，信息杂乱无章。</p>
-
-<p><img src="/images/design-1.png"></p>
-
-<p>利用亲密性原则分组之后，是不是效果完全不同。</p>
-
-<p><img src="/images/design-2.png"></p>
-
-<h3>2、对齐</h3>
-
-<p>「任何元素不能在页面上随意安放,每一项都应与页面上的某个内容存在某种视觉联系。」</p>
-
-<p>页面没有对齐效果</p>
-
-<p><img src="/images/design-3.png"></p>
-
-<p>左对齐后</p>
-
-<p><img src="/images/design-4.png"></p>
-
-<p>有时候页面可以采用不同的对齐方式，但是还要让元素联系起来，就像下面这张图片，如果没有那一条横线，效果就会差很多。</p>
-
-<p><img src="/images/design-5.png"></p>
-
-<h3>3、重复</h3>
-
-<p>设计的某些方面需要在整个作品中重复。重复的元素可以是一种粗字体、一条粗线，某个项目符号、颜色、设计要素，某种格式、空间关系等。重复可以把设计中单独的部分统一起来，让设计作品具有连续性是一个整体。</p>
-
-<p><img src="/images/design-6.png"></p>
-
-<p>注意不要把重复用的太滥，而应当尽量采用“多样性实现统一”。也就是说，如果一个重复元素很明确（如一个圆），那么可以采用多种不同方式重复这个圆，而不是简单的重复同一个圆。</p>
-
-<h3>4、对比</h3>
-
-<p>对比是增加视觉效果的最佳途径之一，很容易吸引读者。对比的一个重要原则是：<strong>要实现有效的对比，对比就必须强烈，千万别畏畏缩缩</strong>。如果两个项不完全相同，就让它们截然不同。不应该使用12点的字体与14点的字体进行对比，也不要用0.5点的线和1点的线进行对比，深棕色和黑色对比也不合适，所以掌握了这个原则才能用好对比。</p>
-
-<p>将上面的网页图加上对比效果后。</p>
-
-<p><img src="/images/design-7.png"></p>
-
-<blockquote><p>Q：<strong>你会了吗？</strong></p></blockquote>
-
-<ul>
-<li><strong>亲密性</strong>：如果相关就让它们更亲密吧。</li>
-<li><strong>对齐</strong>：对齐可以让页面保持统一。</li>
-<li><strong>重复</strong>：重复能够保证一致性，重复的元素可以是项目符号、字体、线条、颜色等等。</li>
-<li><strong>对比</strong>：对比能够产生更强的视觉效果，对比方式可以是粗细、字体、颜色、空间等等。注意想形成对比，就加大力度。</li>
-</ul>
-
+<p>参考：<a href="http://www.alidata.org/archives/2109">http://www.alidata.org/archives/2109</a></p>
 </div>
 
 
@@ -212,12 +153,12 @@ $(document).bind('DOMNodeInserted', function(event) {
   
 
 
-<time datetime="2014-03-23T21:13:47+08:00" pubdate data-updated="true">Mar 23<span>rd</span>, 2014</time>
+<time datetime="2015-01-16T09:41:26+08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/reading/'>Reading</a>
+    <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>
   
 </span>
 
@@ -226,7 +167,7 @@ $(document).bind('DOMNodeInserted', function(event) {
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2014/03/23/how-do-design/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2014/03/23/how-do-design/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.com/blog/2015/01/16/hadoop-data-tilt/" data-via="sunwei553722769" data-counturl="http://findhy.com/blog/2015/01/16/hadoop-data-tilt/" >Tweet</a>
   
   
   
@@ -235,10 +176,8 @@ $(document).bind('DOMNodeInserted', function(event) {
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/" title="Previous Post: Oracle DBA如何转型到Hadoop平台">&laquo; Oracle DBA如何转型到Hadoop平台</a>
+        <a class="basic-alignment left" href="/blog/2014/12/06/hbase-index-mysql/" title="Previous Post: HBase通过Mysql建立二级索引">&laquo; HBase通过Mysql建立二级索引</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/04/17/storm/" title="Next Post: Storm Introduction">Storm Introduction &raquo;</a>
       
     </p>
   </footer>
@@ -427,8 +366,8 @@ $(document).bind('DOMNodeInserted', function(event) {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://findhy.com/blog/2014/03/23/how-do-design/';
-        var disqus_url = 'http://findhy.com/blog/2014/03/23/how-do-design/';
+        var disqus_identifier = 'http://findhy.com/blog/2015/01/16/hadoop-data-tilt/';
+        var disqus_url = 'http://findhy.com/blog/2015/01/16/hadoop-data-tilt/';
         var disqus_script = 'embed.js';
       
     (function () {
