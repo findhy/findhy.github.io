@@ -8,9 +8,9 @@ footer: true
 ---
 
 - 坐标北京
-- 互联网行业
-- 大数据方向
-- 目前研究Graph Database-Titan，感兴趣可加群：239713922
+- 移动互联网广告行业
+- 研究方向包括：Hadoop、HBase、Titan、Storm、Kafka、Spark、Hive、EMR、Lucene
+- 如果对Graph Database-Titan感兴趣可加群：239713922
 - 联系:findhyg(at)gmail(dot)com
 
 
