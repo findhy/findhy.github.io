@@ -128,6 +128,9 @@ $(document).bind('DOMNodeInserted', function(event) {
 
 <p>本文主要想总结一下各种处理方案的思路：</p>
 
+<!--more-->
+
+
 <h3>1、Distributed Cache</h3>
 
 <p>Distributed Cache是Hadoop提供的文件缓存工具，会自动将需要缓存的文件分发到各个DataNode上去，对于key分布不均匀的数据并且数据量不大，可以使用Distributed Cache将文件缓存到各个节点上，这样在做map的时候直接从内存中读取数据不需要到reduce阶段处理从而提高性能。</p>
@@ -169,8 +172,9 @@ hive.mapjoin.smalltable.filesize=25000000//文件达到多大时开启mapjoin优
 
 <h3>5、参数调整</h3>
 
-<p>hive.map.aggr = true//map端部分聚合，相当于Combiner
-hive.groupby.skewindata=true//有数据倾斜的时候自动进行负载均衡</p>
+<pre><code>hive.map.aggr = true//map端部分聚合，相当于Combiner
+hive.groupby.skewindata=true//有数据倾斜的时候自动进行负载均衡
+</code></pre>
 
 <p>如果大家以后遇到数据倾斜的问题，可以尝试从这几个方面来想办法优化。</p>
 </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Hadoop | Findhy's Blog]]></title>
   <link href="http://findhy.com/blog/categories/hadoop/atom.xml" rel="self"/>
   <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:43:32+08:00</updated>
+  <updated>2015-01-17T19:47:05+08:00</updated>
   <id>http://findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -25,6 +25,9 @@
 <p>产生数据倾斜的具体原因以及解决方案可以参考阿里的这篇博客：<a href="http://www.alidata.org/archives/2109">http://www.alidata.org/archives/2109</a></p>
 
 <p>本文主要想总结一下各种处理方案的思路：</p>
+
+<!--more-->
+
 
 <h3>1、Distributed Cache</h3>
 
@@ -67,8 +70,9 @@ hive.mapjoin.smalltable.filesize=25000000//文件达到多大时开启mapjoin优
 
 <h3>5、参数调整</h3>
 
-<p>hive.map.aggr = true//map端部分聚合，相当于Combiner
-hive.groupby.skewindata=true//有数据倾斜的时候自动进行负载均衡</p>
+<pre><code>hive.map.aggr = true//map端部分聚合，相当于Combiner
+hive.groupby.skewindata=true//有数据倾斜的时候自动进行负载均衡
+</code></pre>
 
 <p>如果大家以后遇到数据倾斜的问题，可以尝试从这几个方面来想办法优化。</p>
 ]]></content>
