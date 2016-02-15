@@ -4,7 +4,7 @@
   <title><![CDATA[Category: HBase | Findhy's Blog]]></title>
   <link href="http://blog.findhy.com/blog/categories/hbase/atom.xml" rel="self"/>
   <link href="http://blog.findhy.com/"/>
-  <updated>2016-02-15T15:05:03+08:00</updated>
+  <updated>2016-02-15T15:37:00+08:00</updated>
   <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
@@ -245,6 +245,9 @@ adunionIndex=AdunionIndex()
     <updated>2014-11-28T09:45:23+08:00</updated>
     <id>http://blog.findhy.com/blog/2014/11/28/hbase-page</id>
     <content type="html"><![CDATA[<p>HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条，那么每次就扫描11条，记住第11条的Rowkey，当点击下一页的时候，将startRowkey设置为第11条的Rowkey，就实现了分页的效果，下面是相关的核心代码，具体项目可以参考<a href="https://github.com/findhy/hbase-page">github-HBase-page</a></p>
+
+<!--more-->
+
 
 <pre><code>public class PageHBase {
 

@@ -109,6 +109,9 @@
 
 <div class="entry-content"><p>HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条，那么每次就扫描11条，记住第11条的Rowkey，当点击下一页的时候，将startRowkey设置为第11条的Rowkey，就实现了分页的效果，下面是相关的核心代码，具体项目可以参考<a href="https://github.com/findhy/hbase-page">github-HBase-page</a></p>
 
+<!--more-->
+
+
 <pre><code>public class PageHBase {
 
     private Integer currentPageNo=1;//当前页码
@@ -377,14 +380,6 @@ public class AdunionHbaseService {
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/02/15/hello-gitcafe/">Hello_gitcafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
       </li>
     
@@ -454,6 +449,14 @@ public class AdunionHbaseService {
     
       <li class="post">
         <a href="/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/">怎么在Octopress Blog中嵌入slideshare</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
       </li>
     
   </ul>
@@ -489,14 +492,6 @@ public class AdunionHbaseService {
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/02/15/hello-gitcafe/">Hello_gitcafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
       </li>
     
@@ -566,6 +561,14 @@ public class AdunionHbaseService {
     
       <li class="post">
         <a href="/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/">怎么在Octopress Blog中嵌入slideshare</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
       </li>
     
   </ul>

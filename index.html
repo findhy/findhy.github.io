@@ -9,7 +9,7 @@
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content=" original link: http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/ written by Findhy &nbsp;posted at http://blog.findhy.com ">
+  <meta name="description" content="首先解释什么是数据倾斜问题，举一个例子，图书馆有A0、A1、A2&hellip;A9共10个书架，A0书架有1000本书，而A1到A9书架有100本书，现在要统计图书的总数量，这时我们会发现A1到A9很快就统计完了，而A0书架需要统计很长时间，显然A0成为整个统计过程的瓶颈。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,96 +78,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/02/15/hello-gitcafe/">Hello_gitcafe</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-02-15T14:54:33+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2016</time>
-        
-           | <a href="/blog/2016/02/15/hello-gitcafe/#disqus_thread"
-             data-disqus-identifier="http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p class='post-footer'>
-            original link:
-            <a href='http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/'>http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/</a><br/>
-            written by <a href='http://blog.findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
-            </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-02-15T12:03:55+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2016</time>
-        
-           | <a href="/blog/2016/02/15/hello-baidu/#disqus_thread"
-             data-disqus-identifier="http://blog.findhy.com/blog/2016/02/15/hello-baidu/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p class='post-footer'>
-            original link:
-            <a href='http://blog.findhy.com/blog/2016/02/15/hello-baidu/'>http://blog.findhy.com/blog/2016/02/15/hello-baidu/</a><br/>
-            written by <a href='http://blog.findhy.com'>Findhy</a>
-            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
-            </p>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -306,184 +216,12 @@
 
   <div class="entry-content"><p>HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条，那么每次就扫描11条，记住第11条的Rowkey，当点击下一页的时候，将startRowkey设置为第11条的Rowkey，就实现了分页的效果，下面是相关的核心代码，具体项目可以参考<a href="https://github.com/findhy/hbase-page">github-HBase-page</a></p>
 
-<pre><code>public class PageHBase {
-
-    private Integer currentPageNo=1;//当前页码
-    private Integer pageSize=5;//每页显示行数
-    private Integer totalCount;//总行数
-    private Integer totalPage;//总页数
-    private Integer direction;//下一页：1 上一页2
-    private Boolean hasNext=false;//是否有下一页
-    private String nextPageRowkey;//下一页起始rowkey
-    private List&lt;Map&lt;String, String&gt;&gt; resultList;//结果集List
-    private Map&lt;String,String&gt; paramMap=new HashMap&lt;String,String&gt;();//分页查询参数
-    private Map&lt;Integer,String&gt; pageStartRowMap=new HashMap&lt;Integer,String&gt;();//每页对应的startRow，key为currentPageNo，value为Rowkey
-    private Scan scan=new Scan();
-
-    public Scan getScan(String startRowkey,String endRowkey){
-        scan.setCaching(100);
-        if(direction==1&amp;&amp;hasNext){
-            scan.setStartRow(Bytes.toBytes(startRowkey));
-            scan.setStopRow(Bytes.toBytes(endRowkey));
-        }else{
-            if(pageStartRowMap.get(currentPageNo)!=null){
-                scan.setStartRow(Bytes.toBytes(pageStartRowMap.get(currentPageNo)));
-                scan.setStopRow(Bytes.toBytes(endRowkey));
-            }else{
-                scan.setStartRow(Bytes.toBytes(startRowkey));
-                scan.setStopRow(Bytes.toBytes(endRowkey));
-            }
-        }
-        this.hasNext=false;
-        this.nextPageRowkey=null;
-        return scan;
-    }
-}
-
-
-public class AdunionHbaseService {
-
-    private static final Logger log = LoggerFactory
-            .getLogger(AdunionHbaseService.class);
-    public static final String CLICK_COLUMN_NAME="c";
-    public static final String CLICK_COLUMN_KEY="v";
-    public static final String POSTBACK_COLUMN_NAME="p";
-    public static final String POSTBACK_COLUMN_KEY="v";
-    public static final String ADUNION_TABLE_NAME="adunion_active";
-    private Configuration configuration;
-    private String clientPort;
-    private String retriesNumber;
-    private String zookeeperQuorum;
-
-    public AdunionHbaseService(String zookeeeper,String port,String retries){
-        try {
-            configuration = HBaseConfiguration.create();
-            this.setClientPort(port);
-            this.setRetriesNumber(retries);
-            this.setZookeeperQuorum(zookeeeper);
-            configuration.set("hbase.zookeeper.property.clientPort", this.getClientPort());
-            configuration.set("hbase.client.retries.number", this.getRetriesNumber());
-            configuration.set("hbase.zookeeper.quorum",this.getZookeeperQuorum());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    public PageHBase getPageHBaseData(String tableName, String columnName,String columnKey,String businessId,String publisherId,String offerId,
-            Date startDate,Date endDate, PageHBase pager) {
-        HConnection con = null;
-        HTable table = null;
-        ResultScanner rs=null;
-        List&lt;Map&lt;String,String&gt;&gt; resultList=new ArrayList&lt;Map&lt;String,String&gt;&gt;();
-        try {
-            if(startDate==null||endDate==null) return pager;
-
-            con = HConnectionManager.createConnection(configuration);
-            table=(HTable)con.getTable(tableName);
-
-            StringBuffer startRow=new StringBuffer();
-            StringBuffer endRow=new StringBuffer();
-            startRow.append(startDate.getTime());
-            endRow.append(endDate.getTime());
-            if(pager.getNextPageRowkey()==null) pager.setNextPageRowkey(startRow.toString());
-            Scan scan=pager.getScan(pager.getNextPageRowkey(),endRow.toString());
-
-            List&lt;Filter&gt; filters=new ArrayList&lt;Filter&gt;();
-
-            if(StringUtils.isNotBlank(publisherId)){
-                SingleColumnValueFilter filter=new SingleColumnValueFilter(
-                        Bytes.toBytes(columnName),
-                        Bytes.toBytes("p"),
-                        CompareFilter.CompareOp.EQUAL,
-                        Bytes.toBytes(publisherId));
-                filters.add(filter);
-            }
-            if(StringUtils.isNotBlank(offerId)){
-                SingleColumnValueFilter filter=new SingleColumnValueFilter(
-                        Bytes.toBytes(columnName),
-                        Bytes.toBytes("o"),
-                        CompareFilter.CompareOp.EQUAL,
-                        Bytes.toBytes(offerId));
-                filters.add(filter);
-            }
-            if(StringUtils.isNotBlank(businessId)){
-                SingleColumnValueFilter filter=new SingleColumnValueFilter(
-                        Bytes.toBytes(columnName),
-                        Bytes.toBytes("b"),
-                        CompareFilter.CompareOp.EQUAL,
-                        Bytes.toBytes(businessId));
-                filters.add(filter);
-            }
-            Filter pageFilter=new PageFilter(pager.getPageSize()+1);
-            Filter familyFilter=new FamilyFilter(CompareFilter.CompareOp.EQUAL,
-                    new BinaryComparator(Bytes.toBytes(columnName)));
-            Filter qualifierFilter=new QualifierFilter(CompareFilter.CompareOp.EQUAL,
-                    new BinaryComparator(Bytes.toBytes(columnKey)));
-            filters.add(familyFilter);
-            filters.add(qualifierFilter);
-            filters.add(pageFilter);
-            FilterList filterList=new FilterList(filters);
-            scan.setFilter(filterList);
-            rs = table.getScanner(scan);
-            int totalRow=0;
-            if(rs!=null){
-                for(Result result : rs){
-                    totalRow++;
-                    if(totalRow==1){
-                        pager.getPageStartRowMap().put(pager.getCurrentPageNo(),Bytes.toString(result.getRow()));
-    pager.setTotalPage(pager.getPageStartRowMap().size());
-    }
-                    if(totalRow&gt;pager.getPageSize()){
-                        pager.setNextPageRowkey(new String(result.getRow()));
-                        pager.setHasNext(true);
-                    }else{
-                        Map&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();
-                        for(KeyValue keyValue:result.raw()){
-                            String family=new String(keyValue.getFamily());
-                            byte[] value=keyValue.getValue();
-                            //map.put("rowkey", new String(result.getRow()));
-                            Map&lt;Object,Object&gt; jsonMap=JsonUtil.getMapFromJsonObjStr(new String(value));
-                            for(Object obj:jsonMap.keySet()){
-                                map.put(obj.toString(), jsonMap.get(obj).toString());
-                            }
-                        }
-                        resultList.add(map);
-                    }
-                }
-            }
-            pager.setResultList(resultList);
-        }catch(IOException ioe){
-            log.error(ioe.getMessage());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }finally{
-            try {
-                rs.close();
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-            try {
-                table.close();
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-            try {
-                con.close();
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
-        }
-        return pager;
-    }
-}&lt;p class='post-footer'&gt;
-        original link:
-        &lt;a href='http://blog.findhy.com/blog/2014/11/28/hbase-page/'&gt;http://blog.findhy.com/blog/2014/11/28/hbase-page/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://blog.findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://blog.findhy.com'&gt;http://blog.findhy.com&lt;/a&gt;
-        &lt;/p&gt;
-</code></pre>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/11/28/hbase-page/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -739,6 +477,94 @@ Resources are low on NN. Please add or free up more resources then turn off safe
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/21/mahout-tutorial/">Mahout Tutorial</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-21T17:47:04+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2014</time>
+        
+           | <a href="/blog/2014/07/21/mahout-tutorial/#disqus_thread"
+             data-disqus-identifier="http://blog.findhy.com/blog/2014/07/21/mahout-tutorial/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://mahout.apache.org/">Mahout</a> 是一个开源的Java实现的可伸缩的机器学习库，它实现了常见的聚类和推荐等机器学习算法，并且可运行在 Hadoop 分布式平台处理上PB的数据，Mahout 社区和文档非常丰富，是目前搭建推荐系统或者其它算法平台的首选方案。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/07/21/mahout-tutorial/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/18/app-store-business-and-recommend/">手机应用商店的商业形态以及个性化推荐</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T11:53:49+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/07/18/app-store-business-and-recommend/#disqus_thread"
+             data-disqus-identifier="http://blog.findhy.com/blog/2014/07/18/app-store-business-and-recommend/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近同时在参与两件事：手机应用商店的商业化之路以及应用的个性化推荐，一点想法记录下来，手机应用商店市场已经泛滥，既有官方出品（Google Play），又有巨头入场（应用宝、360、91），还有少年得志生机勃勃的豌豆荚，作为应用商店怎么在竞争如此激烈的市场中抢占一席之地呢？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/07/18/app-store-business-and-recommend/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -777,14 +603,6 @@ Resources are low on NN. Please add or free up more resources then turn off safe
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/02/15/hello-gitcafe/">Hello_gitcafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
       </li>
     
@@ -854,6 +672,14 @@ Resources are low on NN. Please add or free up more resources then turn off safe
     
       <li class="post">
         <a href="/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/">怎么在Octopress Blog中嵌入slideshare</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
       </li>
     
   </ul>
@@ -889,14 +715,6 @@ Resources are low on NN. Please add or free up more resources then turn off safe
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/02/15/hello-gitcafe/">Hello_gitcafe</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
       </li>
     
@@ -966,6 +784,14 @@ Resources are low on NN. Please add or free up more resources then turn off safe
     
       <li class="post">
         <a href="/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/">怎么在Octopress Blog中嵌入slideshare</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
       </li>
     
   </ul>
