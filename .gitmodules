@@ -1,0 +1,3 @@
+[submodule ".themes/classic-martinb"]
+	path = .themes/classic-martinb
+	url = git://github.com/martinbjeldbak/classic-martinb.git
