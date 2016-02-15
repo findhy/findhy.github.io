@@ -47,32 +47,33 @@
 </head>
 
 <body   >
-  <header role="banner"><hgroup>
+  <header role="banner"><div class="header-left">
+  <hgroup>
   <h1><a href="/">Findhy's Blog</a></h1>
   
+  <div class="subtitle">
     <h2>Art is long, Life is short.</h2>
+  </div>
   
-</hgroup>
+  </hgroup>
+  
+</div>
 
+<div class="header-right">
+  <ul class="main-navigation">
+ <div> 
+  <li><a href="/">blog</a></li></div><div class="spacer"></div>
+     <div> 
+  <li><a href="/projects">projects</a></li></div><div class="spacer"></div>
+       <div> 
+  <li><a href="/work">work</a></li></div><div class="spacer"></div>
+         <div> 
+  <li><a href="/about">about</a></li></div>
+</ul>
+  
+
+</div>
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:blog.findhy.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
   <div id="main">
     <div id="content">
       <div>
@@ -244,11 +245,121 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
 </div>
 
 <aside class="sidebar">
+  <section>
+  <p>Hi, I'm <a href="https://twitter.com/martinbjeldbak">Martin Bjeldbak Madsen</a>!</p>
+  
+
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/fapper">here</a>.</p>
+  <p>My resume can be found <a href="cv.pdf">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+
+    
+
+    
+  <a href="https://github.com/findhy"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/sunwei553722769"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
+
+  <section>
+  <h1>Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/06/hbase-index-mysql/">HBase通过Mysql建立二级索引</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/28/hbase-page/">HBase分页</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/13/namenode-low-on-available-disk-space/">Hadoop集群NameNode运行中进入安全模式的问题：NameNode Low on Available Disk Space</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/29/hadoop-streaming-python/">Hadoop Streaming编程(Python)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/25/hadoop-cloud/">基于云的Hadoop架构</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/24/s3cmd-multiple-accounts/">S3cmd 多账户配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/">Introduction to Item-Based Recommendations With Hadoop</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/21/mahout-tutorial/">Mahout Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/18/app-store-business-and-recommend/">手机应用商店的商业形态以及个性化推荐</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/09/zookeeper-manager/">Zookeeper运维管理工具介绍</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/28/spark-on-yarn/">Spark1.0在YARN上部署过程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/23/titan-visualization-with-vivagraphjs/">Titan Visualization With VivaGraphJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/23/storage-performance-locate/">存储性能瓶颈的成因、定位与排查</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/21/graph-database-visualization/">图数据库(graph Database)可视化</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/19/titan-tutorial/">Titan Tutorial</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/19/titan-classic-get-started/">Titan经典入门PPT</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/">怎么在Octopress Blog中嵌入slideshare</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
+      </li>
+    
+  </ul>
+</section>
+
   
     <section>
   <h1>Categories</h1>
-  <ul id="categories">
-    <li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
+    <ul id="category-list"><li class='category'><a href='/blog/categories/ad/'>AD (1)</a></li>
 <li class='category'><a href='/blog/categories/aws/'>AWS (3)</a></li>
 <li class='category'><a href='/blog/categories/bigdata/'>Bigdata (1)</a></li>
 <li class='category'><a href='/blog/categories/hbase/'>HBase (2)</a></li>
@@ -268,10 +379,10 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
 <li class='category'><a href='/blog/categories/websocket/'>WebSocket (1)</a></li>
 <li class='category'><a href='/blog/categories/yarn/'>YARN (1)</a></li>
 <li class='category'><a href='/blog/categories/zookeeper/'>Zookeeper (1)</a></li>
-
-  </ul>
-</section><section>
-  <h1>Recent Posts</h1>
+</ul>
+</section>
+<section>
+  <h1>Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
@@ -401,6 +512,10 @@ Twitter：<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/filter">ht
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
+<p>
+<span>Copyright &copy; 2016  Findhy -</span>
+<span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
+</p>
 </footer>
   
 
