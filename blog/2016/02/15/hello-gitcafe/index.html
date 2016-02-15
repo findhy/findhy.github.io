@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hadoop Streaming编程(Python) - Findhy's Blog</title>
+  <title>Hello_gitcafe - Findhy's Blog</title>
   <meta name="author" content="Findhy">
 
   
-  <meta name="description" content="Hadoop Streaming编程(Python)">
-  <meta name="keywords" content="Hadoop Streaming编程(Python)">
+  <meta name="description" content=" original link: http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/ written by Findhy &nbsp;posted at http://blog.findhy.com ">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python">
+  <link rel="canonical" href="http://blog.findhy.com/blog/2016/02/15/hello-gitcafe">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
@@ -81,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hadoop Streaming编程(Python)</h1>
+      <h1 class="entry-title">Hello_gitcafe</h1>
     
     
       <p class="meta">
@@ -97,7 +97,7 @@
   
 
 
-<time datetime="2014-07-29T17:17:59+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2014</time>
+<time datetime="2016-02-15T14:54:33+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2016</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://blog.findhy.com">Comments</a>
@@ -107,105 +107,9 @@
   </header>
 
 
-<div class="entry-content"><p>Hadoop Streaming是Hadoop提供的一个工具，可以允许开发者以非Java的编程语言开发Mapper和Reducer，而且在开发过程中，我们只需要专注于数据的输入和输出处理，其它的事情都交给这个工具来做。本例是用Python实现一个简单的Wordcount例子，环境为：</p>
-
-<ul>
-<li>Hadoop:CDH4.3.2</li>
-<li>Python:2.6.6</li>
-<li>OS:Centos 6.5</li>
-<li>Hadoop Streaming:hadoop-2.0.0-cdh4.3.2/share/hadoop/tools/lib/hadoop-streaming-2.0.0-cdh4.3.2.jar</li>
-</ul>
-
-
-<!--more-->
-
-
-<h3>代码实现</h3>
-
-<p>Python实现wordcount的Mapper和Reducer，比较简单直接看代码，<em>mapper.py</em>：</p>
-
-<pre><code>#!/usr/bin/python
-
-import sys
-for line in sys.stdin:
-    line = line.strip()
-    words = line.split()
-    for word in words:
-        print '%s\t%s' % (word,1)
-</code></pre>
-
-<p><em>reducer.py</em>:</p>
-
-<pre><code>#!/usr/bin/python
-
-from operator import itemgetter
-import sys
-
-current_word = None
-current_count = 0
-word = None
-
-# input comes from STDIN
-for line in sys.stdin:
-    # remove leading and trailing whitespace
-    line = line.strip()
-
-    # parse the input we got from mapper.py
-    word, count = line.split('\t', 1)
-
-    # convert count (currently a string) to int
-    try:
-        count = int(count)
-    except ValueError:
-        # count was not a number, so silently
-        # ignore/discard this line
-        continue
-
-    # this IF-switch only works because Hadoop sorts map output
-    # by key (here: word) before it is passed to the reducer
-    if current_word == word:
-        current_count += count
-    else:
-        if current_word:
-            # write result to STDOUT
-            print '%s\t%s' % (current_word, current_count)
-        current_count = count
-        current_word = word
-
-# do not forget to output the last word if needed!
-if current_word == word:
-    print '%s\t%s' % (current_word, current_count)
-</code></pre>
-
-<p>这里需要注意第一行是：<em>#!/usr/bin/python</em>，而不是其它例子中的<em>#!/usr/bin/env python</em></p>
-
-<h3>数据准备</h3>
-
-<p>下载下面链接的数据，拷贝到HDFS中</p>
-
-<ul>
-<li><a href="http://www.gutenberg.org/ebooks/20417">The Outline of Science, Vol. 1 (of 4) by J. Arthur Thomson</a></li>
-<li><a href="http://www.gutenberg.org/ebooks/5000">The Notebooks of Leonardo Da Vinci</a></li>
-<li><a href="http://www.gutenberg.org/ebooks/4300">Ulysses by James Joyce</a></li>
-</ul>
-
-
-<h3>任务提交</h3>
-
-<p>这块试了很多次，很多命令参数MR1和MR2不同的，比如必须这么写才可以：<em>-mapper &ldquo;python mapper.py&rdquo;</em>，下面是完整的执行脚本，经过测试没有问题：</p>
-
-<pre><code>hadoop jar /home/hadoop/hadoop-2.0.0-cdh4.3.2/share/hadoop/tools/lib/hadoop-streaming-2.0.0-cdh4.3.2.jar -input /test/data/* -output /test/output  -file ./*.py -mapper "python mapper.py" -reducer  "python reducer.py" -numReduceTasks 2
-</code></pre>
-
-<p>完整代码参考这里项目：<a href="https://github.com/findhy/python-example/tree/master/hadoop/wordcount">https://github.com/findhy/python-example/tree/master/hadoop/wordcount</a></p>
-
-<h3>参考</h3>
-
-<p><a href="http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/">http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/</a></p>
-
-<p class='post-footer'>
+<div class="entry-content"><p class='post-footer'>
             original link:
-            <a href='http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/'>http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/</a><br/>
+            <a href='http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/'>http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/</a><br/>
             written by <a href='http://blog.findhy.com'>Findhy</a>
             &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
             </p>
@@ -232,21 +136,15 @@ if current_word == word:
   
 
 
-<time datetime="2014-07-29T17:17:59+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2014</time>
+<time datetime="2016-02-15T14:54:33+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2016</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/" data-via="sunwei553722769" data-counturl="http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/" data-via="sunwei553722769" data-counturl="http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/" >Tweet</a>
   
   
   
@@ -255,10 +153,8 @@ if current_word == word:
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/07/25/hadoop-cloud/" title="Previous Post: 基于云的Hadoop架构">&laquo; 基于云的Hadoop架构</a>
+        <a class="basic-alignment left" href="/blog/2016/02/15/hello-baidu/" title="Previous Post: hello baidu">&laquo; hello baidu</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/11/13/namenode-low-on-available-disk-space/" title="Next Post: Hadoop集群NameNode运行中进入安全模式的问题：NameNode low on available disk space">Hadoop集群NameNode运行中进入安全模式的问题：NameNode low on available disk space &raquo;</a>
       
     </p>
   </footer>
@@ -552,8 +448,8 @@ if current_word == word:
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/';
-        var disqus_url = 'http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/';
+        var disqus_identifier = 'http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/';
+        var disqus_url = 'http://blog.findhy.com/blog/2016/02/15/hello-gitcafe/';
         var disqus_script = 'embed.js';
       
     (function () {
