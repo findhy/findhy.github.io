@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: IOS | Findhy's Blog]]></title>
-  <link href="http://findhy.com/blog/categories/ios/atom.xml" rel="self"/>
-  <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:47:05+08:00</updated>
-  <id>http://findhy.com/</id>
+  <link href="http://blog.findhy.com/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://blog.findhy.com/"/>
+  <updated>2016-02-15T12:18:03+08:00</updated>
+  <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Swift Introduction]]></title>
-    <link href="http://findhy.com/blog/2014/06/04/swift/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/04/swift/"/>
     <updated>2014-06-04T09:51:16+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/04/swift</id>
+    <id>http://blog.findhy.com/blog/2014/06/04/swift</id>
     <content type="html"><![CDATA[<p>Swift是Apple下一代开发语言，并且为了保证兼容性，Swift代码可以和Objective-C代码共存（官方解释是：New Swift code co-exists along side your existing Objective-C files in the same project）。下面介绍一下它的特性：</p>
 
 <!--more-->

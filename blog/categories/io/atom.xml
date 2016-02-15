@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: IO | Findhy's Blog]]></title>
-  <link href="http://findhy.com/blog/categories/io/atom.xml" rel="self"/>
-  <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:47:05+08:00</updated>
-  <id>http://findhy.com/</id>
+  <link href="http://blog.findhy.com/blog/categories/io/atom.xml" rel="self"/>
+  <link href="http://blog.findhy.com/"/>
+  <updated>2016-02-15T12:18:03+08:00</updated>
+  <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[存储性能瓶颈的成因、定位与排查]]></title>
-    <link href="http://findhy.com/blog/2014/06/23/storage-performance-locate/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/23/storage-performance-locate/"/>
     <updated>2014-06-23T10:41:46+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/23/storage-performance-locate</id>
+    <id>http://blog.findhy.com/blog/2014/06/23/storage-performance-locate</id>
     <content type="html"><![CDATA[<p>一个系统的性能瓶颈可能发生在很多地方，常见包括：CPU、内存、存储IO、网络、技术，其中存储IO的性能瓶颈最容易发生，往往我们刚开始搭建系统的时候都放在单台服务器上，当业务扩大后，单台已经无法支撑，常见的做法就是，前端加一个F5或者Nginx做负载均衡，后端应用做集群，数据库做集群或者读写分离、分表分库来缓解服务器的存储IO瓶颈，但是遇到存储瓶颈时我们如何定位问题和在架构设计的时候就去避免这样的问题呢，下面转载一篇EMC中文论坛的一篇文章，原文在这里<a href="https://community.emc.com/docs/DOC-34921">存储性能瓶颈的成因、定位与排查</a>。正文：</p>
 
 <!--more-->
@@ -130,9 +130,9 @@ IOPS （读和写，随机和顺序，整体平均IOPS）；
   
   <entry>
     <title type="html"><![CDATA[存储系统-I/O]]></title>
-    <link href="http://findhy.com/blog/2014/03/16/io/"/>
+    <link href="http://blog.findhy.com/blog/2014/03/16/io/"/>
     <updated>2014-03-16T15:40:50+08:00</updated>
-    <id>http://findhy.com/blog/2014/03/16/io</id>
+    <id>http://blog.findhy.com/blog/2014/03/16/io</id>
     <content type="html"><![CDATA[<p>存储系统瓶颈往往在于I/O，因此需要对I/O有一个整体而清晰的认识，也算是一次总结。I/O涉及的范围比较广，包括硬件架构和网络结构等方面，本篇文章试图从应用层面来分析：</p>
 
 <!--more-->

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Storm | Findhy's Blog]]></title>
-  <link href="http://findhy.com/blog/categories/storm/atom.xml" rel="self"/>
-  <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:47:05+08:00</updated>
-  <id>http://findhy.com/</id>
+  <link href="http://blog.findhy.com/blog/categories/storm/atom.xml" rel="self"/>
+  <link href="http://blog.findhy.com/"/>
+  <updated>2016-02-15T12:18:03+08:00</updated>
+  <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Storm与Kafka集成开发]]></title>
-    <link href="http://findhy.com/blog/2014/06/16/storm-kafka-dev/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/16/storm-kafka-dev/"/>
     <updated>2014-06-16T16:44:35+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/16/storm-kafka-dev</id>
+    <id>http://blog.findhy.com/blog/2014/06/16/storm-kafka-dev</id>
     <content type="html"><![CDATA[<p>项目源码在这里<a href="https://github.com/findhy/storm-kafka">storm-kafka</a>，里面包括了简单说明和测试过程，照着做就可以了，下面简单介绍一下。</p>
 
 <p><img src="/images/storm-kafka-dev1.png"></p>
@@ -37,9 +37,9 @@
   
   <entry>
     <title type="html"><![CDATA[Storm Spouts Lifecycle]]></title>
-    <link href="http://findhy.com/blog/2014/06/10/storm-spouts-lifecycle/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/10/storm-spouts-lifecycle/"/>
     <updated>2014-06-10T15:16:53+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/10/storm-spouts-lifecycle</id>
+    <id>http://blog.findhy.com/blog/2014/06/10/storm-spouts-lifecycle</id>
     <content type="html"><![CDATA[<p>Spouts是Storm中的Topology对应的消息生产者，消息将从Spouts发出，消息的单位是tuple，本文讲解Spouts核心方法以及Spouts方法的生命周期。相关接口方法看这里：<a href="http://storm.incubator.apache.org/apidocs/backtype/storm/spout/ISpout.html">ISpout</a>。Spouts在Storm中的位置可以参考下图：<br/>
 <img src="/images/storm-concepts.png"></p>
 
@@ -306,9 +306,9 @@ public interface ISpout extends Serializable {
   
   <entry>
     <title type="html"><![CDATA[Storm-on-YARN Install]]></title>
-    <link href="http://findhy.com/blog/2014/05/17/storm-on-yarn/"/>
+    <link href="http://blog.findhy.com/blog/2014/05/17/storm-on-yarn/"/>
     <updated>2014-05-17T06:37:52+08:00</updated>
-    <id>http://findhy.com/blog/2014/05/17/storm-on-yarn</id>
+    <id>http://blog.findhy.com/blog/2014/05/17/storm-on-yarn</id>
     <content type="html"><![CDATA[<p>Storm是一个流数据的实时计算框架，可以单独部署也可是部署在YARN上，本篇文章主要讲解Storm如何部署在YARN上面。  当然前提是Hadoop2.X已经装上了，然后需要安装Zookeeper来作为Storm集群的分布式协调服务。</p>
 
 <!--more-->
@@ -601,9 +601,9 @@ source /etc/profile
   
   <entry>
     <title type="html"><![CDATA[Storm Introduction]]></title>
-    <link href="http://findhy.com/blog/2014/04/17/storm/"/>
+    <link href="http://blog.findhy.com/blog/2014/04/17/storm/"/>
     <updated>2014-04-17T22:54:04+08:00</updated>
-    <id>http://findhy.com/blog/2014/04/17/storm</id>
+    <id>http://blog.findhy.com/blog/2014/04/17/storm</id>
     <content type="html"><![CDATA[<h1>使用场景</h1>
 
 <p>Storm可以通过插件运行在Hadoop YARN平台上，由YARN统一调度实现资源的共享。Storm可以使用任何语言来写topologies。</p>

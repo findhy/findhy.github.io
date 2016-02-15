@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Opendata | Findhy's Blog]]></title>
-  <link href="http://findhy.com/blog/categories/opendata/atom.xml" rel="self"/>
-  <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:47:05+08:00</updated>
-  <id>http://findhy.com/</id>
+  <link href="http://blog.findhy.com/blog/categories/opendata/atom.xml" rel="self"/>
+  <link href="http://blog.findhy.com/"/>
+  <updated>2016-02-15T12:18:03+08:00</updated>
+  <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Open Datasource]]></title>
-    <link href="http://findhy.com/blog/2014/06/05/big-data-open-source/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/05/big-data-open-source/"/>
     <updated>2014-06-05T20:43:54+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/05/big-data-open-source</id>
+    <id>http://blog.findhy.com/blog/2014/06/05/big-data-open-source</id>
     <content type="html"><![CDATA[<p>大数据时代没有数据是玩不转的，真正拥有大数据的公司少之又少，更何况是个人开发者呢。数据有很多，最接近用户诉求、最能够精准定位用户需求的数据是最具有商业价值的，像搜索、电商、社交，而拥有这些数据的公司：Google、Facebook、百度、阿里巴巴、亚马逊等，它们首先会通过广告、增值服务等形式来将数据变现，肯定不会将数据开放出来，而且未来数据会越来越成为一个公司的核心竞争力。</p>
 
 <p>对于大数据研究人员或者创业者，我们有哪些数据可以使用呢？我简单整理了一下。</p>

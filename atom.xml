@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Findhy's Blog]]></title>
-  <link href="http://findhy.com/atom.xml" rel="self"/>
-  <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:47:05+08:00</updated>
-  <id>http://findhy.com/</id>
+  <link href="http://blog.findhy.com/atom.xml" rel="self"/>
+  <link href="http://blog.findhy.com/"/>
+  <updated>2016-02-15T12:18:02+08:00</updated>
+  <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -14,10 +14,25 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Hello Baidu]]></title>
+    <link href="http://blog.findhy.com/blog/2016/02/15/hello-baidu/"/>
+    <updated>2016-02-15T12:03:55+08:00</updated>
+    <id>http://blog.findhy.com/blog/2016/02/15/hello-baidu</id>
+    <content type="html"><![CDATA[<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2016/02/15/hello-baidu/'>http://blog.findhy.com/blog/2016/02/15/hello-baidu/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Hadoop数据倾斜问题总结]]></title>
-    <link href="http://findhy.com/blog/2015/01/16/hadoop-data-tilt/"/>
+    <link href="http://blog.findhy.com/blog/2015/01/16/hadoop-data-tilt/"/>
     <updated>2015-01-16T09:41:26+08:00</updated>
-    <id>http://findhy.com/blog/2015/01/16/hadoop-data-tilt</id>
+    <id>http://blog.findhy.com/blog/2015/01/16/hadoop-data-tilt</id>
     <content type="html"><![CDATA[<p>首先解释什么是数据倾斜问题，举一个例子，图书馆有A0、A1、A2&hellip;A9共10个书架，A0书架有1000本书，而A1到A9书架有100本书，现在要统计图书的总数量，这时我们会发现A1到A9很快就统计完了，而A0书架需要统计很长时间，显然A0成为整个统计过程的瓶颈。</p>
 
 <p>Hadoop最根本的思想就是分而治之，数据倾斜会导致分布式的计算效率依赖单个节点，这与它的初衷是背道而驰的，但是Hadoop又没有从根本层面解决这个问题，所以需要我们在业务设计和开发时来解决这个问题，最好的解决方法是设计时避免让这个问题出现。如果无法避免，那么解决数据倾斜问题和核心思想只有一个：让map输出的key均匀分布到各个reduce中去（mapjoin例外，直接在内存中解决，牺牲内存空间提高效率，只适用于较小的输入数据）</p>
@@ -75,14 +90,22 @@ hive.groupby.skewindata=true//有数据倾斜的时候自动进行负载均衡
 </code></pre>
 
 <p>如果大家以后遇到数据倾斜的问题，可以尝试从这几个方面来想办法优化。</p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2015/01/16/hadoop-data-tilt/'>http://blog.findhy.com/blog/2015/01/16/hadoop-data-tilt/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[HBase通过Mysql建立二级索引]]></title>
-    <link href="http://findhy.com/blog/2014/12/06/hbase-index-mysql/"/>
+    <link href="http://blog.findhy.com/blog/2014/12/06/hbase-index-mysql/"/>
     <updated>2014-12-06T16:28:39+08:00</updated>
-    <id>http://findhy.com/blog/2014/12/06/hbase-index-mysql</id>
+    <id>http://blog.findhy.com/blog/2014/12/06/hbase-index-mysql</id>
     <content type="html"><![CDATA[<p>HBase查询数据有三种模式：Rowkey查询、Rowkey范围scan和全表扫描，HBase的Rowkey查询效率很高，毫秒级的，所以我们应该尽量对HBase使用Rowkey查询，而避免范围和全表扫描，思路有很多种，一种是Rowkey的巧妙设计，例如Rowkey是userId#timestamp，这样就可以支持用户和时间戳的查询了，这种方式最简单但也比较局限，例如无法支持较复杂的查询条件，还有Rowkey设计与region数据分布的问题，我们总是希望数据在多个region上均匀分布，又希望经常被一起查的数据在同一个region上，所以全靠Rowkey设计来解决还是比较局限的，本文介绍通过Mysql来建立HBase二级索引的方式，来实现HBase高效率的分页查询、复杂条件组合查询。</p>
 
 <h2>思路</h2>
@@ -299,16 +322,21 @@ adunionIndex=AdunionIndex()
             }
         }
         return resultList;
-    }
+    }&lt;p class='post-footer'&gt;
+        original link:
+        &lt;a href='http://blog.findhy.com/blog/2014/12/06/hbase-index-mysql/'&gt;http://blog.findhy.com/blog/2014/12/06/hbase-index-mysql/&lt;/a&gt;&lt;br/&gt;
+        written by &lt;a href='http://blog.findhy.com'&gt;Findhy&lt;/a&gt;
+        &amp;nbsp;posted at &lt;a href='http://blog.findhy.com'&gt;http://blog.findhy.com&lt;/a&gt;
+        &lt;/p&gt;
 </code></pre>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[HBase分页]]></title>
-    <link href="http://findhy.com/blog/2014/11/28/hbase-page/"/>
+    <link href="http://blog.findhy.com/blog/2014/11/28/hbase-page/"/>
     <updated>2014-11-28T09:45:23+08:00</updated>
-    <id>http://findhy.com/blog/2014/11/28/hbase-page</id>
+    <id>http://blog.findhy.com/blog/2014/11/28/hbase-page</id>
     <content type="html"><![CDATA[<p>HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条，那么每次就扫描11条，记住第11条的Rowkey，当点击下一页的时候，将startRowkey设置为第11条的Rowkey，就实现了分页的效果，下面是相关的核心代码，具体项目可以参考<a href="https://github.com/findhy/hbase-page">github-HBase-page</a></p>
 
 <pre><code>public class PageHBase {
@@ -480,16 +508,21 @@ public class AdunionHbaseService {
         }
         return pager;
     }
-}
+}&lt;p class='post-footer'&gt;
+        original link:
+        &lt;a href='http://blog.findhy.com/blog/2014/11/28/hbase-page/'&gt;http://blog.findhy.com/blog/2014/11/28/hbase-page/&lt;/a&gt;&lt;br/&gt;
+        written by &lt;a href='http://blog.findhy.com'&gt;Findhy&lt;/a&gt;
+        &amp;nbsp;posted at &lt;a href='http://blog.findhy.com'&gt;http://blog.findhy.com&lt;/a&gt;
+        &lt;/p&gt;
 </code></pre>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Hadoop集群NameNode运行中进入安全模式的问题：NameNode Low on Available Disk Space]]></title>
-    <link href="http://findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space/"/>
+    <link href="http://blog.findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space/"/>
     <updated>2014-11-13T15:23:26+08:00</updated>
-    <id>http://findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space</id>
+    <id>http://blog.findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space</id>
     <content type="html"><![CDATA[<p>问题描述：Hadoop集群在运行过程，早上来的时候发现NameNode自动进入安全模式，导致系统运行的MR任务失败。</p>
 
 <p>最开始怀疑是HDFS的块复制没有达到最低的要求，通过hadoop fsck -blocks查看，Minimally replicated blocks为100%，说明blocks都达到了复制要求，最后查看了NameNode的日志发现几行警告信息：</p>
@@ -510,14 +543,22 @@ Resources are low on NN. Please add or free up more resources then turn off safe
 <p>另外这里还有详细的解释：<a href="https://support.pivotal.io/hc/en-us/articles/201455807-Namenode-logs-reports-Space-available-on-volume-null-is-below-threshold-and-enters-safe-mode">https://support.pivotal.io/hc/en-us/articles/201455807-Namenode-logs-reports-Space-available-on-volume-null-is-below-threshold-and-enters-safe-mode</a></p>
 
 <p>原因是Hadoop的源码里面有一个类 <code>NameNodeResourceChecker</code> 负责检查NameNode的磁盘空间，如果磁盘空间低于100M则进入到安全模式，导致系统不可用，<strong>那么问题来了</strong>，是什么原因导致磁盘空间暴涨了呢？最后发现是HBase的DEBUG日志没有关闭导致日志文件非常大，最终磁盘空间占满，NameNode不可用。</p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space/'>http://blog.findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Hadoop Streaming编程(Python)]]></title>
-    <link href="http://findhy.com/blog/2014/07/29/hadoop-streaming-python/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/"/>
     <updated>2014-07-29T17:17:59+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/29/hadoop-streaming-python</id>
+    <id>http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python</id>
     <content type="html"><![CDATA[<p>Hadoop Streaming是Hadoop提供的一个工具，可以允许开发者以非Java的编程语言开发Mapper和Reducer，而且在开发过程中，我们只需要专注于数据的输入和输出处理，其它的事情都交给这个工具来做。本例是用Python实现一个简单的Wordcount例子，环境为：</p>
 
 <ul>
@@ -613,14 +654,22 @@ if current_word == word:
 <h3>参考</h3>
 
 <p><a href="http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/">http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/</a></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/'>http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[基于云的Hadoop架构]]></title>
-    <link href="http://findhy.com/blog/2014/07/25/hadoop-cloud/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/25/hadoop-cloud/"/>
     <updated>2014-07-25T12:18:55+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/25/hadoop-cloud</id>
+    <id>http://blog.findhy.com/blog/2014/07/25/hadoop-cloud</id>
     <content type="html"><![CDATA[<p>今天看了Netflix分享的基于AWS的大数据平台Hadoop架构，感觉这是未来大数据平台的发展模式，将整个数据仓库部署在云端，开发者不需要考虑集群的资源扩展，也不需要接触复杂的底层命令，通过一个简单RESTFul接口就可以提交我们的MapReduce任务，还可以实时看到任务和运行状态。</p>
 
 <!--more-->
@@ -628,7 +677,7 @@ if current_word == word:
 
 <h3>Netflix基于AWS的Hadoop架构介绍</h3>
 
-<p><img src="http://findhy.com/images/hadoopcloud1.png"></p>
+<p><img src="http://blog.findhy.com/images/hadoopcloud1.png"></p>
 
 <p>Netflix的Hadoop云架构是完全基于AWS来搭建，底层存储采用S3，Hadoop组件采用AWS上原生的EMR，PAAS层是自己开发的Genie(目前已经开源)，开发者或者数据分析师通过Genie提供的RESTFul接口来提交和管理任务，由于AWS云带来的弹性扩展的好处，整个集群可以任意横向和纵向扩展，而开发者只需要专注在算法和业务上即可。</p>
 
@@ -654,14 +703,22 @@ if current_word == word:
 
 
 <p></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/25/hadoop-cloud/'>http://blog.findhy.com/blog/2014/07/25/hadoop-cloud/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[S3cmd 多账户配置]]></title>
-    <link href="http://findhy.com/blog/2014/07/24/s3cmd-multiple-accounts/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/24/s3cmd-multiple-accounts/"/>
     <updated>2014-07-24T15:16:17+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/24/s3cmd-multiple-accounts</id>
+    <id>http://blog.findhy.com/blog/2014/07/24/s3cmd-multiple-accounts</id>
     <content type="html"><![CDATA[<p>关于s3cmd的安装配置参考这篇文章：<a href="http://findhy.com/blog/2014/06/05/s3cmd-config/">s3cmd Configure</a>，本文介绍s3cmd多账户配置。</p>
 
 <!--more-->
@@ -709,14 +766,22 @@ OK!这样就不用每次指定配置文件了
 <p><a href="https://blog.techopsguru.com/2011/12/s3-bucket-copying-with-multiple-accounts.html  ">https://blog.techopsguru.com/2011/12/s3-bucket-copying-with-multiple-accounts.html  </a>
 <a href="http://mikesisk.tumblr.com/post/8703449578/s3cmd-and-multiple-accounts  ">http://mikesisk.tumblr.com/post/8703449578/s3cmd-and-multiple-accounts  </a>
 <a href="http://mikesisk.com/2011/08/09/s3cmd-with-multiple-aws-accounts/">http://mikesisk.com/2011/08/09/s3cmd-with-multiple-aws-accounts/</a></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/24/s3cmd-multiple-accounts/'>http://blog.findhy.com/blog/2014/07/24/s3cmd-multiple-accounts/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Introduction to Item-Based Recommendations With Hadoop]]></title>
-    <link href="http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/"/>
     <updated>2014-07-22T14:30:07+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop</id>
+    <id>http://blog.findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop</id>
     <content type="html"><![CDATA[<p>本文是Mahout官网上的Item-Based CF on Hadoop的例子，原文在这里<a href="https://mahout.apache.org/users/recommender/intro-itembased-hadoop.html">Introduction to Item-Based Recommendations with Hadoop</a>。</p>
 
 <!--more-->
@@ -725,7 +790,7 @@ OK!这样就不用每次指定配置文件了
 <h3>前言</h3>
 
 <p>Item-Based CF是协调过滤推荐算法的一个分支，是基于物品相似推荐，基于物品的 CF 的原理和基于用户的 CF 类似，只是在计算邻居时采用物品本身，而不是从用户的角度，即基于用户对物品的偏好找到相似的物品，然后根据用户的历史偏好，推荐相似的物品给他。从计算的角度看，就是将所有用户对某个物品的偏好作为一个向量来计算物品之间的相似度，得到物品的相似物品后，根据用户历史的偏好预测当前用户还没有表示偏好的 物品，计算得到一个排序的物品列表作为推荐。下图给出了一个例子，对于物品 A，根据所有用户的历史偏好，喜欢物品 A 的用户都喜欢物品 C，得出物品 A 和物品 C 比较相似，而用户 C 喜欢物品 A，那么可以推断出用户 C 可能也喜欢物品 C。  <br/>
-<img src="http://findhy.com/images/mahout3.png"></p>
+<img src="http://blog.findhy.com/images/mahout3.png"></p>
 
 <h3>示例</h3>
 
@@ -768,15 +833,23 @@ OK!这样就不用每次指定配置文件了
 
 <h4>3、查看结果</h4>
 
-<p><img src="http://findhy.com/images/mahout2.png"></p>
+<p><img src="http://blog.findhy.com/images/mahout2.png"></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/'>http://blog.findhy.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Mahout Tutorial]]></title>
-    <link href="http://findhy.com/blog/2014/07/21/mahout-tutorial/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/21/mahout-tutorial/"/>
     <updated>2014-07-21T17:47:04+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/21/mahout-tutorial</id>
+    <id>http://blog.findhy.com/blog/2014/07/21/mahout-tutorial</id>
     <content type="html"><![CDATA[<p><a href="http://mahout.apache.org/">Mahout</a> 是一个开源的Java实现的可伸缩的机器学习库，它实现了常见的聚类和推荐等机器学习算法，并且可运行在 Hadoop 分布式平台处理上PB的数据，Mahout 社区和文档非常丰富，是目前搭建推荐系统或者其它算法平台的首选方案。</p>
 
 <!--more-->
@@ -842,7 +915,7 @@ and part of it over distributed optimizer).
 
 <h3>二、Mahout 架构介绍</h3>
 
-<p><img src="http://findhy.com/images/mahout1.png"><br/>
+<p><img src="http://blog.findhy.com/images/mahout1.png"><br/>
 这个Mahout整个业务架构图，最下面是Mahout的底层数学模型库和数据存储，Mahout可以从HDFS中读取数据，中间是它的算法实现，上面是业务层。</p>
 
 <h3>三、Mahout Startup</h3>
@@ -943,14 +1016,22 @@ User 5: RecommendedItem[item:3, value:1.0]
 </code></pre>
 
 <p>更多例子请参考这个项目：<a href="https://github.com/findhy/mahout-example">https://github.com/findhy/mahout-example</a></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/21/mahout-tutorial/'>http://blog.findhy.com/blog/2014/07/21/mahout-tutorial/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[手机应用商店的商业形态以及个性化推荐]]></title>
-    <link href="http://findhy.com/blog/2014/07/18/app-store-business-and-recommend/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/18/app-store-business-and-recommend/"/>
     <updated>2014-07-18T11:53:49+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/18/app-store-business-and-recommend</id>
+    <id>http://blog.findhy.com/blog/2014/07/18/app-store-business-and-recommend</id>
     <content type="html"><![CDATA[<p>最近同时在参与两件事：手机应用商店的商业化之路以及应用的个性化推荐，一点想法记录下来，手机应用商店市场已经泛滥，既有官方出品（Google Play），又有巨头入场（应用宝、360、91），还有少年得志生机勃勃的豌豆荚，作为应用商店怎么在竞争如此激烈的市场中抢占一席之地呢？</p>
 
 <!--more-->
@@ -1021,14 +1102,22 @@ User 5: RecommendedItem[item:3, value:1.0]
 <li>有了用户，有了用户交互，积累了数据，盈利也会比较容易，也会衍生出其它产品形态(卖数据服务来指导游戏厂商哪些游戏受用户喜爱)</li>
 </ul>
 
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/18/app-store-business-and-recommend/'>http://blog.findhy.com/blog/2014/07/18/app-store-business-and-recommend/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Zookeeper运维管理工具介绍]]></title>
-    <link href="http://findhy.com/blog/2014/07/09/zookeeper-manager/"/>
+    <link href="http://blog.findhy.com/blog/2014/07/09/zookeeper-manager/"/>
     <updated>2014-07-09T13:39:26+08:00</updated>
-    <id>http://findhy.com/blog/2014/07/09/zookeeper-manager</id>
+    <id>http://blog.findhy.com/blog/2014/07/09/zookeeper-manager</id>
     <content type="html"><![CDATA[<p><a href="http://zookeeper.apache.org/">Zookeeper</a>是一个提供维护配置信息、命名空间、分布式同步和组服务的集中式管理工具，广泛应用与分布式系统中，像Storm、HBase、Dubbo都依赖Zookeeper，所以怎么运维和管理Zookeeper就非常重要了，下面介绍几个Zookeeper的管理工具，有些我用过有些我没有用过，仅供参考。</p>
 
 <!--more-->
@@ -1051,14 +1140,22 @@ User 5: RecommendedItem[item:3, value:1.0]
 <h3>3.node-zk-browser</h3>
 
 <p><a href="https://github.com/killme2008/node-zk-browser">node-zk-browser</a>和ZooInspector功能相似，但是基于浏览器访问的，底层是用Node.js实现。</p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/07/09/zookeeper-manager/'>http://blog.findhy.com/blog/2014/07/09/zookeeper-manager/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Spark1.0在YARN上部署过程]]></title>
-    <link href="http://findhy.com/blog/2014/06/28/spark-on-yarn/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/28/spark-on-yarn/"/>
     <updated>2014-06-28T14:13:34+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/28/spark-on-yarn</id>
+    <id>http://blog.findhy.com/blog/2014/06/28/spark-on-yarn</id>
     <content type="html"><![CDATA[<p>Spark支持独立部署和在YARN上部署，选择在YARN上就是作为一个APP跑在YARN平台上，这样的好处是可以和原来的数据平台无缝结合。</p>
 
 <!--more-->
@@ -1131,35 +1228,51 @@ export SCALA_HOME=/opt/scala/scala-2.10.4
 </code></pre>
 
 <p>看到命令行显示<br/>
-<img src="http://findhy.com/images/spark-1.png"></p>
+<img src="http://blog.findhy.com/images/spark-1.png"></p>
 
 <p>YARN管理台显示<br/>
-<img src="http://findhy.com/images/spark-2.png"></p>
+<img src="http://blog.findhy.com/images/spark-2.png"></p>
 
 <p>点击yarn app的tracking UI到达Spark的管理界面<br/>
-<img src="http://findhy.com/images/spark-3.png"></p>
+<img src="http://blog.findhy.com/images/spark-3.png"></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/28/spark-on-yarn/'>http://blog.findhy.com/blog/2014/06/28/spark-on-yarn/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Titan Visualization With VivaGraphJS]]></title>
-    <link href="http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/"/>
     <updated>2014-06-23T16:09:23+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs</id>
+    <id>http://blog.findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs</id>
     <content type="html"><![CDATA[<p><a href="http://findhy.com/blog/2014/06/21/graph-database-visualization/">上一篇文章</a>介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是<a href="https://github.com/anvaka/VivaGraphJS">VivaGraphJS</a>，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：<a href="https://github.com/titan-cn/titan-vivagraph">titan-vivagraph</a>。</p>
 
 <!--more-->
 
 
 
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/'>http://blog.findhy.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[存储性能瓶颈的成因、定位与排查]]></title>
-    <link href="http://findhy.com/blog/2014/06/23/storage-performance-locate/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/23/storage-performance-locate/"/>
     <updated>2014-06-23T10:41:46+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/23/storage-performance-locate</id>
+    <id>http://blog.findhy.com/blog/2014/06/23/storage-performance-locate</id>
     <content type="html"><![CDATA[<p>一个系统的性能瓶颈可能发生在很多地方，常见包括：CPU、内存、存储IO、网络、技术，其中存储IO的性能瓶颈最容易发生，往往我们刚开始搭建系统的时候都放在单台服务器上，当业务扩大后，单台已经无法支撑，常见的做法就是，前端加一个F5或者Nginx做负载均衡，后端应用做集群，数据库做集群或者读写分离、分表分库来缓解服务器的存储IO瓶颈，但是遇到存储瓶颈时我们如何定位问题和在架构设计的时候就去避免这样的问题呢，下面转载一篇EMC中文论坛的一篇文章，原文在这里<a href="https://community.emc.com/docs/DOC-34921">存储性能瓶颈的成因、定位与排查</a>。正文：</p>
 
 <!--more-->
@@ -1267,14 +1380,22 @@ IOPS （读和写，随机和顺序，整体平均IOPS）；
 <h3>应用于</h3>
 
 <p>存储性能分析、定位与排查</p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/23/storage-performance-locate/'>http://blog.findhy.com/blog/2014/06/23/storage-performance-locate/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[图数据库(graph Database)可视化]]></title>
-    <link href="http://findhy.com/blog/2014/06/21/graph-database-visualization/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/21/graph-database-visualization/"/>
     <updated>2014-06-21T11:04:58+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/21/graph-database-visualization</id>
+    <id>http://blog.findhy.com/blog/2014/06/21/graph-database-visualization</id>
     <content type="html"><![CDATA[<p>数据可视化是大数据的最后一环，重要性不可忽视，内行往往关心你的算法和架构，但是用户(客户或者领导)只会看最终展现在他们面前的东西，当然业务层面你需要先了解用户的核心需求，再去建模和设计指标，本文讨论关于数据可视化的技术方案，还有比较特别的图数据库的可视化。</p>
 
 <!--more-->
@@ -1343,14 +1464,22 @@ IOPS （读和写，随机和顺序，整体平均IOPS）；
 <p><a href="http://stackoverflow.com/questions/14867132/is-d3-js-the-right-choice-for-real-time-visualization-of-neo4j-graph-db-data/23522907#23522907">http://stackoverflow.com/questions/14867132/is-d3-js-the-right-choice-for-real-time-visualization-of-neo4j-graph-db-data/23522907#23522907</a></p>
 
 <p><a href="http://stackoverflow.com/questions/18571685/neo4j-graph-visualizing-libraries?rq=1">http://stackoverflow.com/questions/18571685/neo4j-graph-visualizing-libraries?rq=1</a></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/21/graph-database-visualization/'>http://blog.findhy.com/blog/2014/06/21/graph-database-visualization/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Titan Tutorial]]></title>
-    <link href="http://findhy.com/blog/2014/06/19/titan-tutorial/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/19/titan-tutorial/"/>
     <updated>2014-06-19T13:43:40+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/19/titan-tutorial</id>
+    <id>http://blog.findhy.com/blog/2014/06/19/titan-tutorial</id>
     <content type="html"><![CDATA[<p>Titan的<a href="https://github.com/thinkaurelius/titan/wiki">官方手册</a>内容更加丰富，但是太多，初学者不知如何下手，本文摘取重点部分，希望能快速上手Titan。</p>
 
 <!--more-->
@@ -1503,7 +1632,7 @@ vi rexster-hbase-es.xml
 
 <p>出现下面画面则启动成功</p>
 
-<p><img src="http://findhy.com/images/titan-tul-1.png"></p>
+<p><img src="http://blog.findhy.com/images/titan-tul-1.png"></p>
 
 <p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是建立在任何实现了Blueprints的图数据库(Graph Database)之上的web server，它提供这三种功能：</p>
 
@@ -1517,21 +1646,29 @@ vi rexster-hbase-es.xml
 <li><a href="https://github.com/tinkerpop/rexster/wiki/The-Dog-House">The Dog House</a>提供基于浏览器去操作Graph，还有可视化Graph，界面如下：
 
 <ul>
-<li><img src="http://findhy.com/images/titan-tul-2.png"></li>
-<li><img src="http://findhy.com/images/titan-tul-3.png"></li>
+<li><img src="http://blog.findhy.com/images/titan-tul-2.png"></li>
+<li><img src="http://blog.findhy.com/images/titan-tul-3.png"></li>
 </ul>
 </li>
 <li>提供<a href="https://github.com/tinkerpop/rexster/wiki/RexPro-Java">RexsterClient</a>客户端去访问Rexster server，包括执行一些Graph的操作</li>
 </ul>
+
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/19/titan-tutorial/'>http://blog.findhy.com/blog/2014/06/19/titan-tutorial/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
 
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Titan经典入门PPT]]></title>
-    <link href="http://findhy.com/blog/2014/06/19/titan-classic-get-started/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/19/titan-classic-get-started/"/>
     <updated>2014-06-19T11:00:50+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/19/titan-classic-get-started</id>
+    <id>http://blog.findhy.com/blog/2014/06/19/titan-classic-get-started</id>
     <content type="html"><![CDATA[<p>下面是Marko Rodriguez分享的一个PPT，原文在这里<a href="http://www.slideshare.net/slidarko/titan-the-rise-of-big-graph-data">slideshare.</a>，该PPT深入浅出，从Graph基础知识到Graph Database到Titan的优势，还包括基本的入门操作，我觉得非常经典，很适合初学者，在此分享，因为原文PPT表达很简单而且加上动画展示，所以即使英文不好的人看也没有障碍。</p>
 
 <!--more-->
@@ -1543,14 +1680,22 @@ vi rexster-hbase-es.xml
 
 
 <p></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/19/titan-classic-get-started/'>http://blog.findhy.com/blog/2014/06/19/titan-classic-get-started/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[怎么在Octopress Blog中嵌入slideshare]]></title>
-    <link href="http://findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/"/>
     <updated>2014-06-19T10:56:50+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog</id>
+    <id>http://blog.findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog</id>
     <content type="html"><![CDATA[<p>怎么在Octopress blog中嵌入slideshar，使用该插件<a href="https://github.com/petehamilton/Octopress-Slideshare-Plugin">Octopress-Slideshare-Plugin</a>，下面是操作过程。</p>
 
 <!--more-->
@@ -1569,7 +1714,7 @@ vi rexster-hbase-es.xml
 
 <p>到<a href="http://www.slideshare.net/">slideshare</a>网站找到你需要嵌入的ppt。</p>
 
-<p><img src="http://findhy.com/images/slideshare-1.png"></p>
+<p><img src="http://blog.findhy.com/images/slideshare-1.png"></p>
 
 <p>点击Embed，生成类似下面的链接，最后的291600就是我们要的Slideshare Embed ID</p>
 
@@ -1580,7 +1725,7 @@ vi rexster-hbase-es.xml
 
 <p>在你的bolg MD文件中添加下面的代码：</p>
 
-<p><img src="http://findhy.com/images/slideshare-2.png"></p>
+<p><img src="http://blog.findhy.com/images/slideshare-2.png"></p>
 
 <p>执行</p>
 
@@ -1594,14 +1739,22 @@ rake preview
 
 
 <p></p>
+
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/'>http://blog.findhy.com/blog/2014/06/19/how-to-put-slideshare-on-octopress-blog/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
+
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[TinkerPop]]></title>
-    <link href="http://findhy.com/blog/2014/06/18/tinkerpop/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/18/tinkerpop/"/>
     <updated>2014-06-18T15:09:59+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/18/tinkerpop</id>
+    <id>http://blog.findhy.com/blog/2014/06/18/tinkerpop</id>
     <content type="html"><![CDATA[<p><a href="http://www.tinkerpop.com/">TinkerPop</a>是Graph领域的一系列开源工具包的集合。下面分别介绍：</p>
 
 <!--more-->
@@ -1620,7 +1773,7 @@ rake preview
 
 <p>满足上述三个条件的graph被称为property graphs，下面展现一个property graphs的例子，数据格式可以是<a href="http://graphml.graphdrawing.org/index.html">GraphML</a>或者<a href="https://github.com/tinkerpop/blueprints/wiki/GraphSON-Reader-and-Writer-Library">GraphSON</a>，前者是<a href="https://github.com/tinkerpop/gremlin/blob/master/data/graph-example-1.xml">XML</a>，后者<a href="https://github.com/tinkerpop/gremlin/blob/master/data/graph-example-1.json">JSON</a>，当然JSON会更轻量级。</p>
 
-<p><img src="http://findhy.com/images/tinkpop-1.png"></p>
+<p><img src="http://blog.findhy.com/images/tinkpop-1.png"></p>
 
 <p>一个property graphs包含下面这些元素</p>
 
@@ -1690,65 +1843,13 @@ graph.shutdown();
 <p><a href="https://github.com/tinkerpop/rexster/wiki">Rexster</a>是一个Graph Server</p>
 
 <p>TinkerPop的维护人员来自不同的Graph Database产品厂商，像Neo4j、Titan、OrientDB、Bitsy，它在Graph Database领域的地位我理解就像JavaEE里面的Apache。在最新的<a href="https://github.com/tinkerpop/tinkerpop3">TinkerPop3.0</a>版本的时候，TinkerPop将原本分散的各个工具包合并成了一个项目，并且增加了很多特性，Titan0.5版本还不支持TP3，将会在Titan1.0版本时支持，更多的可以看<a href="http://www.tinkerpop.com/docs/current/">TinkerPop3 Story/doc</a>。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Graph Database]]></title>
-    <link href="http://findhy.com/blog/2014/06/17/graph-database-data-structure/"/>
-    <updated>2014-06-17T14:50:02+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/17/graph-database-data-structure</id>
-    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Graph_database">Graph database</a>是近年兴起的NoSQL存储模型(graph, key-value, column, and document)中的一种实现数据库，代表产品是Neo4j、Titan，它的理论基础是<a href="http://zh.wikipedia.org/wiki/%E5%9B%BE%E8%AE%BA">图论/Graph theory</a>,一个数学分支，主要研究顶点和边组成的图形的数学理论和方法，它的起源也比较有意思，这部分本文不谈，感兴趣的同学可以去Google研究一下。</p>
 
-<!--more-->
-
-
-<p>想了解Graph Database，我们还是要把图论(Graph theory)简单说一下，略过中间复杂的数学问题，我们以结果为导向，图论可以解决哪些问题？这里有一个<a href="http://www.global-sci.org/mc/issues/3/no2/freepdf/67s.pdf">图论经典问题简介</a>,诸如<a href="http://zh.wikipedia.org/wiki/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98">最短路径问题</a>、<a href="http://zh.wikipedia.org/wiki/%E6%97%85%E8%A1%8C%E6%8E%A8%E9%94%80%E5%91%98%E9%97%AE%E9%A2%98">旅行售货商问题</a>、<a href="http://zh.wikipedia.org/wiki/%E9%82%AE%E9%80%92%E5%91%98%E9%97%AE%E9%A2%98">中国邮递员问题</a>，这些是图论中研究的经典问题，具体实现会涉及到不同的算法问题。</p>
-
-<p>举个例子，在社交网络中，你搜索了一个人，怎么最快结识他，这其实就是一个最短路径问题，LinkedIn已经有相关的推荐产品，可以去试一下。而且未来随着智能设备的普及个人数据会呈现爆炸性增长，就是人的属性和关联会更多更复杂，其实这个问题在阿里现在已经存在了，他收购了那么多产品，重要一点就是为了获取数据，现在阿里拥有一个人的网购数据(淘宝、天猫)、社交数据(陌陌、新浪微博)、浏览搜索数据(UC、优酷)等等，这么庞大的一个数据结构该怎么来描述，更关键的是怎么快速的去做定位和推荐，这也是Graph Database兴起的一个原因，未来Graph这块必然会大放异彩。</p>
-
-<h3>数据结构</h3>
-
-<p>Graph Database的存储单元是：节点(nodes)、关系/边(edges)、属性(properties)<br/>
-<img src="http://findhy.com/images/GraphDatabase_1.png"></p>
-
-<ul>
-<li>节点(nodes)：通常是一个实体，类似于社交网络中的人或者电商网络中的商品，节点不一定都是同一个类型的，比如我们构建一个Graph，节点是人和商品，之间的连接是谁买了哪个商品，这样我们可以很容易找到买相同的产品的人，去做关联推荐</li>
-<li>属性(properties)：是与节点(nodes)相关的信息，通常是节点的描述，比如人的性别、年龄、地点、电话等信息</li>
-<li>关系/边(edges)：用来连接节点(nodes)的，代表节点(nodes)与节点(nodes)之间具有某种关系，比如用户A和用户B是好友，用户A和用户C来自同一个地方，关系可以是有方向和无方向的，而且节点(nodes)之间可以有多条关系</li>
-</ul>
-
-
-<p>Graph Database的数据结构使得它在处理数据关联问题更具优势，因为它的节点(nodes)原生的就是通过某种关系连接在一起，这样就减少了join这样耗费资源的操作。</p>
-
-<h3>算法</h3>
-
-<p>Graph Database中很多问题都涉及到一些重要算法，下面列举一些，数据来源<a href="http://zh.wikipedia.org/wiki/%E6%9C%80%E7%9F%AD%E8%B7%AF%E9%97%AE%E9%A2%98">Wikipedia-Graph-Algorithms</a>：</p>
-
-<ul>
-<li>基本遍历：深度优先搜索、广度优先搜索、A*、Flood fill</li>
-<li>最短路径：Dijkstra、Bellman-Ford、Floyd-Warshall 、Kneser图</li>
-<li>最小生成树：Prim、Kruskal</li>
-<li>强连通分量：Kosaraju算法、Gabow算法、Tarjan算法</li>
-<li>图匹配：匈牙利算法、Hopcroft–Karp、Edmonds&rsquo;s matching</li>
-<li>网络流：Ford-Fulkerson、Edmonds-Karp、Dinic 、Push-relabel maximum flow</li>
-</ul>
-
-
-<h3>常规操作</h3>
-
-<p>类似于关系型数据库提供的CRUD操作，Graph Database也提供一系列指令来操作Graph，下面G代表一个Graph data structure，你可以把它想象为关系型数据库中的一张表。</p>
-
-<ul>
-<li>adjacent(G, x, y)：检查节点x和节点y之间是否有一个边(edge)</li>
-<li>neighbors(G, x)：列出所有与节点x有连接/边(edge)的节点</li>
-<li>add(G, x, y)：插入一个边(edge)，从x指向y</li>
-<li>delete(G, x, y)：删除一个从x指向y的边(edge)</li>
-<li>get_node_value(G, x)：返回节点x的相关属性</li>
-<li>set_node_value(G, x, a)：设置节点x的属性为a</li>
-<li>get_edge_value(G, x, y)：返回节点x和y之间的边(edge)的属性，边(edge)也是有属性的</li>
-<li>set_edge_value(G, x, y, v)：设置节点x和y之间的边(edge)的属性为v</li>
-</ul>
+<p class='post-footer'>
+            original link:
+            <a href='http://blog.findhy.com/blog/2014/06/18/tinkerpop/'>http://blog.findhy.com/blog/2014/06/18/tinkerpop/</a><br/>
+            written by <a href='http://blog.findhy.com'>Findhy</a>
+            &nbsp;posted at <a href='http://blog.findhy.com'>http://blog.findhy.com</a>
+            </p>
 
 ]]></content>
   </entry>

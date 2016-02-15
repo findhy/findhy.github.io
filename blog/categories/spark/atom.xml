@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Spark | Findhy's Blog]]></title>
-  <link href="http://findhy.com/blog/categories/spark/atom.xml" rel="self"/>
-  <link href="http://findhy.com/"/>
-  <updated>2015-01-17T19:47:05+08:00</updated>
-  <id>http://findhy.com/</id>
+  <link href="http://blog.findhy.com/blog/categories/spark/atom.xml" rel="self"/>
+  <link href="http://blog.findhy.com/"/>
+  <updated>2016-02-15T12:18:03+08:00</updated>
+  <id>http://blog.findhy.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Spark1.0在YARN上部署过程]]></title>
-    <link href="http://findhy.com/blog/2014/06/28/spark-on-yarn/"/>
+    <link href="http://blog.findhy.com/blog/2014/06/28/spark-on-yarn/"/>
     <updated>2014-06-28T14:13:34+08:00</updated>
-    <id>http://findhy.com/blog/2014/06/28/spark-on-yarn</id>
+    <id>http://blog.findhy.com/blog/2014/06/28/spark-on-yarn</id>
     <content type="html"><![CDATA[<p>Spark支持独立部署和在YARN上部署，选择在YARN上就是作为一个APP跑在YARN平台上，这样的好处是可以和原来的数据平台无缝结合。</p>
 
 <!--more-->
