@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Bigdata | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/bigdata/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/bigdata/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[大数据时代下的商机]]></title>
-    <link href="http://findhy.github.com/blog/2014/04/21/big-data-business/"/>
+    <link href="http://findhy.github.io/blog/2014/04/21/big-data-business/"/>
     <updated>2014-04-21T22:57:30+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/04/21/big-data-business</id>
+    <id>http://findhy.github.io/blog/2014/04/21/big-data-business</id>
     <content type="html"><![CDATA[<p>大数据时代下的我们有哪些商机？有哪些大数据产品可以参考？我没有数据怎么做？</p>
 
 <!--more-->

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: AD | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/ad/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/ad/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Computational Advertising]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/07/computational-advertising/"/>
+    <link href="http://findhy.github.io/blog/2014/06/07/computational-advertising/"/>
     <updated>2014-06-07T12:50:40+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/07/computational-advertising</id>
+    <id>http://findhy.github.io/blog/2014/06/07/computational-advertising</id>
     <content type="html"><![CDATA[<p>最近在学习计算广告学，一个互联网广告行业催生出来的新兴学科，斯坦福大学已经推出了计算广告学的课程，本文下面有公开课的链接。</p>
 
 <!--more-->

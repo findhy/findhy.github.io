@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Nginx | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/nginx/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/nginx/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Nginx Install on Centos]]></title>
-    <link href="http://findhy.github.com/blog/2014/05/17/nginx-on-linux/"/>
+    <link href="http://findhy.github.io/blog/2014/05/17/nginx-on-linux/"/>
     <updated>2014-05-17T07:12:34+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/05/17/nginx-on-linux</id>
+    <id>http://findhy.github.io/blog/2014/05/17/nginx-on-linux</id>
     <content type="html"><![CDATA[<p>Nginx是一个高性能的HTTP和反向代理服务器，官网在<a href="http://nginx.org/">这里</a>。</p>
 
 <!--more-->

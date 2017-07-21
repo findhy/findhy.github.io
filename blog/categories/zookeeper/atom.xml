@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Zookeeper | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/zookeeper/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/zookeeper/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Zookeeper运维管理工具介绍]]></title>
-    <link href="http://findhy.github.com/blog/2014/07/09/zookeeper-manager/"/>
+    <link href="http://findhy.github.io/blog/2014/07/09/zookeeper-manager/"/>
     <updated>2014-07-09T13:39:26+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/07/09/zookeeper-manager</id>
+    <id>http://findhy.github.io/blog/2014/07/09/zookeeper-manager</id>
     <content type="html"><![CDATA[<p><a href="http://zookeeper.apache.org/">Zookeeper</a>是一个提供维护配置信息、命名空间、分布式同步和组服务的集中式管理工具，广泛应用与分布式系统中，像Storm、HBase、Dubbo都依赖Zookeeper，所以怎么运维和管理Zookeeper就非常重要了，下面介绍几个Zookeeper的管理工具，有些我用过有些我没有用过，仅供参考。</p>
 
 <!--more-->

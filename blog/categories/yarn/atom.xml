@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: YARN | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/yarn/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/yarn/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[YARN，Hadoop平台的操作系统]]></title>
-    <link href="http://findhy.github.com/blog/2014/03/20/yarn/"/>
+    <link href="http://findhy.github.io/blog/2014/03/20/yarn/"/>
     <updated>2014-03-20T10:55:35+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/03/20/yarn</id>
+    <id>http://findhy.github.io/blog/2014/03/20/yarn</id>
     <content type="html"><![CDATA[<p>YARN是Hadoop2.0版本推出的全新数据处理平台。通过YARN，用户可以在Hadoop平台中根据不同的应用场景选择不同的计算框架（MR、TEZ等），而且可以同时处理同一批数据。</p>
 
 <!--more-->

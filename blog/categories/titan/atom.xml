@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Titan | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/titan/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/titan/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Titan Visualization With VivaGraphJS]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/23/titan-visualization-with-vivagraphjs/"/>
+    <link href="http://findhy.github.io/blog/2014/06/23/titan-visualization-with-vivagraphjs/"/>
     <updated>2014-06-23T16:09:23+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/23/titan-visualization-with-vivagraphjs</id>
+    <id>http://findhy.github.io/blog/2014/06/23/titan-visualization-with-vivagraphjs</id>
     <content type="html"><![CDATA[<p><a href="http://findhy.com/blog/2014/06/21/graph-database-visualization/">上一篇文章</a>介绍了Graph Database的可视化技术方案，本项目是Titan的数据可视化和在线更新，前端使用的是<a href="https://github.com/anvaka/VivaGraphJS">VivaGraphJS</a>，在线更新就是调用Rexster提供的REST API，具体可以参考github上面的README介绍：<a href="https://github.com/titan-cn/titan-vivagraph">titan-vivagraph</a>。</p>
 
 <!--more-->
@@ -29,9 +29,9 @@
   
   <entry>
     <title type="html"><![CDATA[图数据库(graph Database)可视化]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/21/graph-database-visualization/"/>
+    <link href="http://findhy.github.io/blog/2014/06/21/graph-database-visualization/"/>
     <updated>2014-06-21T11:04:58+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/21/graph-database-visualization</id>
+    <id>http://findhy.github.io/blog/2014/06/21/graph-database-visualization</id>
     <content type="html"><![CDATA[<p>数据可视化是大数据的最后一环，重要性不可忽视，内行往往关心你的算法和架构，但是用户(客户或者领导)只会看最终展现在他们面前的东西，当然业务层面你需要先了解用户的核心需求，再去建模和设计指标，本文讨论关于数据可视化的技术方案，还有比较特别的图数据库的可视化。</p>
 
 <!--more-->
@@ -105,9 +105,9 @@
   
   <entry>
     <title type="html"><![CDATA[Titan Tutorial]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/19/titan-tutorial/"/>
+    <link href="http://findhy.github.io/blog/2014/06/19/titan-tutorial/"/>
     <updated>2014-06-19T13:43:40+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/19/titan-tutorial</id>
+    <id>http://findhy.github.io/blog/2014/06/19/titan-tutorial</id>
     <content type="html"><![CDATA[<p>Titan的<a href="https://github.com/thinkaurelius/titan/wiki">官方手册</a>内容更加丰富，但是太多，初学者不知如何下手，本文摘取重点部分，希望能快速上手Titan。</p>
 
 <!--more-->
@@ -286,9 +286,9 @@ vi rexster-hbase-es.xml
   
   <entry>
     <title type="html"><![CDATA[Titan经典入门PPT]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/19/titan-classic-get-started/"/>
+    <link href="http://findhy.github.io/blog/2014/06/19/titan-classic-get-started/"/>
     <updated>2014-06-19T11:00:50+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/19/titan-classic-get-started</id>
+    <id>http://findhy.github.io/blog/2014/06/19/titan-classic-get-started</id>
     <content type="html"><![CDATA[<p>下面是Marko Rodriguez分享的一个PPT，原文在这里<a href="http://www.slideshare.net/slidarko/titan-the-rise-of-big-graph-data">slideshare.</a>，该PPT深入浅出，从Graph基础知识到Graph Database到Titan的优势，还包括基本的入门操作，我觉得非常经典，很适合初学者，在此分享，因为原文PPT表达很简单而且加上动画展示，所以即使英文不好的人看也没有障碍。</p>
 
 <!--more-->
@@ -300,9 +300,9 @@ vi rexster-hbase-es.xml
   
   <entry>
     <title type="html"><![CDATA[TinkerPop]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/18/tinkerpop/"/>
+    <link href="http://findhy.github.io/blog/2014/06/18/tinkerpop/"/>
     <updated>2014-06-18T15:09:59+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/18/tinkerpop</id>
+    <id>http://findhy.github.io/blog/2014/06/18/tinkerpop</id>
     <content type="html"><![CDATA[<p><a href="http://www.tinkerpop.com/">TinkerPop</a>是Graph领域的一系列开源工具包的集合。下面分别介绍：</p>
 
 <!--more-->

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Kafka | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/kafka/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/kafka/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/14/kafka-storm-notserializableexception/"/>
+    <link href="http://findhy.github.io/blog/2014/06/14/kafka-storm-notserializableexception/"/>
     <updated>2014-06-14T20:24:15+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/14/kafka-storm-notserializableexception</id>
+    <id>http://findhy.github.io/blog/2014/06/14/kafka-storm-notserializableexception</id>
     <content type="html"><![CDATA[<p>我们现在的架构使用Kafka作为消息的入口，数据全部发送到Kafka中，然后用Storm的Topology写一个spout去订阅Kafka的消息，执行提交Topology：</p>
 
 <!--more-->
@@ -71,9 +71,9 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
   
   <entry>
     <title type="html"><![CDATA[Kafka vs MQ vs JMS]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/10/kafka-vs-mq-vs-jms/"/>
+    <link href="http://findhy.github.io/blog/2014/06/10/kafka-vs-mq-vs-jms/"/>
     <updated>2014-06-10T10:43:08+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/10/kafka-vs-mq-vs-jms</id>
+    <id>http://findhy.github.io/blog/2014/06/10/kafka-vs-mq-vs-jms</id>
     <content type="html"><![CDATA[<p>Kafka的介绍参加这篇文章：<a href="http://findhy.com/blog/2014/05/18/kafka/">Kafka Introduction</a>，本文将Kafka、MQ、JMS这几个概念重新梳理一下，当然它们之间是有包含的关系，还有已经有了那么多的MQ产品，为什么LinkedIn还要开发Kafka呢？</p>
 
 <!--more-->
@@ -108,9 +108,9 @@ Caused by: java.io.NotSerializableException: kafka.javaapi.producer.Producer
   
   <entry>
     <title type="html"><![CDATA[Kafka Introduction]]></title>
-    <link href="http://findhy.github.com/blog/2014/05/18/kafka/"/>
+    <link href="http://findhy.github.io/blog/2014/05/18/kafka/"/>
     <updated>2014-05-18T10:25:44+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/05/18/kafka</id>
+    <id>http://findhy.github.io/blog/2014/05/18/kafka</id>
     <content type="html"><![CDATA[<p>Kafka是Linkedin于2010开源的消息系统，现在已经放到Apache的项目中了，主页是：<a href="http://kafka.apache.org/%E3%80%82">http://kafka.apache.org/%E3%80%82</a>
 Kafka是一个高吞吐量分布式的消息系统（publish-subscribe），它有如下这些特点：</p>
 

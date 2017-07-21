@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: RPC | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/rpc/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/rpc/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Protocol Buffers vs Avro vs Thrift]]></title>
-    <link href="http://findhy.github.com/blog/2014/05/18/protocol-buffers/"/>
+    <link href="http://findhy.github.io/blog/2014/05/18/protocol-buffers/"/>
     <updated>2014-05-18T15:53:37+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/05/18/protocol-buffers</id>
+    <id>http://findhy.github.io/blog/2014/05/18/protocol-buffers</id>
     <content type="html"><![CDATA[<p>分布式架构一个重要的思路是解耦，将系统拆解为很多个相互独立的组件，每个组件通过接口对外提供服务，这种面向服务（SOA）架构设计可伸缩性更强、维护成本也更低。但服务的管理、分布式锁、高效的组件调用等相关技术复杂性也更高。本文介绍几个常用的高效的RPC框架。</p>
 
 <!--more-->

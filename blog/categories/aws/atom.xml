@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: AWS | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/aws/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/aws/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[基于云的Hadoop架构]]></title>
-    <link href="http://findhy.github.com/blog/2014/07/25/hadoop-cloud/"/>
+    <link href="http://findhy.github.io/blog/2014/07/25/hadoop-cloud/"/>
     <updated>2014-07-25T12:18:55+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/07/25/hadoop-cloud</id>
+    <id>http://findhy.github.io/blog/2014/07/25/hadoop-cloud</id>
     <content type="html"><![CDATA[<p>今天看了Netflix分享的基于AWS的大数据平台Hadoop架构，感觉这是未来大数据平台的发展模式，将整个数据仓库部署在云端，开发者不需要考虑集群的资源扩展，也不需要接触复杂的底层命令，通过一个简单RESTFul接口就可以提交我们的MapReduce任务，还可以实时看到任务和运行状态。</p>
 
 <!--more-->
@@ -48,9 +48,9 @@
   
   <entry>
     <title type="html"><![CDATA[S3cmd 多账户配置]]></title>
-    <link href="http://findhy.github.com/blog/2014/07/24/s3cmd-multiple-accounts/"/>
+    <link href="http://findhy.github.io/blog/2014/07/24/s3cmd-multiple-accounts/"/>
     <updated>2014-07-24T15:16:17+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/07/24/s3cmd-multiple-accounts</id>
+    <id>http://findhy.github.io/blog/2014/07/24/s3cmd-multiple-accounts</id>
     <content type="html"><![CDATA[<p>关于s3cmd的安装配置参考这篇文章：<a href="http://findhy.com/blog/2014/06/05/s3cmd-config/">s3cmd Configure</a>，本文介绍s3cmd多账户配置。</p>
 
 <!--more-->
@@ -103,9 +103,9 @@ OK!这样就不用每次指定配置文件了
   
   <entry>
     <title type="html"><![CDATA[S3cmd Configure]]></title>
-    <link href="http://findhy.github.com/blog/2014/06/05/s3cmd-config/"/>
+    <link href="http://findhy.github.io/blog/2014/06/05/s3cmd-config/"/>
     <updated>2014-06-05T18:52:03+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/06/05/s3cmd-config</id>
+    <id>http://findhy.github.io/blog/2014/06/05/s3cmd-config</id>
     <content type="html"><![CDATA[<p>s3cmd是AWS S3的命令行工具，可以用来下载、上传、同步文件，还可以配置权限。</p>
 
 <!--more-->

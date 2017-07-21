@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Mahout | Findhy's Blog]]></title>
-  <link href="http://findhy.github.com/blog/categories/mahout/atom.xml" rel="self"/>
-  <link href="http://findhy.github.com/"/>
-  <updated>2017-07-21T15:36:26+08:00</updated>
-  <id>http://findhy.github.com/</id>
+  <link href="http://findhy.github.io/blog/categories/mahout/atom.xml" rel="self"/>
+  <link href="http://findhy.github.io/"/>
+  <updated>2017-07-21T15:42:48+08:00</updated>
+  <id>http://findhy.github.io/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Introduction to Item-Based Recommendations With Hadoop]]></title>
-    <link href="http://findhy.github.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/"/>
+    <link href="http://findhy.github.io/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop/"/>
     <updated>2014-07-22T14:30:07+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop</id>
+    <id>http://findhy.github.io/blog/2014/07/22/introduction-to-item-based-recommendation-with-hadoop</id>
     <content type="html"><![CDATA[<p>本文是Mahout官网上的Item-Based CF on Hadoop的例子，原文在这里<a href="https://mahout.apache.org/users/recommender/intro-itembased-hadoop.html">Introduction to Item-Based Recommendations with Hadoop</a>。</p>
 
 <!--more-->
@@ -75,9 +75,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mahout Tutorial]]></title>
-    <link href="http://findhy.github.com/blog/2014/07/21/mahout-tutorial/"/>
+    <link href="http://findhy.github.io/blog/2014/07/21/mahout-tutorial/"/>
     <updated>2014-07-21T17:47:04+08:00</updated>
-    <id>http://findhy.github.com/blog/2014/07/21/mahout-tutorial</id>
+    <id>http://findhy.github.io/blog/2014/07/21/mahout-tutorial</id>
     <content type="html"><![CDATA[<p><a href="http://mahout.apache.org/">Mahout</a> 是一个开源的Java实现的可伸缩的机器学习库，它实现了常见的聚类和推荐等机器学习算法，并且可运行在 Hadoop 分布式平台处理上PB的数据，Mahout 社区和文档非常丰富，是目前搭建推荐系统或者其它算法平台的首选方案。</p>
 
 <!--more-->
