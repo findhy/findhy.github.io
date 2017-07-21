@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Hadoop | Findhy's Blog]]></title>
-  <link href="http://blog.findhy.com/blog/categories/hadoop/atom.xml" rel="self"/>
-  <link href="http://blog.findhy.com/"/>
-  <updated>2016-02-15T17:29:23+08:00</updated>
-  <id>http://blog.findhy.com/</id>
+  <link href="http://findhy.github.com/blog/categories/hadoop/atom.xml" rel="self"/>
+  <link href="http://findhy.github.com/"/>
+  <updated>2017-07-21T15:14:00+08:00</updated>
+  <id>http://findhy.github.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hadoop数据倾斜问题总结]]></title>
-    <link href="http://blog.findhy.com/blog/2015/01/16/hadoop-data-tilt/"/>
+    <link href="http://findhy.github.com/blog/2015/01/16/hadoop-data-tilt/"/>
     <updated>2015-01-16T09:41:26+08:00</updated>
-    <id>http://blog.findhy.com/blog/2015/01/16/hadoop-data-tilt</id>
+    <id>http://findhy.github.com/blog/2015/01/16/hadoop-data-tilt</id>
     <content type="html"><![CDATA[<p>首先解释什么是数据倾斜问题，举一个例子，图书馆有A0、A1、A2&hellip;A9共10个书架，A0书架有1000本书，而A1到A9书架有100本书，现在要统计图书的总数量，这时我们会发现A1到A9很快就统计完了，而A0书架需要统计很长时间，显然A0成为整个统计过程的瓶颈。</p>
 
 <p>Hadoop最根本的思想就是分而治之，数据倾斜会导致分布式的计算效率依赖单个节点，这与它的初衷是背道而驰的，但是Hadoop又没有从根本层面解决这个问题，所以需要我们在业务设计和开发时来解决这个问题，最好的解决方法是设计时避免让这个问题出现。如果无法避免，那么解决数据倾斜问题和核心思想只有一个：让map输出的key均匀分布到各个reduce中去（mapjoin例外，直接在内存中解决，牺牲内存空间提高效率，只适用于较小的输入数据）</p>
@@ -80,9 +80,9 @@ hive.groupby.skewindata=true//有数据倾斜的时候自动进行负载均衡
   
   <entry>
     <title type="html"><![CDATA[Hadoop集群NameNode运行中进入安全模式的问题：NameNode Low on Available Disk Space]]></title>
-    <link href="http://blog.findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space/"/>
+    <link href="http://findhy.github.com/blog/2014/11/13/namenode-low-on-available-disk-space/"/>
     <updated>2014-11-13T15:23:26+08:00</updated>
-    <id>http://blog.findhy.com/blog/2014/11/13/namenode-low-on-available-disk-space</id>
+    <id>http://findhy.github.com/blog/2014/11/13/namenode-low-on-available-disk-space</id>
     <content type="html"><![CDATA[<p>问题描述：Hadoop集群在运行过程，早上来的时候发现NameNode自动进入安全模式，导致系统运行的MR任务失败。</p>
 
 <p>最开始怀疑是HDFS的块复制没有达到最低的要求，通过hadoop fsck -blocks查看，Minimally replicated blocks为100%，说明blocks都达到了复制要求，最后查看了NameNode的日志发现几行警告信息：</p>
@@ -108,9 +108,9 @@ Resources are low on NN. Please add or free up more resources then turn off safe
   
   <entry>
     <title type="html"><![CDATA[Hadoop Streaming编程(Python)]]></title>
-    <link href="http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python/"/>
+    <link href="http://findhy.github.com/blog/2014/07/29/hadoop-streaming-python/"/>
     <updated>2014-07-29T17:17:59+08:00</updated>
-    <id>http://blog.findhy.com/blog/2014/07/29/hadoop-streaming-python</id>
+    <id>http://findhy.github.com/blog/2014/07/29/hadoop-streaming-python</id>
     <content type="html"><![CDATA[<p>Hadoop Streaming是Hadoop提供的一个工具，可以允许开发者以非Java的编程语言开发Mapper和Reducer，而且在开发过程中，我们只需要专注于数据的输入和输出处理，其它的事情都交给这个工具来做。本例是用Python实现一个简单的Wordcount例子，环境为：</p>
 
 <ul>
@@ -211,9 +211,9 @@ if current_word == word:
   
   <entry>
     <title type="html"><![CDATA[Hadoop 2.2.0-cdh5.0.0-beta-2 Install on Centos]]></title>
-    <link href="http://blog.findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/"/>
+    <link href="http://findhy.github.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install/"/>
     <updated>2014-05-14T23:08:37+08:00</updated>
-    <id>http://blog.findhy.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install</id>
+    <id>http://findhy.github.com/blog/2014/05/14/cdh5-hadoop-2-2-0-install</id>
     <content type="html"><![CDATA[<p>环境说明</p>
 
 <pre><code>master 10.0.1.252  
@@ -422,9 +422,9 @@ scp -r /home/hadoop/hadoop-2.2.0-cdh5.0.0-beta-2 hadoop@slave2:/home/hadoop/hado
   
   <entry>
     <title type="html"><![CDATA[Oracle DBA如何转型到Hadoop平台]]></title>
-    <link href="http://blog.findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/"/>
+    <link href="http://findhy.github.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas/"/>
     <updated>2014-03-20T15:02:44+08:00</updated>
-    <id>http://blog.findhy.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas</id>
+    <id>http://findhy.github.com/blog/2014/03/20/the-hadoop-faq-for-oracle-dbas</id>
     <content type="html"><![CDATA[<p>Oracle DBA如何转型到Hadoop平台，这篇博客是Cloudera的工程师Gwen Shapira的回答，因为他以前就是从事Oracle DBA的。原文在<a href="http://blog.cloudera.com/blog/2014/01/the-hadoop-faq-for-oracle-dbas/">这里</a>。对于国内的一些DBA想转型Hadoop的可以参考一下。</p>
 
 <!--more-->

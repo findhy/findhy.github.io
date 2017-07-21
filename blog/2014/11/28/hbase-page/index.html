@@ -18,15 +18,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.findhy.com/blog/2014/11/28/hbase-page">
+  <link rel="canonical" href="http://findhy.github.com/blog/2014/11/28/hbase-page">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Findhy's Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-52121968-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
@@ -83,15 +99,15 @@
 
 <time datetime="2014-11-28T09:45:23+08:00" pubdate data-updated="true">Nov 28<span>th</span>, 2014</time>
         
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://findhy.github.com">Comments</a>
+        
       </p>
     
   </header>
 
 
 <div class="entry-content"><p>HBase分页的难点在于两点：获取总行数困难、没有行标号。根据HBase的特点获取数据只有三种模式：RowKey唯一定位、Rowkey范围扫描和全表扫描。那么分页可以采用Rowkey的范围扫描，每次扫描一定范围内的数据并且通过PageFilter过滤来限定扫描的行数，如果我们每页10条，那么每次就扫描11条，记住第11条的Rowkey，当点击下一页的时候，将startRowkey设置为第11条的Rowkey，就实现了分页的效果，下面是相关的核心代码，具体项目可以参考<a href="https://github.com/findhy/hbase-page">github-HBase-page</a></p>
-
-<!--more-->
-
 
 <pre><code>public class PageHBase {
 
@@ -264,9 +280,9 @@ public class AdunionHbaseService {
     }
 }&lt;p class='post-footer'&gt;
         original link:
-        &lt;a href='http://blog.findhy.com/blog/2014/11/28/hbase-page/'&gt;http://blog.findhy.com/blog/2014/11/28/hbase-page/&lt;/a&gt;&lt;br/&gt;
-        written by &lt;a href='http://blog.findhy.com'&gt;Findhy&lt;/a&gt;
-        &amp;nbsp;posted at &lt;a href='http://blog.findhy.com'&gt;http://blog.findhy.com&lt;/a&gt;
+        &lt;a href='http://findhy.github.com/blog/2014/11/28/hbase-page/'&gt;http://findhy.github.com/blog/2014/11/28/hbase-page/&lt;/a&gt;&lt;br/&gt;
+        written by &lt;a href='http://findhy.github.com'&gt;Findhy&lt;/a&gt;
+        &amp;nbsp;posted at &lt;a href='http://findhy.github.com'&gt;http://findhy.github.com&lt;/a&gt;
         &lt;/p&gt;
 </code></pre>
 </div>
@@ -305,6 +321,8 @@ public class AdunionHbaseService {
     
       <div class="sharing">
   
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://findhy.github.com/blog/2014/11/28/hbase-page/" data-via="sunwei553722769" data-counturl="http://findhy.github.com/blog/2014/11/28/hbase-page/" >Tweet</a>
+  
   
   
 </div>
@@ -321,14 +339,46 @@ public class AdunionHbaseService {
   </footer>
 </article>
 
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
 </div>
 
 <aside class="sidebar">
+  <section>
+  <p>Hi, I'm <a href="https://twitter.com/martinbjeldbak">Martin Bjeldbak Madsen</a>!</p>
   
+
+  <p>You can read more about me on my <a href="/about/">about</a> page. To see what I'm working on, check out my GitHub page <a href="https://github.com/fapper">here</a>.</p>
+  <p>My resume can be found <a href="cv.pdf">here</a>.</p>
+  <div class="social-icons">
+    
+
+    
+
+    
+
+    
+  <a href="https://github.com/findhy"><i class="fa fa-github fa-3x"></i></a>
+
+
+    
+  <a href="https://twitter.com/sunwei553722769"><i class="fa fa-twitter fa-3x"></i></a>
+
+
+  </div>
+</section>
 
   <section>
   <h1>Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
@@ -404,10 +454,6 @@ public class AdunionHbaseService {
     
       <li class="post">
         <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
       </li>
     
   </ul>
@@ -443,6 +489,10 @@ public class AdunionHbaseService {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/02/15/hello-baidu/">Hello Baidu</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/01/16/hadoop-data-tilt/">Hadoop数据倾斜问题总结</a>
       </li>
     
@@ -518,11 +568,36 @@ public class AdunionHbaseService {
         <a href="/blog/2014/06/18/tinkerpop/">TinkerPop</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/17/graph-database-data-structure/">Graph Database</a>
-      </li>
-    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/findhy">@findhy</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'findhy',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -535,17 +610,49 @@ public class AdunionHbaseService {
 
     </div>
   </div>
-  <footer role="contentinfo"><span>Copyright &copy; 2016  Findhy -</span>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Findhy -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+<p>
+<span>Copyright &copy; 2017  Findhy -</span>
 <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> using the <a href="https://github.com/fapper/classic-martinb">classic-martinb</a> theme</span>
 </p>
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'findhy';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://findhy.github.com/blog/2014/11/28/hbase-page/';
+        var disqus_url = 'http://findhy.github.com/blog/2014/11/28/hbase-page/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
 
 
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
 
 
 

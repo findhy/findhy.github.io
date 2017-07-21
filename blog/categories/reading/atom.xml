@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Reading | Findhy's Blog]]></title>
-  <link href="http://blog.findhy.com/blog/categories/reading/atom.xml" rel="self"/>
-  <link href="http://blog.findhy.com/"/>
-  <updated>2016-02-15T17:29:23+08:00</updated>
-  <id>http://blog.findhy.com/</id>
+  <link href="http://findhy.github.com/blog/categories/reading/atom.xml" rel="self"/>
+  <link href="http://findhy.github.com/"/>
+  <updated>2017-07-21T15:14:00+08:00</updated>
+  <id>http://findhy.github.com/</id>
   <author>
     <name><![CDATA[Findhy]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[「写给大家的设计书」]]></title>
-    <link href="http://blog.findhy.com/blog/2014/03/23/how-do-design/"/>
+    <link href="http://findhy.github.com/blog/2014/03/23/how-do-design/"/>
     <updated>2014-03-23T21:13:47+08:00</updated>
-    <id>http://blog.findhy.com/blog/2014/03/23/how-do-design</id>
+    <id>http://findhy.github.com/blog/2014/03/23/how-do-design</id>
     <content type="html"><![CDATA[<p>最近看了「写给大家的设计书」，收获颇多，作者用了最简洁的语言表达出设计之美的真谛，并且技巧入门简单、易用，对于非专业设计的我来说是一个非常有意思的学习过程，本文大部分内容来自这本书和自己的总结。</p>
 
 <!--more-->
